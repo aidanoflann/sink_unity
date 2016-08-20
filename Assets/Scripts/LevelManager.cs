@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 public class LevelManager : MonoBehaviour {
 
@@ -13,6 +14,19 @@ public class LevelManager : MonoBehaviour {
 	// this is used to child all of the gameObjects for better control/organisation in the inspector.
 	private Transform levelHolder;
 
+    // platform parameter ranges
+    private float[] wPosRange;
+    private float[] wVelRange;
+    private float[] wSizeRange;
+
+    private void GeneratePlatformRanges()
+    {
+        wPosRange = Enumerable.Range(0, 359).Select(i => (float)i).ToArray();
+        wVelRange = Enumerable.Range(1, 10).Select(i => (float)i * 10f).ToArray();
+        wSizeRange = Enumerable.Range(3, 30).Select(i => (float)i*10f).ToArray();
+    }
+
+
 	private void SpawnPlatforms(int numPlatforms)
 	{
 		bool clockwise = true;
@@ -24,16 +38,18 @@ public class LevelManager : MonoBehaviour {
 			// grab the script
 			Platform platform = instance.GetComponent<Platform> ();
 
-			// TODO: Find a way to get these into an init function - doing so as normal changes the values of the prefab, not the instance
-			platform.w_size = 180f;
-			platform.r_pos = 2f * (float)(p + 1);
-			platform.r_vel = -1f;
-			platform.w_pos = 0f;
-			if (clockwise)
-				platform.w_vel = 100f;
+            // TODO: Find a way to get these into an init function - doing so as normal changes the values of the prefab, not the instance
+            platform.w_size = wSizeRange[Random.Range(0, wSizeRange.Length - 1)];
+			platform.w_pos = wPosRange[Random.Range(0, wPosRange.Length - 1)];
+            platform.w_vel = wVelRange[Random.Range(0, wVelRange.Length - 1)];
+            if (clockwise)
+				platform.w_vel *= 1f;
 			else
-				platform.w_vel = -100f;
-			clockwise = !clockwise;
+				platform.w_vel *= -1f;
+
+            platform.r_pos = 2f * (float)(p + 1);
+            platform.r_vel = -1f;
+            clockwise = !clockwise;
 
 			instance.transform.SetParent (levelHolder);
             platformList.Add(instance);
@@ -52,6 +68,7 @@ public class LevelManager : MonoBehaviour {
 		levelHolder = new GameObject ("Level").transform;
         platformList = new List<GameObject>(numPlatforms);
 
+        GeneratePlatformRanges();
         SpawnPlatforms (numPlatforms);
 		SpawnPlayer ();
 	}

@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour {
 
 	void InitGame()
 	{
-		levelManager.SetupScene (30);
+		levelManager.SetupScene (10);
 	}
 
 }
