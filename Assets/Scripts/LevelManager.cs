@@ -22,7 +22,7 @@ public class LevelManager : MonoBehaviour {
     private void GeneratePlatformRanges()
     {
         wPosRange = Enumerable.Range(0, 359).Select(i => (float)i).ToArray();
-        wVelRange = Enumerable.Range(1, 10).Select(i => (float)i * 10f).ToArray();
+        wVelRange = Enumerable.Range(4, 12).Select(i => (float)i * 10f).ToArray();
         wSizeRange = Enumerable.Range(3, 30).Select(i => (float)i*10f).ToArray();
     }
 
@@ -48,7 +48,7 @@ public class LevelManager : MonoBehaviour {
 				platform.w_vel *= -1f;
 
             platform.r_pos = 2f * (float)(p + 1);
-            platform.r_vel = -1f;
+            platform.r_vel = -0.5f;
             clockwise = !clockwise;
 
 			instance.transform.SetParent (levelHolder);

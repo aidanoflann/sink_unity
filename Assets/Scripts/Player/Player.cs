@@ -19,10 +19,10 @@ public class Player : DynamicObject {
 
 	public Player() {
 		//static attributes
-		size = 0.3f;
+		size = 0.5f;
 
 		//dynamic attributes
-		r_pos = 20;
+		r_pos = 10;
 		r_vel = 0f;
 		w_pos = 0f;
 		w_vel = 0f;
