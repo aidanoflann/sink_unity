@@ -1,11 +1,14 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class LevelManager : MonoBehaviour {
 
 	// prepare the player and platform prefabs
 	public GameObject playerPrefab;
 	public GameObject platformPrefab;
+
+    // cached platforms
+    private List<GameObject> platformList;
 
 	// this is used to child all of the gameObjects for better control/organisation in the inspector.
 	private Transform levelHolder;
@@ -33,7 +36,8 @@ public class LevelManager : MonoBehaviour {
 			clockwise = !clockwise;
 
 			instance.transform.SetParent (levelHolder);
-		}
+            platformList.Add(instance);
+        }
 	}
 
 	private void SpawnPlayer()
@@ -46,7 +50,24 @@ public class LevelManager : MonoBehaviour {
 	public void SetupScene(int numPlatforms)
 	{
 		levelHolder = new GameObject ("Level").transform;
-		SpawnPlatforms (numPlatforms);
+        platformList = new List<GameObject>(numPlatforms);
+
+        SpawnPlatforms (numPlatforms);
 		SpawnPlayer ();
 	}
+
+    public void Update()
+    {
+        // despawn platforms as required
+        for (int i = 0; i < platformList.Count; i++)
+        {
+            GameObject platformObject = platformList[i];
+            Platform platform = platformObject.GetComponent<Platform>();
+            if (platform.r_pos <= 0)
+            {
+                Destroy(platformObject);
+                platformList.Remove(platformObject);
+            }
+        }
+    }
 }
