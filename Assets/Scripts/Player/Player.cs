@@ -24,8 +24,8 @@ public class Player : DynamicObject {
 		size = 0.5f;
 
 		//dynamic attributes
-		r_pos = 10;
-		r_vel = 0f;
+		r_pos = 100;
+		r_vel = -10f;
 		w_pos = 90f;
 		w_vel = 0f;
 
@@ -143,4 +143,12 @@ public class Player : DynamicObject {
 		r_vel = 14;
 		w_vel = 0;
 	}
+
+    public bool IsLanded
+    {
+        get
+        {
+            return currentState == state.landed;
+        }
+    }
 }

@@ -22,11 +22,17 @@ public class LevelManager : MonoBehaviour {
     private float[] wSizeRange;
 
     //level status
-    public bool levelNeedsRestart;
+    public enum state
+    {
+        needsRestart = 0,
+        starting = 1,
+        main = 2,
+        paused = 3
+    }
+    public state currentState;
 
     private void GeneratePlatformRanges()
     {
-        wPosRange = Enumerable.Range(0, 359).Select(i => (float)i).ToArray();
         wVelRange = Enumerable.Range(4, 12).Select(i => (float)i * 10f).ToArray();
         wSizeRange = Enumerable.Range(3, 30).Select(i => (float)i*10f).ToArray();
     }
@@ -43,20 +49,21 @@ public class LevelManager : MonoBehaviour {
 			Platform platform = instance.GetComponent<Platform> ();
 
             // TODO: Find a way to get these into an init function - doing so as normal changes the values of the prefab, not the instance
-            if (p == 0)
-            {
-                platform.w_size = 360f;
-            }
-            else
-            {
-                platform.w_size = wSizeRange[Random.Range(0, wSizeRange.Length - 1)];
-            }
-			platform.w_pos = wPosRange[Random.Range(0, wPosRange.Length - 1)];
             platform.w_vel = wVelRange[Random.Range(0, wVelRange.Length - 1)];
             if (clockwise)
 				platform.w_vel *= 1f;
 			else
 				platform.w_vel *= -1f;
+            if (p == 0)
+            {
+                platform.w_size = 360f;
+                platform.w_pos = 90f;
+            }
+            else
+            {
+                platform.w_size = wSizeRange[Random.Range(0, wSizeRange.Length - 1)];
+                platform.w_pos = 270f;
+            }
 
             platform.r_pos = 2f * (float)(p + 1);
             platform.r_vel = -0.5f;
@@ -84,30 +91,38 @@ public class LevelManager : MonoBehaviour {
 
 	public void SetupScene(int numPlatforms)
 	{
-        levelNeedsRestart = false;
+        currentState = state.starting;
         SpawnPlatforms (numPlatforms);
 		SpawnPlayer ();
 	}
 
     public void Update()
     {
-        // despawn platforms as required
-        for (int i = 0; i < platformList.Count; i++)
-        {
-            GameObject platformObject = platformList[i];
-            Platform platform = platformObject.GetComponent<Platform>();
-            if (platform.r_pos <= 0)
-            {
-                Destroy(platformObject);
-                platformList.Remove(platformObject);
-                i -= 1;
-            }
-        }
-
         // restart game if player has died
         if (player.r_pos <= 0)
         {
-            levelNeedsRestart = true;
+            currentState = state.needsRestart;
+        }
+
+        // check if player has landed for the first time
+        if (currentState == state.starting && player.IsLanded)
+        {
+            currentState = state.main;
+        }
+        else if (currentState == state.main)
+        {
+            for (int i = 0; i < platformList.Count; i++)
+            {
+                GameObject platformObject = platformList[i];
+                Platform platform = platformObject.GetComponent<Platform>();
+                platform.UpdatePosition();
+                if (platform.r_pos <= 0)
+                {
+                    Destroy(platformObject);
+                    platformList.Remove(platformObject);
+                    i -= 1;
+                }
+            }
         }
     }
 

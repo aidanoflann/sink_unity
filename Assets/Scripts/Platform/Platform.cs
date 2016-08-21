@@ -42,7 +42,7 @@ public class Platform : DynamicObject {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	public void UpdatePosition () {
 		// update position in polar coordinates
 		float deltaTime = Time.deltaTime;
 
