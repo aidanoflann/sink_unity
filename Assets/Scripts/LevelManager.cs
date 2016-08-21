@@ -10,6 +10,7 @@ public class LevelManager : MonoBehaviour {
 
     // cached GameObjects
     private List<GameObject> platformList;
+    private List<Platform> platforms;
     private GameObject playerObject;
     private Player player;
 
@@ -72,6 +73,7 @@ public class LevelManager : MonoBehaviour {
 
 			instance.transform.SetParent (levelHolder);
             platformList.Add(instance);
+            platforms.Add(platform);
         }
 	}
 
@@ -87,6 +89,7 @@ public class LevelManager : MonoBehaviour {
     {
         levelHolder = new GameObject("Level").transform;
         platformList = new List<GameObject>();
+        platforms = new List<Platform>();
         GeneratePlatformRanges();
     }
 
@@ -100,7 +103,8 @@ public class LevelManager : MonoBehaviour {
     public void Update()
     {
         // restart game if player has died
-        if (player.r_pos <= 0)
+        player.UpdatePosition(Input.GetKeyDown("space"), platforms);
+        if (player.RPos <= 0)
         {
             currentState = state.needsRestart;
         }
@@ -120,7 +124,9 @@ public class LevelManager : MonoBehaviour {
                 if (platform.r_pos <= 0)
                 {
                     Destroy(platformObject);
+                    Destroy(platform);
                     platformList.Remove(platformObject);
+                    platforms.Remove(platform);
                     i -= 1;
                 }
             }
@@ -136,6 +142,7 @@ public class LevelManager : MonoBehaviour {
             Destroy(platformObject);
         }
         platformList.Clear();
+        platforms.Clear();
         Destroy(playerObject);
     }
 }

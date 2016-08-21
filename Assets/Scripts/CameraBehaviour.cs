@@ -1,26 +1,25 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class CameraBehaviour : MonoBehaviour {
 
-	private Camera camera;
+	private Camera cameraObject;
 	private Player player;
 
 	// Use this for initialization
 	void Start () {
-		camera = Camera.main;
+		cameraObject = Camera.main;
         FindPlayer();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        Vector3 newPosition = camera.transform.position;
+        Vector3 newPosition = cameraObject.transform.position;
 
 		newPosition.x = player.transform.position.x * 0.67f;
 		newPosition.y = player.transform.position.y * 0.67f;
-        camera.transform.position = newPosition;
+        cameraObject.transform.position = newPosition;
 
-        camera.orthographicSize = 5f * Mathf.Max(0.001f, Mathf.Sqrt(Mathf.Abs(player.r_pos)));
+        cameraObject.orthographicSize = 5f * Mathf.Max(0.001f, Mathf.Sqrt(Mathf.Abs(player.RPos)));
     }
 
     public void FindPlayer()

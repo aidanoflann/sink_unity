@@ -1,14 +1,15 @@
 ﻿using UnityEngine;
 using System.Linq;
+using System.Collections.Generic;
 
 public class Player : DynamicObject {
 
 	private float size;
-	public float r_pos;
+	private float r_pos;
 	private float r_vel;
 	private float w_pos;
 	private float w_vel;
-	private bool[] abovePlatform;
+	private List<bool> abovePlatform;
 	private int platformIndex;
 	private enum state
 	{
@@ -53,15 +54,15 @@ public class Player : DynamicObject {
 
 	}
 
-	void Update() {
+	public void UpdatePosition(bool needsToJump, List<Platform> platforms) {
 		// update position in polar coordinates
 		float deltaTime = Time.deltaTime;
 
         // collisions
         if (currentState == state.midair)
         {
-            platformIndex = CheckPlatformCollisions();
-            applyCollisions(platformIndex);
+            platformIndex = CheckPlatformCollisions(platforms);
+            applyCollisions(platformIndex, platforms);
         }
         else
         {
@@ -81,7 +82,7 @@ public class Player : DynamicObject {
 		}
 
 		// inputs
-		if (Input.GetKeyDown ("space")) {
+		if (needsToJump) {
 			jump ();
 		}
 		w_pos = (w_pos + w_vel * deltaTime) % 360f;
@@ -89,23 +90,28 @@ public class Player : DynamicObject {
 		updateTransform (r_pos, w_pos);
 	}
 
-	private int CheckPlatformCollisions()
+	private int CheckPlatformCollisions(List<Platform> platforms)
 	{
 		// index of platform the player is colliding with
 		int collisionIndex = -1;
 
 		// generate array of bools to compare with last tick.
-		Platform[] platforms = (Platform[])GameObject.FindObjectsOfType(typeof(Platform));
-		bool[] abovePlatformNew = new bool[platforms.Length];
+		List<bool> abovePlatformNew = new List<bool>();
+
+        // trim abovePlatform to the same length as platforms (i.e. one has despawned)
+        if (abovePlatform != null && abovePlatform.Count != platforms.Count)
+        {
+            abovePlatform.RemoveAt(0);
+        }
 
 		// iterate through platforms, update array and check if entry has changed
-		for (int platformIndex = 0; platformIndex < platforms.Length; platformIndex++) {
+		for (int platformIndex = 0; platformIndex < platforms.Count; platformIndex++) {
 			if (abovePlatform == null || abovePlatform [platformIndex]) {
 				//check for colliding from above
-				abovePlatformNew [platformIndex] = Mathf.Abs (r_pos - size * 0.5f) >= (platforms [platformIndex].r_pos + platforms[platformIndex].r_size * 0.5f);
+				abovePlatformNew.Add(Mathf.Abs (r_pos - size * 0.5f) >= (platforms [platformIndex].r_pos + platforms[platformIndex].r_size * 0.5f));
 			} else {
 				//check for colliding from below
-				abovePlatformNew [platformIndex] = Mathf.Abs (r_pos + size * 0.5f) >= (platforms [platformIndex].r_pos - platforms[platformIndex].r_size * 0.5f);
+				abovePlatformNew.Add(Mathf.Abs (r_pos + size * 0.5f) >= (platforms [platformIndex].r_pos - platforms[platformIndex].r_size * 0.5f));
 			}
 			if (abovePlatform != null && abovePlatformNew [platformIndex] != abovePlatform [platformIndex]) {
 				// check if outside of the angular range of the platform
@@ -122,10 +128,10 @@ public class Player : DynamicObject {
 		return collisionIndex;
 	}
 
-	private void applyCollisions (int collisionIndex)
+	private void applyCollisions (int collisionIndex, List<Platform> platforms)
 	{
 		if (collisionIndex != -1) {
-			platform = (Platform)GameObject.FindObjectsOfType (typeof(Platform)) [collisionIndex];
+			platform = platforms[collisionIndex];
 
             r_vel = 0;
 			//check if collision was from above or below
@@ -159,6 +165,14 @@ public class Player : DynamicObject {
         get
         {
             return w_pos;
+        }
+    }
+
+    public float RPos
+    {
+        get
+        {
+            return r_pos;
         }
     }
 }
