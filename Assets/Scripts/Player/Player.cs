@@ -17,7 +17,9 @@ public class Player : DynamicObject {
 	}
 	private state currentState;
 
-	public Player() {
+    private Platform platform;
+
+    public Player() {
 		//static attributes
 		size = 0.5f;
 
@@ -59,13 +61,20 @@ public class Player : DynamicObject {
             platformIndex = CheckPlatformCollisions();
             applyCollisions(platformIndex);
         }
+        else
+        {
+            // check that platform hasn't despawned
+            if (platform == null)
+            {
+                currentState = state.midair;
+            }
+        }
 
         // states
         if (currentState == state.midair) {
 			r_vel -= Globals.gravity * deltaTime;
 			r_pos += r_vel * deltaTime;
 		} else {
-			Platform platform = (Platform)GameObject.FindObjectsOfType (typeof(Platform)) [platformIndex];
 			r_pos = platform.r_pos + size * 0.51f + platform.r_size * 0.5f;
 		}
 
@@ -114,9 +123,9 @@ public class Player : DynamicObject {
 	private void applyCollisions (int collisionIndex)
 	{
 		if (collisionIndex != -1) {
-			Platform platform = (Platform)GameObject.FindObjectsOfType (typeof(Platform)) [collisionIndex];
+			platform = (Platform)GameObject.FindObjectsOfType (typeof(Platform)) [collisionIndex];
 
-			r_vel = 0;
+            r_vel = 0;
 			//check if collision was from above or below
 			if (abovePlatform [collisionIndex]) {
 				w_vel = platform.w_vel;
