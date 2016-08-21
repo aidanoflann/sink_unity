@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Linq;
 
 public class Player : DynamicObject {
 
@@ -19,14 +19,16 @@ public class Player : DynamicObject {
 
     private Platform platform;
 
-    public Player() {
+    void Awake() {
 		//static attributes
 		size = 0.5f;
 
-		//dynamic attributes
-		r_pos = 100;
-		r_vel = -10f;
-		w_pos = 90f;
+        //dynamic attributes
+        float[] wPosRange = Enumerable.Range(0, 359).Select(i => (float)i).ToArray();
+        w_pos = wPosRange[Random.Range(0, wPosRange.Length - 1)];
+
+        r_pos = 100;
+		r_vel = 0f;
 		w_vel = 0f;
 
 		currentState = state.midair;
@@ -149,6 +151,14 @@ public class Player : DynamicObject {
         get
         {
             return currentState == state.landed;
+        }
+    }
+    
+    public float WPos
+    {
+        get
+        {
+            return w_pos;
         }
     }
 }

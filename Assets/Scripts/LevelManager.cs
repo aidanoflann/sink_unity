@@ -37,7 +37,7 @@ public class LevelManager : MonoBehaviour {
         wSizeRange = Enumerable.Range(3, 30).Select(i => (float)i*10f).ToArray();
     }
 
-	private void SpawnPlatforms(int numPlatforms)
+	private void SpawnPlatforms(int numPlatforms, float playerPosition)
 	{
 		bool clockwise = true;
 		for (int p=0; p < numPlatforms; p++) {
@@ -49,6 +49,7 @@ public class LevelManager : MonoBehaviour {
 			Platform platform = instance.GetComponent<Platform> ();
 
             // TODO: Find a way to get these into an init function - doing so as normal changes the values of the prefab, not the instance
+            // TODO: Seems to be that public attributes are assumed to be accessible in-editor only - use properties where required.
             platform.w_vel = wVelRange[Random.Range(0, wVelRange.Length - 1)];
             if (clockwise)
 				platform.w_vel *= 1f;
@@ -62,7 +63,7 @@ public class LevelManager : MonoBehaviour {
             else
             {
                 platform.w_size = wSizeRange[Random.Range(0, wSizeRange.Length - 1)];
-                platform.w_pos = 270f;
+                platform.w_pos = playerPosition + 180f;
             }
 
             platform.r_pos = 2f * (float)(p + 1);
@@ -92,8 +93,8 @@ public class LevelManager : MonoBehaviour {
 	public void SetupScene(int numPlatforms)
 	{
         currentState = state.starting;
-        SpawnPlatforms (numPlatforms);
-		SpawnPlayer ();
+        SpawnPlayer();
+        SpawnPlatforms (numPlatforms, player.WPos);
 	}
 
     public void Update()
