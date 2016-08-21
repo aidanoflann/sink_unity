@@ -43,7 +43,14 @@ public class LevelManager : MonoBehaviour {
 			Platform platform = instance.GetComponent<Platform> ();
 
             // TODO: Find a way to get these into an init function - doing so as normal changes the values of the prefab, not the instance
-            platform.w_size = wSizeRange[Random.Range(0, wSizeRange.Length - 1)];
+            if (p == 0)
+            {
+                platform.w_size = 360f;
+            }
+            else
+            {
+                platform.w_size = wSizeRange[Random.Range(0, wSizeRange.Length - 1)];
+            }
 			platform.w_pos = wPosRange[Random.Range(0, wPosRange.Length - 1)];
             platform.w_vel = wVelRange[Random.Range(0, wVelRange.Length - 1)];
             if (clockwise)

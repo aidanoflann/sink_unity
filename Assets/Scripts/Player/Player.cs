@@ -53,8 +53,15 @@ public class Player : DynamicObject {
 		// update position in polar coordinates
 		float deltaTime = Time.deltaTime;
 
-		// states
-		if (currentState == state.midair) {
+        // collisions
+        if (currentState == state.midair)
+        {
+            platformIndex = CheckPlatformCollisions();
+            applyCollisions(platformIndex);
+        }
+
+        // states
+        if (currentState == state.midair) {
 			r_vel -= Globals.gravity * deltaTime;
 			r_pos += r_vel * deltaTime;
 		} else {
@@ -68,16 +75,10 @@ public class Player : DynamicObject {
 		}
 		w_pos = (w_pos + w_vel * deltaTime) % 360f;
 
-		// collisions
-		if (currentState == state.midair) {
-			platformIndex = checkPlatformCollisions ();
-			applyCollisions (platformIndex);
-		}
-
 		updateTransform (r_pos, w_pos);
 	}
 
-	private int checkPlatformCollisions()
+	private int CheckPlatformCollisions()
 	{
 		// index of platform the player is colliding with
 		int collisionIndex = -1;
