@@ -16,12 +16,12 @@ public class CameraBehaviour : MonoBehaviour {
 	void Update () {
         Vector3 newPosition = camera.transform.position;
 
-		camera.orthographicSize += 0.0f;
 		newPosition.x = player.transform.position.x * 0.67f;
 		newPosition.y = player.transform.position.y * 0.67f;
+        camera.transform.position = newPosition;
 
-		camera.transform.position = newPosition;
-	}
+        camera.orthographicSize = 5f * Mathf.Max(0.001f, Mathf.Sqrt(Mathf.Abs(player.r_pos)));
+    }
 
     public void FindPlayer()
     {
