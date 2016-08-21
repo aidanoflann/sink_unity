@@ -31,6 +31,7 @@ public class LevelManager : MonoBehaviour {
         paused = 3
     }
     public state currentState;
+    private state prepausedState;
 
     private void GeneratePlatformRanges()
     {
@@ -102,32 +103,35 @@ public class LevelManager : MonoBehaviour {
 
     public void Update()
     {
-        // restart game if player has died
-        player.UpdatePosition(Input.GetKeyDown("space"), platforms);
-        if (player.RPos <= 0)
+        if (currentState != state.paused)
         {
-            currentState = state.needsRestart;
-        }
-
-        // check if player has landed for the first time
-        if (currentState == state.starting && player.IsLanded)
-        {
-            currentState = state.main;
-        }
-        else if (currentState == state.main)
-        {
-            for (int i = 0; i < platformList.Count; i++)
+            // restart game if player has died
+            player.UpdatePosition(Input.GetKeyDown("space"), platforms);
+            if (player.RPos <= 0)
             {
-                GameObject platformObject = platformList[i];
-                Platform platform = platformObject.GetComponent<Platform>();
-                platform.UpdatePosition();
-                if (platform.r_pos <= 0)
+                currentState = state.needsRestart;
+            }
+
+            // check if player has landed for the first time
+            if (currentState == state.starting && player.IsLanded)
+            {
+                currentState = state.main;
+            }
+            else if (currentState == state.main)
+            {
+                for (int i = 0; i < platformList.Count; i++)
                 {
-                    Destroy(platformObject);
-                    Destroy(platform);
-                    platformList.Remove(platformObject);
-                    platforms.Remove(platform);
-                    i -= 1;
+                    GameObject platformObject = platformList[i];
+                    Platform platform = platformObject.GetComponent<Platform>();
+                    platform.UpdatePosition();
+                    if (platform.r_pos <= 0)
+                    {
+                        Destroy(platformObject);
+                        Destroy(platform);
+                        platformList.Remove(platformObject);
+                        platforms.Remove(platform);
+                        i -= 1;
+                    }
                 }
             }
         }
@@ -144,5 +148,18 @@ public class LevelManager : MonoBehaviour {
         platformList.Clear();
         platforms.Clear();
         Destroy(playerObject);
+    }
+
+    public void Pause()
+    {
+        if (currentState != state.paused)
+        {
+            prepausedState = currentState;
+            currentState = state.paused;
+        }
+        else
+        {
+            currentState = prepausedState;
+        }
     }
 }

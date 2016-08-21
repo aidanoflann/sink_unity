@@ -40,6 +40,11 @@ public class GameManager : MonoBehaviour {
             Restart();
         }
 
+        if (Input.GetKeyDown("x"))
+        {
+            levelManager.Pause();
+        }
+
         deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
     }
 
