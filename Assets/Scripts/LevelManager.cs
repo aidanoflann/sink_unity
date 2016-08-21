@@ -8,8 +8,9 @@ public class LevelManager : MonoBehaviour {
 	public GameObject playerPrefab;
 	public GameObject platformPrefab;
 
-    // cached platforms
+    // cached GameObjects
     private List<GameObject> platformList;
+    private GameObject player;
 
 	// this is used to child all of the gameObjects for better control/organisation in the inspector.
 	private Transform levelHolder;
@@ -25,7 +26,6 @@ public class LevelManager : MonoBehaviour {
         wVelRange = Enumerable.Range(4, 12).Select(i => (float)i * 10f).ToArray();
         wSizeRange = Enumerable.Range(3, 30).Select(i => (float)i*10f).ToArray();
     }
-
 
 	private void SpawnPlatforms(int numPlatforms)
 	{
@@ -59,16 +59,19 @@ public class LevelManager : MonoBehaviour {
 	private void SpawnPlayer()
 	{
 		GameObject toInstantiate = playerPrefab;
-		GameObject instance = Instantiate (toInstantiate);
-		instance.transform.SetParent (levelHolder);
+		player = Instantiate (toInstantiate);
+        player.transform.SetParent (levelHolder);
 	}
+
+    public void Awake()
+    {
+        levelHolder = new GameObject("Level").transform;
+        platformList = new List<GameObject>();
+        GeneratePlatformRanges();
+    }
 
 	public void SetupScene(int numPlatforms)
 	{
-		levelHolder = new GameObject ("Level").transform;
-        platformList = new List<GameObject>(numPlatforms);
-
-        GeneratePlatformRanges();
         SpawnPlatforms (numPlatforms);
 		SpawnPlayer ();
 	}
@@ -86,5 +89,17 @@ public class LevelManager : MonoBehaviour {
                 platformList.Remove(platformObject);
             }
         }
+    }
+
+    public void Clear()
+    {
+        // clear out all platforms & player
+        for (int i = 0; i < platformList.Count; i++)
+        {
+            GameObject platformObject = platformList[i];
+            Destroy(platformObject);
+        }
+        platformList.Clear();
+        Destroy(player);
     }
 }

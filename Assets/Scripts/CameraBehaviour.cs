@@ -9,12 +9,12 @@ public class CameraBehaviour : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		camera = Camera.main;
-		player = (Player)GameObject.FindObjectOfType (typeof(Player));
+        FindPlayer();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		Vector3 newPosition = camera.transform.position;
+        Vector3 newPosition = camera.transform.position;
 
 		camera.orthographicSize += 0.0f;
 		newPosition.x = player.transform.position.x * 0.67f;
@@ -22,4 +22,9 @@ public class CameraBehaviour : MonoBehaviour {
 
 		camera.transform.position = newPosition;
 	}
+
+    public void FindPlayer()
+    {
+        this.player = (Player)GameObject.FindObjectOfType(typeof(Player));
+    }
 }

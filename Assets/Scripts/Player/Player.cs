@@ -24,7 +24,7 @@ public class Player : DynamicObject {
 		//dynamic attributes
 		r_pos = 10;
 		r_vel = 0f;
-		w_pos = 0f;
+		w_pos = 90f;
 		w_vel = 0f;
 
 		currentState = state.midair;

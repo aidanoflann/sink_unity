@@ -3,10 +3,14 @@ using System.Collections;
 
 public class GameManager : MonoBehaviour {
 
-	public LevelManager levelManager;
+	private LevelManager levelManager;
+    private CameraBehaviour cameraBehaviour;
+    private Camera camera;
 
 	void Awake () {
 		levelManager = GetComponent<LevelManager> ();
+        Camera camera = GameObject.FindObjectOfType<Camera>();
+        CameraBehaviour cameraBehaviour = camera.GetComponent<CameraBehaviour>();
 		InitGame ();
 	}
 
@@ -15,12 +19,26 @@ public class GameManager : MonoBehaviour {
 		levelManager.SetupScene (10);
 	}
 
+    void Restart()
+    {
+        levelManager.Clear();
+        Camera camera = GameObject.FindObjectOfType<Camera>();
+        CameraBehaviour cameraBehaviour = camera.GetComponent<CameraBehaviour>();
+        InitGame();
+        cameraBehaviour.FindPlayer();
+    }
+
 
     // quick FPS script shamelessly copied from http://wiki.unity3d.com/index.php?title=FramesPerSecond
     float deltaTime = 0.0f;
 
     void Update()
     {
+        if (Input.GetKeyDown("r"))
+        {
+            Restart();
+        }
+
         deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
     }
 
