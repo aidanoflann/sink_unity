@@ -10,7 +10,8 @@ public class LevelManager : MonoBehaviour {
 
     // cached GameObjects
     private List<GameObject> platformList;
-    private GameObject player;
+    private GameObject playerObject;
+    private Player player;
 
 	// this is used to child all of the gameObjects for better control/organisation in the inspector.
 	private Transform levelHolder;
@@ -19,6 +20,9 @@ public class LevelManager : MonoBehaviour {
     private float[] wPosRange;
     private float[] wVelRange;
     private float[] wSizeRange;
+
+    //level status
+    public bool levelNeedsRestart;
 
     private void GeneratePlatformRanges()
     {
@@ -59,9 +63,10 @@ public class LevelManager : MonoBehaviour {
 	private void SpawnPlayer()
 	{
 		GameObject toInstantiate = playerPrefab;
-		player = Instantiate (toInstantiate);
-        player.transform.SetParent (levelHolder);
-	}
+		playerObject = Instantiate (toInstantiate);
+        playerObject.transform.SetParent (levelHolder);
+        player = playerObject.GetComponent<Player>();
+    }
 
     public void Awake()
     {
@@ -72,6 +77,7 @@ public class LevelManager : MonoBehaviour {
 
 	public void SetupScene(int numPlatforms)
 	{
+        levelNeedsRestart = false;
         SpawnPlatforms (numPlatforms);
 		SpawnPlayer ();
 	}
@@ -87,7 +93,14 @@ public class LevelManager : MonoBehaviour {
             {
                 Destroy(platformObject);
                 platformList.Remove(platformObject);
+                i -= 1;
             }
+        }
+
+        // restart game if player has died
+        if (player.r_pos <= 0)
+        {
+            levelNeedsRestart = true;
         }
     }
 
@@ -100,6 +113,6 @@ public class LevelManager : MonoBehaviour {
             Destroy(platformObject);
         }
         platformList.Clear();
-        Destroy(player);
+        Destroy(playerObject);
     }
 }

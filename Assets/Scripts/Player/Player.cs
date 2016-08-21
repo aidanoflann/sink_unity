@@ -4,7 +4,7 @@ using System.Collections;
 public class Player : DynamicObject {
 
 	private float size;
-	private float r_pos;
+	public float r_pos;
 	private float r_vel;
 	private float w_pos;
 	private float w_vel;

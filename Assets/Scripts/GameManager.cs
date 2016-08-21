@@ -5,26 +5,26 @@ public class GameManager : MonoBehaviour {
 
 	private LevelManager levelManager;
     private CameraBehaviour cameraBehaviour;
-    private Camera camera;
+    private Camera mainCamera;
 
 	void Awake () {
 		levelManager = GetComponent<LevelManager> ();
-        Camera camera = GameObject.FindObjectOfType<Camera>();
-        CameraBehaviour cameraBehaviour = camera.GetComponent<CameraBehaviour>();
 		InitGame ();
 	}
 
 	void InitGame()
-	{
-		levelManager.SetupScene (10);
+    {
+        mainCamera = GameObject.FindObjectOfType<Camera>();
+        cameraBehaviour = mainCamera.GetComponent<CameraBehaviour>();
+        levelManager.SetupScene (10);
 	}
 
     void Restart()
     {
+        // wipe level manager and restart the game
         levelManager.Clear();
-        Camera camera = GameObject.FindObjectOfType<Camera>();
-        CameraBehaviour cameraBehaviour = camera.GetComponent<CameraBehaviour>();
         InitGame();
+        // reassign the camera's player
         cameraBehaviour.FindPlayer();
     }
 
@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour {
 
     void Update()
     {
-        if (Input.GetKeyDown("r"))
+        if (Input.GetKeyDown("r") || levelManager.levelNeedsRestart)
         {
             Restart();
         }
