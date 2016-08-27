@@ -146,11 +146,15 @@ public class Player : DynamicObject {
 		}
 	}
 
-	private void jump() {
-		currentState = state.midair;
-		r_vel = 14;
-		w_vel = 0;
-	}
+    private void jump()
+    {
+        if (currentState != state.midair)
+        {
+            currentState = state.midair;
+            r_vel = 14;
+            w_vel = 0;
+        }
+    }
 
     public bool IsLanded
     {
