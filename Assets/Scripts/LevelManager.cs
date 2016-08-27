@@ -35,7 +35,7 @@ public class LevelManager : MonoBehaviour {
 
     private void GeneratePlatformRanges()
     {
-        wVelRange = Enumerable.Range(4, 12).Select(i => (float)i * 10f).ToArray();
+        wVelRange = Enumerable.Range(6, 12).Select(i => (float)i * 10f).ToArray();
         wSizeRange = Enumerable.Range(3, 30).Select(i => (float)i*10f).ToArray();
     }
 
@@ -59,15 +59,14 @@ public class LevelManager : MonoBehaviour {
 				platform.w_vel *= -1f;
             if (p == 0)
             {
-                platform.w_size = 360f;
-                platform.w_pos = 90f;
+                platform.w_pos = playerPosition;
             }
             else
             {
-                platform.w_size = wSizeRange[Random.Range(0, wSizeRange.Length - 1)];
                 platform.w_pos = playerPosition + 180f;
             }
 
+            platform.w_size = wSizeRange[Random.Range(0, wSizeRange.Length - 1)];
             platform.r_pos = 2f * (float)(p + 1);
             platform.r_vel = -0.5f;
             clockwise = !clockwise;
