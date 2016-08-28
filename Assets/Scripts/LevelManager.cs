@@ -33,6 +33,7 @@ public class LevelManager : MonoBehaviour {
     public state currentState;
     private state prepausedState;
     private int numPlatforms;
+    CameraBehaviour cameraBehaviour;
 
     private void GeneratePlatformRanges()
     {
@@ -94,16 +95,25 @@ public class LevelManager : MonoBehaviour {
         GeneratePlatformRanges();
     }
 
-	public void SetupScene(int numPlatforms = -1)
+	public void SetupScene(int numPlatforms = -1, CameraBehaviour cameraBehaviour = null)
 	{
         if (numPlatforms != -1)
         {
             this.numPlatforms = numPlatforms;
         }
+
+        if (cameraBehaviour != null)
+        {
+            this.cameraBehaviour = cameraBehaviour;
+        }
+
         currentState = state.starting;
         SpawnPlayer();
         SpawnPlatforms (this.numPlatforms, player.WPos);
-	}
+        
+        // reassign the camera's player
+        this.cameraBehaviour.FindPlayer();
+    }
 
     public void Update()
     {

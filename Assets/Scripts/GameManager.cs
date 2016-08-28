@@ -12,17 +12,8 @@ public class GameManager : MonoBehaviour {
         mainCamera = GameObject.FindObjectOfType<Camera>();
         cameraBehaviour = mainCamera.GetComponent<CameraBehaviour>();
         levelManager = GetComponent<LevelManager> ();
-        levelManager.SetupScene(10);
+        levelManager.SetupScene(10, cameraBehaviour);
 	}
-
-    void Restart()
-    {
-        // wipe level manager and restart the game
-        levelManager.Restart();
-        // reassign the camera's player
-        cameraBehaviour.FindPlayer();
-    }
-
 
     // quick FPS script shamelessly copied from http://wiki.unity3d.com/index.php?title=FramesPerSecond
     float deltaTime = 0.0f;
@@ -31,7 +22,7 @@ public class GameManager : MonoBehaviour {
     {
         if (Input.GetKeyDown("r") || levelManager.currentState == LevelManager.state.needsRestart)
         {
-            Restart();
+            this.levelManager.Restart();
         }
 
         if (Input.GetKeyDown("x"))
