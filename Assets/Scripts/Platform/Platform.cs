@@ -40,13 +40,13 @@ public class Platform : DynamicObject {
 
 		return points;
 	}
-	
-	// Update is called once per frame
-	public void UpdatePosition () {
+
+    // Update is called once per frame
+    public void UpdatePosition( float rSpeedMultiplier = 1f ) {
 		// update position in polar coordinates
 		float deltaTime = Time.deltaTime;
 
-		r_pos += r_vel * deltaTime;
+		r_pos += r_vel * rSpeedMultiplier * deltaTime;
 		w_pos = ((w_pos + w_vel * deltaTime) + 360f) % 360f;
 
 		// update annulus based on new points

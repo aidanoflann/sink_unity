@@ -12,7 +12,7 @@ public class CameraBehaviour : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	public void FollowPlayer () {
         Vector3 newPosition = cameraObject.transform.position;
 
 		newPosition.x = player.transform.position.x * 0.67f;
@@ -20,6 +20,11 @@ public class CameraBehaviour : MonoBehaviour {
         cameraObject.transform.position = newPosition;
 
         cameraObject.orthographicSize = 5f * Mathf.Max(0.001f, Mathf.Sqrt(Mathf.Abs(player.RPos)));
+    }
+
+    public void EndGame()
+    {
+        cameraObject.orthographicSize = 7f;
     }
 
     public void FindPlayer()

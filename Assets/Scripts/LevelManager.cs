@@ -16,7 +16,8 @@ public class LevelManager : MonoBehaviour {
         needsRestart = 0,
         starting = 1,
         main = 2,
-        paused = 3
+        paused = 3,
+        ending = 4
     }
     public state currentState;
 
@@ -38,6 +39,7 @@ public class LevelManager : MonoBehaviour {
     private float[] wVelRange;
     private float[] wSizeRange;
 
+    private float platformRSpeedMultiplier;
 
     private state prepausedState;
     private int numPlatforms;
@@ -114,7 +116,8 @@ public class LevelManager : MonoBehaviour {
     #region [Public methods]
     
     public void SetupScene(int numPlatforms = -1, CameraBehaviour cameraBehaviour = null)
-	{
+    {
+        platformRSpeedMultiplier = 1f;
         if (numPlatforms != -1)
         {
             this.numPlatforms = numPlatforms;
@@ -167,11 +170,19 @@ public class LevelManager : MonoBehaviour {
     {
         if (currentState != state.paused)
         {
-            // restart game if player has died
-            player.UpdatePosition(Input.GetKeyDown("space"), platforms);
-            if (player.RPos <= 0)
+            if (currentState != state.ending)
             {
-                currentState = state.needsRestart;
+                player.UpdatePosition(Input.GetKeyDown("space"), platforms);
+                cameraBehaviour.FollowPlayer();
+            }
+
+            // restart game if player has died
+            if (player.RPos <= 0 && currentState != state.ending)
+            {
+                currentState = state.ending;
+                platformRSpeedMultiplier = 24f;
+                cameraBehaviour.EndGame();
+                Destroy(playerObject);
             }
 
             // check if player has landed for the first time
@@ -179,13 +190,13 @@ public class LevelManager : MonoBehaviour {
             {
                 currentState = state.main;
             }
-            else if (currentState == state.main)
+            else if (currentState == state.main || currentState == state.ending)
             {
                 for (int i = 0; i < platformList.Count; i++)
                 {
                     GameObject platformObject = platformList[i];
                     Platform platform = platformObject.GetComponent<Platform>();
-                    platform.UpdatePosition();
+                    platform.UpdatePosition(platformRSpeedMultiplier);
                     if (platform.r_pos <= 0)
                     {
                         Destroy(platformObject);
@@ -194,6 +205,11 @@ public class LevelManager : MonoBehaviour {
                         platforms.Remove(platform);
                         i -= 1;
                     }
+                }
+
+                if (platformList.Count == 0)
+                {
+                    this.Restart();
                 }
             }
         }
