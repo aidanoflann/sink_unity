@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Platform : DynamicObject {
 
@@ -10,6 +11,8 @@ public class Platform : DynamicObject {
 	public float r_vel { get; set;}
 	public float w_pos { get; set;}
 	public float w_vel { get; set;}
+
+    private Color oldColour;
 
 	// Use this for initialization
 	void Start () {
@@ -40,8 +43,7 @@ public class Platform : DynamicObject {
 
 		return points;
 	}
-
-    // Update is called once per frame
+    
     public void UpdatePosition( float rSpeedMultiplier = 1f ) {
 		// update position in polar coordinates
 		float deltaTime = Time.deltaTime;
@@ -53,4 +55,15 @@ public class Platform : DynamicObject {
 		Vector2[] points = CalculateAnnulusPoints ();
 		updateMesh (points);
 	}
+
+    public void SetColour(Color colour)
+    {
+        this.oldColour = this.meshRenderer.material.GetColor("_Color");
+        this.meshRenderer.material.SetColor("_Color", colour);
+    }
+
+    public void ResetColour()
+    {
+        this.meshRenderer.material.SetColor("_Color", this.oldColour);
+    }
 }

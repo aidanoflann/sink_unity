@@ -137,6 +137,7 @@ public class Player : DynamicObject {
 	{
 		if (collisionIndex != -1) {
             this.platform = platforms[collisionIndex];
+            this.platform.SetColour(this.meshRenderer.material.GetColor("_Color"));
 
             r_vel = 0;
 			//check if collision was from above or below
@@ -158,6 +159,7 @@ public class Player : DynamicObject {
             currentState = state.midair;
             r_vel = 14 * jumpSpeedModifier;
             w_vel = 0;
+            this.platform.ResetColour();
         }
     }
 

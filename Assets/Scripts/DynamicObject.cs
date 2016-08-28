@@ -4,14 +4,15 @@ using System.Collections;
 public class DynamicObject : MonoBehaviour {
     
     protected MeshFilter meshFilter;
+    protected MeshRenderer meshRenderer;
 
     protected void createMesh(Vector2[] points, Material material)
 	{
 		int pointCount = points.Length;
 
 		// add a MeshRenderer (cannot share these between prefab clones)
-		MeshRenderer mr = gameObject.AddComponent<MeshRenderer>();
-		mr.material = material;
+		this.meshRenderer = gameObject.AddComponent<MeshRenderer>();
+        this.meshRenderer.material = material;
 
 		this.meshFilter = GetComponent<MeshFilter>();
 		Mesh mesh = this.meshFilter.mesh;
