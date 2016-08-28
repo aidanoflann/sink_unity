@@ -32,6 +32,7 @@ public class LevelManager : MonoBehaviour {
     }
     public state currentState;
     private state prepausedState;
+    private int numPlatforms;
 
     private void GeneratePlatformRanges()
     {
@@ -93,11 +94,15 @@ public class LevelManager : MonoBehaviour {
         GeneratePlatformRanges();
     }
 
-	public void SetupScene(int numPlatforms)
+	public void SetupScene(int numPlatforms = -1)
 	{
+        if (numPlatforms != -1)
+        {
+            this.numPlatforms = numPlatforms;
+        }
         currentState = state.starting;
         SpawnPlayer();
-        SpawnPlatforms (numPlatforms, player.WPos);
+        SpawnPlatforms (this.numPlatforms, player.WPos);
 	}
 
     public void Update()
@@ -147,6 +152,12 @@ public class LevelManager : MonoBehaviour {
         platformList.Clear();
         platforms.Clear();
         Destroy(playerObject);
+    }
+
+    public void Restart()
+    {
+        this.Clear();
+        this.SetupScene();
     }
 
     public void Pause()
