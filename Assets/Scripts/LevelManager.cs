@@ -116,18 +116,9 @@ public class LevelManager : MonoBehaviour {
 
     #region [Public methods]
     
-    public void SetupScene(int numPlatforms = -1, CameraBehaviour cameraBehaviour = null)
+    public void SetupScene()
     {
         platformRSpeedMultiplier = 1f;
-        if (numPlatforms != -1)
-        {
-            this.numPlatforms = numPlatforms;
-        }
-
-        if (cameraBehaviour != null)
-        {
-            this.cameraBehaviour = cameraBehaviour;
-        }
 
         currentState = state.starting;
         SpawnPlayer();
@@ -135,6 +126,16 @@ public class LevelManager : MonoBehaviour {
         
         // reassign the camera's player
         this.cameraBehaviour.FindPlayer();
+    }
+
+    public void SetNumPlatforms(int numPlatforms)
+    {
+        this.numPlatforms = numPlatforms;
+    }
+
+    public void SetCameraBehaviour(CameraBehaviour cameraBehaviour)
+    {
+        this.cameraBehaviour = cameraBehaviour;
     }
 
     public void Restart()
