@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour {
         mainCamera = GameObject.FindObjectOfType<Camera>();
         cameraBehaviour = mainCamera.GetComponent<CameraBehaviour>();
         levelManager = GetComponent<LevelManager> ();
-        levelManager.SetupScene(2, cameraBehaviour);
+        levelManager.SetupScene(10, cameraBehaviour);
 	}
 
     // quick FPS script shamelessly copied from http://wiki.unity3d.com/index.php?title=FramesPerSecond
@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour {
 
     void Update()
     {
-        if (Input.GetKeyDown("r") || levelManager.currentState == LevelManager.state.needsRestart)
+        if (Input.GetKeyDown("r") || levelManager.currentState == LevelManager.state.needsRestart || (Input.GetKeyDown("space") && levelManager.currentState == LevelManager.state.ending))
         {
             this.levelManager.Restart();
         }
