@@ -4,9 +4,25 @@ using System.Linq;
 
 public class LevelManager : MonoBehaviour {
 
-	// prepare the player and platform prefabs
-	public GameObject playerPrefab;
+    #region [Public fields]
+
+    // prepare the player and platform prefabs
+    public GameObject playerPrefab;
 	public GameObject platformPrefab;
+
+    //level status
+    public enum state
+    {
+        needsRestart = 0,
+        starting = 1,
+        main = 2,
+        paused = 3
+    }
+    public state currentState;
+
+    #endregion
+
+    #region [Private fields]
 
     // cached GameObjects
     private List<GameObject> platformList;
@@ -22,19 +38,13 @@ public class LevelManager : MonoBehaviour {
     private float[] wVelRange;
     private float[] wSizeRange;
 
-    //level status
-    public enum state
-    {
-        needsRestart = 0,
-        starting = 1,
-        main = 2,
-        paused = 3
-    }
-    public state currentState;
+
     private state prepausedState;
     private int numPlatforms;
-    CameraBehaviour cameraBehaviour;
+    private CameraBehaviour cameraBehaviour;
+    #endregion
 
+    #region [Private Methods]
     private void GeneratePlatformRanges()
     {
         wVelRange = Enumerable.Range(6, 12).Select(i => (float)i * 10f).ToArray();
@@ -87,15 +97,23 @@ public class LevelManager : MonoBehaviour {
         player = playerObject.GetComponent<Player>();
     }
 
-    public void Awake()
+    private void Clear()
     {
-        levelHolder = new GameObject("Level").transform;
-        platformList = new List<GameObject>();
-        platforms = new List<Platform>();
-        GeneratePlatformRanges();
+        // clear out all platforms & player
+        for (int i = 0; i < platformList.Count; i++)
+        {
+            GameObject platformObject = platformList[i];
+            Destroy(platformObject);
+        }
+        platformList.Clear();
+        platforms.Clear();
+        Destroy(playerObject);
     }
+    #endregion
 
-	public void SetupScene(int numPlatforms = -1, CameraBehaviour cameraBehaviour = null)
+    #region [Public methods]
+    
+    public void SetupScene(int numPlatforms = -1, CameraBehaviour cameraBehaviour = null)
 	{
         if (numPlatforms != -1)
         {
@@ -113,6 +131,36 @@ public class LevelManager : MonoBehaviour {
         
         // reassign the camera's player
         this.cameraBehaviour.FindPlayer();
+    }
+
+    public void Restart()
+    {
+        this.Clear();
+        this.SetupScene();
+    }
+
+    public void Pause()
+    {
+        if (currentState != state.paused)
+        {
+            prepausedState = currentState;
+            currentState = state.paused;
+        }
+        else
+        {
+            currentState = prepausedState;
+        }
+    }
+    #endregion
+
+    #region [Unity methods]
+
+    public void Awake()
+    {
+        levelHolder = new GameObject("Level").transform;
+        platformList = new List<GameObject>();
+        platforms = new List<Platform>();
+        GeneratePlatformRanges();
     }
 
     public void Update()
@@ -150,36 +198,5 @@ public class LevelManager : MonoBehaviour {
             }
         }
     }
-
-    public void Clear()
-    {
-        // clear out all platforms & player
-        for (int i = 0; i < platformList.Count; i++)
-        {
-            GameObject platformObject = platformList[i];
-            Destroy(platformObject);
-        }
-        platformList.Clear();
-        platforms.Clear();
-        Destroy(playerObject);
-    }
-
-    public void Restart()
-    {
-        this.Clear();
-        this.SetupScene();
-    }
-
-    public void Pause()
-    {
-        if (currentState != state.paused)
-        {
-            prepausedState = currentState;
-            currentState = state.paused;
-        }
-        else
-        {
-            currentState = prepausedState;
-        }
-    }
+    #endregion
 }
