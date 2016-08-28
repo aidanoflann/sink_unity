@@ -116,12 +116,18 @@ public class LevelManager : MonoBehaviour {
 
     #region [Public methods]
     
-    public void SetupScene()
+    public void SetupScene(float playerWPos = -1)
     {
         platformRSpeedMultiplier = 1f;
 
         currentState = state.starting;
         SpawnPlayer();
+
+        if (playerWPos != -1)
+        {
+            player.SetWPos(playerWPos);
+        }
+
         SpawnPlatforms (this.numPlatforms, player.WPos);
         
         // reassign the camera's player
@@ -138,10 +144,10 @@ public class LevelManager : MonoBehaviour {
         this.cameraBehaviour = cameraBehaviour;
     }
 
-    public void Restart()
+    public void Restart(float newPlayerWpos = -1)
     {
         this.Clear();
-        this.SetupScene();
+        this.SetupScene(newPlayerWpos);
     }
 
     public void Pause()
@@ -198,7 +204,7 @@ public class LevelManager : MonoBehaviour {
             // restart game if in completing state and player gets over a certain height
             if (currentState == state.completing && player.RPos > 400f)
             {
-                this.Restart();
+                this.Restart(player.WPos + 180f);
             }
 
             // check if player has landed for the first time

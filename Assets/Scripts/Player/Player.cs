@@ -90,6 +90,11 @@ public class Player : DynamicObject {
 		updateTransform (r_pos, w_pos);
 	}
 
+    public void SetWPos(float wPos)
+    {
+        this.w_pos = wPos;
+    }
+
 	private int CheckPlatformCollisions(List<Platform> platforms)
 	{
 		// index of platform the player is colliding with
