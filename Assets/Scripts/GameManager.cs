@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour {
         mainCamera = GameObject.FindObjectOfType<Camera>();
         cameraBehaviour = mainCamera.GetComponent<CameraBehaviour>();
         levelManager = GetComponent<LevelManager> ();
-        levelManager.SetupScene(10, cameraBehaviour);
+        levelManager.SetupScene(2, cameraBehaviour);
 	}
 
     // quick FPS script shamelessly copied from http://wiki.unity3d.com/index.php?title=FramesPerSecond

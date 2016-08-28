@@ -17,7 +17,8 @@ public class LevelManager : MonoBehaviour {
         starting = 1,
         main = 2,
         paused = 3,
-        ending = 4
+        ending = 4,
+        completing = 5
     }
     public state currentState;
 
@@ -172,7 +173,15 @@ public class LevelManager : MonoBehaviour {
         {
             if (currentState != state.ending)
             {
-                player.UpdatePosition(Input.GetKeyDown("space"), platforms);
+                bool needsToJump = Input.GetKeyDown("space");
+
+                if (needsToJump && player.IsOnTopPlatform)
+                {
+                    currentState = state.completing;
+                    player.UpdatePosition(needsToJump, platforms, 20f);
+                }
+
+                player.UpdatePosition(needsToJump, platforms);
                 cameraBehaviour.FollowPlayer();
             }
 
@@ -185,12 +194,18 @@ public class LevelManager : MonoBehaviour {
                 Destroy(playerObject);
             }
 
+            // restart game if in completing state and player gets over a certain height
+            if (currentState == state.completing && player.RPos > 400f)
+            {
+                this.Restart();
+            }
+
             // check if player has landed for the first time
             if (currentState == state.starting && player.IsLanded)
             {
                 currentState = state.main;
             }
-            else if (currentState == state.main || currentState == state.ending)
+            else if (currentState == state.main || currentState == state.ending || currentState == state.completing)
             {
                 for (int i = 0; i < platformList.Count; i++)
                 {

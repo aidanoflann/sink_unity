@@ -54,7 +54,7 @@ public class Player : DynamicObject {
 
 	}
 
-	public void UpdatePosition(bool needsToJump, List<Platform> platforms) {
+	public void UpdatePosition(bool needsToJump, List<Platform> platforms, float jumpSpeedModifier = 1f) {
 		// update position in polar coordinates
 		float deltaTime = Time.deltaTime;
 
@@ -83,7 +83,7 @@ public class Player : DynamicObject {
 
 		// inputs
 		if (needsToJump) {
-			jump ();
+			Jump (jumpSpeedModifier);
 		}
 		w_pos = (w_pos + w_vel * deltaTime) % 360f;
 
@@ -146,12 +146,12 @@ public class Player : DynamicObject {
 		}
 	}
 
-    private void jump()
+    private void Jump( float jumpSpeedModifier )
     {
         if (currentState != state.midair)
         {
             currentState = state.midair;
-            r_vel = 14;
+            r_vel = 14 * jumpSpeedModifier;
             w_vel = 0;
         }
     }
@@ -177,6 +177,21 @@ public class Player : DynamicObject {
         get
         {
             return r_pos;
+        }
+    }
+
+    public bool IsOnTopPlatform
+    {
+        get
+        {
+            if (currentState == state.landed)
+            {
+                if (abovePlatform.All(c => c == true))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
