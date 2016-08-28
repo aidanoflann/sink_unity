@@ -2,8 +2,10 @@
 using System.Collections;
 
 public class DynamicObject : MonoBehaviour {
+    
+    protected MeshFilter meshFilter;
 
-	protected void createMesh(Vector2[] points, Material material)
+    protected void createMesh(Vector2[] points, Material material)
 	{
 		int pointCount = points.Length;
 
@@ -11,8 +13,8 @@ public class DynamicObject : MonoBehaviour {
 		MeshRenderer mr = gameObject.AddComponent<MeshRenderer>();
 		mr.material = material;
 
-		MeshFilter mf = GetComponent<MeshFilter>();
-		Mesh mesh = mf.mesh;
+		this.meshFilter = GetComponent<MeshFilter>();
+		Mesh mesh = this.meshFilter.mesh;
 		Vector3[] vertices = new Vector3[pointCount];
 
 		for(int j=0; j<pointCount; j++){
@@ -24,7 +26,7 @@ public class DynamicObject : MonoBehaviour {
 		int [] triangles = tr.Triangulate();
 		mesh.vertices = vertices;
 		mesh.triangles = triangles;
-		mf.mesh = mesh;
+        this.meshFilter.mesh = mesh;
 	}
 
 	protected void updateMesh(Vector2[] points)
