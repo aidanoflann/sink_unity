@@ -229,7 +229,7 @@ public class LevelManager : MonoBehaviour {
                     }
                 }
 
-                if (platformList.Count == 0)
+                if (platformList.Count == 0 && currentState != state.completing)
                 {
                     this.Restart();
                 }
