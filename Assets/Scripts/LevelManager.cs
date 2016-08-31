@@ -225,7 +225,8 @@ public class LevelManager : MonoBehaviour {
                     GameObject platformObject = platformList[i];
                     Platform platform = platformObject.GetComponent<Platform>();
 
-                    platform.UpdatePosition(platformRSpeedMultiplier);
+                    levelTemplate.UpdatePlatformPosition(platform, platformRSpeedMultiplier);
+                    platform.UpdateMesh();
 
                     if (platform.r_pos <= 0)
                     {

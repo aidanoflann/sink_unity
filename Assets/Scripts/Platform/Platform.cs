@@ -44,13 +44,7 @@ public class Platform : DynamicObject {
 		return points;
 	}
     
-    public void UpdatePosition( float rSpeedMultiplier = 1f ) {
-		// update position in polar coordinates
-		float deltaTime = Time.deltaTime;
-
-		r_pos += r_vel * rSpeedMultiplier * deltaTime;
-		w_pos = ((w_pos + w_vel * deltaTime) + 360f) % 360f;
-
+    public void UpdateMesh() {
 		// update annulus based on new points
 		Vector2[] points = CalculateAnnulusPoints ();
 		updateMesh (points);

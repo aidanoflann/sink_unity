@@ -5,8 +5,6 @@ using System.Text;
 
 class Core : LevelTemplate
 {
-    public override void UpdatePlatformPosition()
-    {
-        
-    }
+    //public override void UpdatePlatformPosition()
+    //{}
 }
