@@ -12,6 +12,10 @@ public class GameManager : MonoBehaviour {
         mainCamera = GameObject.FindObjectOfType<Camera>();
         cameraBehaviour = mainCamera.GetComponent<CameraBehaviour>();
         levelManager = GetComponent<LevelManager> ();
+
+        LevelTemplate levelTemplate = new LevelTemplate();
+
+        levelManager.SetTemplate(levelTemplate);
         levelManager.SetNumPlatforms(10);
         levelManager.SetCameraBehaviour(cameraBehaviour);
         levelManager.SetupScene();
