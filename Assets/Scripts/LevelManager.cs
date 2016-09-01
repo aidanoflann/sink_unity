@@ -45,7 +45,7 @@ public class LevelManager : MonoBehaviour {
     private state prepausedState;
     private int numPlatforms;
     private CameraBehaviour cameraBehaviour;
-    private LevelTemplate levelTemplate;
+    private List<LevelTemplate> levelTemplates;
     #endregion
 
     #region [Private Methods]
@@ -135,9 +135,9 @@ public class LevelManager : MonoBehaviour {
         this.cameraBehaviour.FindPlayer();
     }
 
-    public void SetTemplate(LevelTemplate levelTemplate)
+    public void SetTemplates(List<LevelTemplate> levelTemplates)
     {
-        this.levelTemplate = levelTemplate;
+        this.levelTemplates = levelTemplates;
     }
 
     public void SetNumPlatforms(int numPlatforms)
@@ -225,7 +225,10 @@ public class LevelManager : MonoBehaviour {
                     GameObject platformObject = platformList[i];
                     Platform platform = platformObject.GetComponent<Platform>();
 
-                    levelTemplate.UpdatePlatformPosition(platform, platformRSpeedMultiplier);
+                    for( int j = 0; j < levelTemplates.Count; j++)
+                    {
+                        levelTemplates[j].UpdatePlatformPosition(platform, platformRSpeedMultiplier);
+                    }
                     platform.UpdateMesh();
 
                     if (platform.r_pos <= 0)

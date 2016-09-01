@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour {
 
 	private LevelManager levelManager;
     private CameraBehaviour cameraBehaviour;
     private Camera mainCamera;
+    private List<LevelTemplate> levelTemplates;
 
 	void Awake ()
     {
@@ -13,9 +15,11 @@ public class GameManager : MonoBehaviour {
         cameraBehaviour = mainCamera.GetComponent<CameraBehaviour>();
         levelManager = GetComponent<LevelManager> ();
 
-        LevelTemplate levelTemplate = new LevelTemplate();
+        levelTemplates = new List<LevelTemplate>();
+        levelTemplates.Add(new CoreTemplate());
+        levelTemplates.Add(new PulseTemplate());
 
-        levelManager.SetTemplate(levelTemplate);
+        levelManager.SetTemplates(levelTemplates);
         levelManager.SetNumPlatforms(10);
         levelManager.SetCameraBehaviour(cameraBehaviour);
         levelManager.SetupScene();
