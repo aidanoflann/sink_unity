@@ -157,6 +157,7 @@ public class Player : DynamicObject {
         if (currentState != state.midair)
         {
             currentState = state.midair;
+            r_pos += 0.1f;
             r_vel = 14 * jumpSpeedModifier;
             w_vel = 0;
             this.platform.ResetColour();
