@@ -6,9 +6,13 @@ public class DynamicObject : MonoBehaviour {
     protected MeshFilter meshFilter;
     protected MeshRenderer meshRenderer;
 
+    private int pointCount;
+    private Vector3[] vertices;
+    private Triangulator triangulator;
+
     protected void createMesh(Vector2[] points, Material material)
 	{
-		int pointCount = points.Length;
+		this.pointCount = points.Length;
 
 		// add a MeshRenderer (cannot share these between prefab clones)
 		this.meshRenderer = gameObject.AddComponent<MeshRenderer>();
@@ -16,15 +20,15 @@ public class DynamicObject : MonoBehaviour {
 
 		this.meshFilter = GetComponent<MeshFilter>();
 		Mesh mesh = this.meshFilter.mesh;
-		Vector3[] vertices = new Vector3[pointCount];
+		this.vertices = new Vector3[pointCount];
 
 		for(int j=0; j<pointCount; j++){
 			Vector2 actual = points[j];
 			vertices[j] = new Vector3(actual.x, actual.y, 0);
 		}
 
-		Triangulator tr = new Triangulator(points);
-		int [] triangles = tr.Triangulate();
+		this.triangulator = new Triangulator(points);
+		int [] triangles = triangulator.Triangulate();
 		mesh.vertices = vertices;
 		mesh.triangles = triangles;
         this.meshFilter.mesh = mesh;
@@ -32,22 +36,19 @@ public class DynamicObject : MonoBehaviour {
 
 	protected void updateMesh(Vector2[] points)
 	{
-		int pointCount = points.Length;
-
-		MeshFilter mf = GetComponent<MeshFilter>();
-		Mesh mesh = mf.mesh;
-		Vector3[] vertices = new Vector3[pointCount];
+		Mesh mesh = this.meshFilter.mesh;
 
 		for(int j=0; j<pointCount; j++){
 			Vector2 actual = points[j];
-			vertices[j] = new Vector3(actual.x, actual.y, 0);
+            this.vertices[j].x = actual.x;
+            this.vertices[j].y = actual.y;
 		}
 
-		Triangulator tr = new Triangulator(points);
-		int [] triangles = tr.Triangulate();
-		mesh.vertices = vertices;
+        this.triangulator.UpdatePoints(points);
+        int [] triangles = this.triangulator.Triangulate();
+		mesh.vertices = this.vertices;
 		mesh.triangles = triangles;
-		mf.mesh = mesh;
+		this.meshFilter.mesh = mesh;
 	}
 
 	protected void updateTransform (float r_pos, float w_pos)

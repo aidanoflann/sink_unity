@@ -9,6 +9,11 @@ public class Triangulator
 		m_points = new List<Vector2>(points);
 	}
 
+    public void UpdatePoints(Vector2[] points)
+    {
+        this.m_points = new List<Vector2>(points);
+    }
+
 	public int[] Triangulate() {
 		List<int> indices = new List<int>();
 
