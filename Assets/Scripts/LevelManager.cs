@@ -187,14 +187,15 @@ public class LevelManager : MonoBehaviour {
             if (currentState != state.ending)
             {
                 bool needsToJump = Input.GetKeyDown("space");
+                bool needsToDeJump = Input.GetKeyUp("space");
 
                 if (needsToJump && player.IsOnTopPlatform)
                 {
                     currentState = state.completing;
-                    player.UpdatePosition(needsToJump, platforms, 20f);
+                    player.UpdatePosition(needsToJump, false, platforms, 20f);
                 }
 
-                player.UpdatePosition(needsToJump, platforms);
+                player.UpdatePosition(needsToJump, needsToDeJump, platforms);
                 cameraBehaviour.FollowPlayer();
             }
 

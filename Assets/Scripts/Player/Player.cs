@@ -18,6 +18,13 @@ public class Player : DynamicObject {
 	}
 	private state currentState;
 
+    private enum jumpState
+    {
+        holding = 0,
+        letGo = 1,
+    }
+    private jumpState currentJumpState;
+
     private Platform platform;
 
     void Awake() {
@@ -54,7 +61,7 @@ public class Player : DynamicObject {
 
 	}
 
-	public void UpdatePosition(bool needsToJump, List<Platform> platforms, float jumpSpeedModifier = 1f) {
+	public void UpdatePosition(bool needsToJump, bool needsToDeJump, List<Platform> platforms, float jumpSpeedModifier = 1f) {
 		// update position in polar coordinates
 		float deltaTime = Time.deltaTime;
 
@@ -85,6 +92,10 @@ public class Player : DynamicObject {
 		if (needsToJump) {
 			Jump (jumpSpeedModifier);
 		}
+        if (needsToDeJump)
+        {
+            DeJump();
+        }
 		w_pos = (w_pos + w_vel * deltaTime) % 360f;
 
 		updateTransform (r_pos, w_pos);
@@ -167,11 +178,24 @@ public class Player : DynamicObject {
     {
         if (currentState != state.midair)
         {
-            currentState = state.midair;
-            r_pos += 0.1f;
-            r_vel = 14 * jumpSpeedModifier;
-            w_vel = 0;
+            this.currentState = state.midair;
+            this.currentJumpState = jumpState.holding;
+            this.r_pos += 0.1f;
+            this.r_vel = 17 * jumpSpeedModifier;
+            this.w_vel = 0;
             this.platform.ResetColour();
+        }
+    }
+
+    private void DeJump()
+    {
+        if (currentState == state.midair && currentJumpState == jumpState.holding )
+        {
+            currentJumpState = jumpState.letGo;
+            if (this.r_vel > 0)
+            {
+                this.r_vel /= 2f;
+            }
         }
     }
 

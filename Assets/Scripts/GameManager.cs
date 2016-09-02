@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour {
         levelTemplates = new List<LevelTemplate>();
         levelTemplates.Add(new RotateTemplate());
         levelTemplates.Add(new FallTemplate());
-        levelTemplates.Add(new PulseTemplate());
+        //levelTemplates.Add(new PulseTemplate());
 
         levelManager.SetTemplates(levelTemplates);
         levelManager.SetNumPlatforms(10);
