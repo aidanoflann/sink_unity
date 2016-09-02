@@ -136,17 +136,27 @@ public class Player : DynamicObject {
 	private void applyCollisions (int collisionIndex, List<Platform> platforms)
 	{
 		if (collisionIndex != -1) {
-            r_vel = 0;
 			//check if collision was from above or below
 			if (abovePlatform [collisionIndex])
             {
+                this.r_vel = 0;
                 this.platform = platforms[collisionIndex];
                 this.platform.SetColour(this.meshRenderer.material.GetColor("_Color"));
                 w_vel = this.platform.w_vel;
-				r_pos = this.platform.r_pos + (this.platform.r_size * 0.5f) + (size * 0.501f);
+				r_pos = this.platform.r_pos + (this.platform.r_size * 0.5f) + (size * 0.5f);
 				currentState = state.landed;
 			} else {
-				r_pos = platforms[collisionIndex].r_pos - (platforms[collisionIndex].r_size * 0.5f) - (size * 0.501f);
+                Platform unattachedPlatform = platforms[collisionIndex];
+                if (unattachedPlatform.r_vel < 0)
+                {
+                    this.r_vel = (-unattachedPlatform.r_vel - this.r_vel);
+                }
+                else
+                {
+                    this.r_vel = -this.r_vel;
+                }
+                
+                r_pos = unattachedPlatform.r_pos - (unattachedPlatform.r_size * 0.5f) - (size * 0.5f);
 			}
 
 		}
