@@ -230,7 +230,6 @@ public class LevelManager : MonoBehaviour {
                     {
                         levelTemplates[j].UpdatePlatformPosition(platform, platformRSpeedMultiplier);
                     }
-                    platform.UpdateMesh();
 
                     if (platform.r_pos <= 0)
                     {
@@ -239,6 +238,10 @@ public class LevelManager : MonoBehaviour {
                         platformList.Remove(platformObject);
                         platforms.Remove(platform);
                         i -= 1;
+                    }
+                    else
+                    {
+                        platform.UpdateMesh();
                     }
                 }
 
