@@ -194,7 +194,7 @@ public class Player : DynamicObject {
             currentJumpState = jumpState.letGo;
             if (this.r_vel > 0)
             {
-                this.r_vel /= 2f;
+                this.r_vel /= 5f;
             }
         }
     }
