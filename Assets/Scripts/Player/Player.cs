@@ -147,6 +147,7 @@ public class Player : DynamicObject {
 				currentState = state.landed;
 			} else {
                 Platform unattachedPlatform = platforms[collisionIndex];
+                // bounce back from the platform, adding its momentum if moving down
                 if (unattachedPlatform.r_vel < 0)
                 {
                     this.r_vel = (-unattachedPlatform.r_vel - this.r_vel);

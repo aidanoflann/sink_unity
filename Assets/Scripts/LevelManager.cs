@@ -83,7 +83,7 @@ public class LevelManager : MonoBehaviour {
             }
 
             platform.w_size = wSizeRange[Random.Range(0, wSizeRange.Length - 1)];
-            platform.r_pos = 2f * (float)(p + 1);
+            platform.r_pos = 2f * (float)(p + 3);
             platform.r_vel = -0.5f;
             clockwise = !clockwise;
 
