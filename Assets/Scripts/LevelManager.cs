@@ -184,21 +184,6 @@ public class LevelManager : MonoBehaviour {
     {
         if (currentState != state.paused)
         {
-            if (currentState != state.ending)
-            {
-                bool needsToJump = Input.GetKeyDown("space");
-                bool needsToDeJump = Input.GetKeyUp("space");
-
-                if (needsToJump && player.IsOnTopPlatform)
-                {
-                    currentState = state.completing;
-                    player.UpdatePosition(needsToJump, false, platforms, 20f);
-                }
-
-                player.UpdatePosition(needsToJump, needsToDeJump, platforms);
-                cameraBehaviour.FollowPlayer();
-            }
-
             // restart game if player has died
             if (player.RPos <= 0 && currentState != state.ending)
             {
@@ -249,6 +234,21 @@ public class LevelManager : MonoBehaviour {
                 {
                     this.Restart();
                 }
+
+            }
+            if (currentState != state.ending)
+            {
+                bool needsToJump = Input.GetKeyDown("space");
+                bool needsToDeJump = Input.GetKeyUp("space");
+
+                if (needsToJump && player.IsOnTopPlatform)
+                {
+                    currentState = state.completing;
+                    player.UpdatePosition(needsToJump, false, platforms, 20f);
+                }
+
+                player.UpdatePosition(needsToJump, needsToDeJump, platforms);
+                cameraBehaviour.FollowPlayer();
             }
         }
     }

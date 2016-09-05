@@ -85,7 +85,7 @@ public class Player : DynamicObject {
 			r_vel -= Globals.gravity * deltaTime;
 			r_pos += r_vel * deltaTime;
 		} else {
-			r_pos = this.platform.r_pos + size * 0.51f + this.platform.r_size * 0.5f;
+			this.r_pos = this.platform.r_pos + this.size * 0.5f + this.platform.r_size * 0.5f;
 		}
 
 		// inputs
