@@ -48,6 +48,7 @@ public class DynamicObject : MonoBehaviour {
         int [] triangles = this.triangulator.Triangulate();
 		mesh.vertices = this.vertices;
 		mesh.triangles = triangles;
+        mesh.RecalculateBounds();
 		this.meshFilter.mesh = mesh;
 	}
 

@@ -4,14 +4,15 @@ using System.Collections.Generic;
 
 public class Platform : DynamicObject {
 
-	//TODO: these are public for collision checks - would rather they weren't
-	public float r_size { get; private set;}
-	public float w_size { get;  set;}
-	public float r_pos { get; set;}
-	public float r_vel { get; set;}
-	public float w_pos { get; set;}
-	public float w_vel { get; set;}
+    //TODO: these are public for collision checks - would rather they weren't
+    public float r_size;
+    public float w_size;
+    public float r_pos;
+    public float r_vel;
+    public float w_pos;
+    public float w_vel;
 
+    private int num_points;
     private Color oldColour;
 
 	// Use this for initialization
@@ -27,18 +28,18 @@ public class Platform : DynamicObject {
 	protected Vector2[] CalculateAnnulusPoints()
 	{
 		//edge points of annulus with gap
-		int num_points = (int)(w_size / 5f) + 1;
+		this.num_points = (int)(this.w_size / 5f) + 1;
 
-		float[] d_w = new float[num_points];
-		Vector2[] points = new Vector2 [num_points * 2];
+		float[] d_w = new float[this.num_points];
+		Vector2[] points = new Vector2 [this.num_points * 2];
+        for (int x = 0; x < this.num_points; x++) {
+            //TODO: disappearing issue starts exactly when w_pos gets > w_size
+			d_w [x] = (x * 5 - this.w_size * 0.5f + this.w_pos) * Globals.degreesToRadians;
+			points [x].x = (this.r_pos + this.r_size * 0.5f) * Mathf.Cos (d_w [x]);
+			points [x].y = (this.r_pos + this.r_size * 0.5f) * Mathf.Sin (d_w [x]);
 
-		for (int x = 0; x < num_points; x++) {
-			d_w [x] = (x * 5 - w_size / 2f + w_pos) * Globals.degreesToRadians;
-			points [x].x = (r_pos + r_size * 0.5f) * Mathf.Cos (d_w [x]);
-			points [x].y = (r_pos + r_size * 0.5f) * Mathf.Sin (d_w [x]);
-
-			points [num_points * 2 - 1 - x].x = (r_pos - r_size * 0.5f) * Mathf.Cos (d_w [x]);
-			points [num_points * 2 - 1 - x].y = (r_pos - r_size * 0.5f) * Mathf.Sin (d_w [x]);
+			points [this.num_points * 2 - 1 - x].x = (this.r_pos - this.r_size * 0.5f) * Mathf.Cos (d_w [x]);
+			points [this.num_points * 2 - 1 - x].y = (this.r_pos - this.r_size * 0.5f) * Mathf.Sin (d_w [x]);
 		}
 
 		return points;

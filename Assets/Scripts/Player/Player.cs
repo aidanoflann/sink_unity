@@ -131,7 +131,7 @@ public class Player : DynamicObject {
 			}
 			if (abovePlatform != null && abovePlatformNew [platformIndex] != abovePlatform [platformIndex]) {
 				// check if outside of the angular range of the platform
-				if (Mathf.Abs(Mathf.Abs ((w_pos - platforms [platformIndex].w_pos) + 180) % 360 - 180) < platforms [platformIndex].w_size * 0.5) {
+				if (Mathf.Abs(Mathf.Abs ((this.w_pos - platforms [platformIndex].w_pos) + 180) % 360 - 180) < platforms [platformIndex].w_size * 0.5) {
 					collisionIndex = platformIndex;
 					//set the abovePlatform value back to its original
 					abovePlatformNew [platformIndex] = abovePlatform [platformIndex];
