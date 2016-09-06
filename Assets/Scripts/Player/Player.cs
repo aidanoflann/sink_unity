@@ -181,7 +181,7 @@ public class Player : DynamicObject {
             this.currentState = state.midair;
             this.currentJumpState = jumpState.holding;
             this.r_pos += 0.1f;
-            this.r_vel = 17 * jumpSpeedModifier;
+            this.r_vel = 17 * jumpSpeedModifier + this.platform.r_vel;
             this.w_vel = 0;
             this.platform.ResetColour();
         }
