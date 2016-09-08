@@ -18,7 +18,8 @@ public class LevelManager : MonoBehaviour {
         main = 2,
         paused = 3,
         ending = 4,
-        completing = 5
+        completing = 5,
+        nextLevel = 6
     }
     public state currentState;
 
@@ -152,6 +153,10 @@ public class LevelManager : MonoBehaviour {
 
     public void Restart(float newPlayerWpos = -1)
     {
+        if (newPlayerWpos == -1)
+        {
+            newPlayerWpos = player.WPos + 180f;
+        }
         this.Clear();
         this.SetupScene(newPlayerWpos);
     }
@@ -196,7 +201,7 @@ public class LevelManager : MonoBehaviour {
             // restart game if in completing state and player gets over a certain height
             if (currentState == state.completing && player.RPos > 400f)
             {
-                this.Restart(player.WPos + 180f);
+                this.currentState = state.nextLevel;
             }
 
             // check if player has landed for the first time

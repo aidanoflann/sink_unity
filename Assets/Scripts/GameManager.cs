@@ -15,13 +15,12 @@ public class GameManager : MonoBehaviour {
         cameraBehaviour = mainCamera.GetComponent<CameraBehaviour>();
         levelManager = GetComponent<LevelManager> ();
 
-        levelTemplates = new List<LevelTemplate>();
-        levelTemplates.Add(new RotateTemplate());
-        levelTemplates.Add(new FallTemplate());
-        levelTemplates.Add(new PulseTemplate());
+        this.levelTemplates = new List<LevelTemplate>();
+        this.levelTemplates.Add(new RotateTemplate());
+        this.levelTemplates.Add(new FallTemplate());
 
         levelManager.SetTemplates(levelTemplates);
-        levelManager.SetNumPlatforms(10);
+        levelManager.SetNumPlatforms(5);
         levelManager.SetCameraBehaviour(cameraBehaviour);
         levelManager.SetupScene();
 	}
@@ -35,6 +34,10 @@ public class GameManager : MonoBehaviour {
         {
             this.levelManager.Restart();
         }
+        else if (levelManager.currentState == LevelManager.state.nextLevel)
+        {
+            this.NextLevel();
+        }
 
         if (Input.GetKeyDown("x"))
         {
@@ -42,6 +45,13 @@ public class GameManager : MonoBehaviour {
         }
 
         deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
+    }
+
+    void NextLevel()
+    {
+        this.levelTemplates.Add(new PulseTemplate());
+        this.levelManager.SetTemplates(this.levelTemplates);
+        this.levelManager.Restart();
     }
 
     void OnGUI()
