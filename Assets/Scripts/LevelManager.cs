@@ -85,7 +85,7 @@ public class LevelManager : MonoBehaviour {
 
             platform.w_size = wSizeRange[Random.Range(0, wSizeRange.Length - 1)];
             platform.r_pos = 2f * (float)(p + 3);
-            platform.r_vel = -0.5f;
+            platform.r_vel = -0.7f;
             clockwise = !clockwise;
 
 			instance.transform.SetParent (levelHolder);
@@ -244,7 +244,11 @@ public class LevelManager : MonoBehaviour {
             if (currentState != state.ending)
             {
                 bool needsToJump = Input.GetKeyDown("space");
-                bool needsToDeJump = Input.GetKeyUp("space");
+                bool needsToDeJump = false;
+                if (this.currentState != state.completing)
+                { 
+                    needsToDeJump = Input.GetKeyUp("space");
+                }
 
                 if (needsToJump && player.IsOnTopPlatform)
                 {
