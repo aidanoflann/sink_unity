@@ -13,10 +13,9 @@ public class Platform : DynamicObject {
     public float w_vel;
 
     private int num_points;
-    private Color oldColour;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 		//static attributes
 		r_size = 0.2f;
 
@@ -52,13 +51,13 @@ public class Platform : DynamicObject {
 	}
 
     public void SetColour(Color colour)
-    {
-        this.oldColour = this.meshRenderer.material.GetColor("_Color");
-        this.meshRenderer.material.SetColor("_Color", colour);
+    {   
+        this.oldColour = this.currentColour;
+        this.currentColour = colour;
     }
 
     public void ResetColour()
     {
-        this.meshRenderer.material.SetColor("_Color", this.oldColour);
+        this.currentColour = this.oldColour;
     }
 }

@@ -86,6 +86,7 @@ public class LevelManager : MonoBehaviour {
             platform.w_size = wSizeRange[Random.Range(0, wSizeRange.Length - 1)];
             platform.r_pos = 2f * (float)(p + 3);
             platform.r_vel = -0.7f;
+            platform.SetColour(this.levelTemplates[this.levelTemplates.Count() - 1].PlatformColor);
             clockwise = !clockwise;
 
 			instance.transform.SetParent (levelHolder);

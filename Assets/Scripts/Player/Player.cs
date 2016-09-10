@@ -29,17 +29,18 @@ public class Player : DynamicObject {
 
     void Awake() {
 		//static attributes
-		size = 0.5f;
+		this.size = 0.5f;
 
         //dynamic attributes
         float[] wPosRange = Enumerable.Range(0, 359).Select(i => (float)i).ToArray();
-        w_pos = wPosRange[Random.Range(0, wPosRange.Length - 1)];
+        this.w_pos = wPosRange[Random.Range(0, wPosRange.Length - 1)];
 
-        r_pos = 100;
-		r_vel = 0f;
-		w_vel = 0f;
+        this.r_pos = 100;
+        this.r_vel = 0f;
+        this.w_vel = 0f;
 
-		currentState = state.midair;
+        this.currentState = state.midair;
+        this.currentColour = new Color(0.1f, 0.2f, 0.9f);
 	}
 
 	void Start() {
@@ -152,7 +153,7 @@ public class Player : DynamicObject {
             {
                 this.r_vel = 0;
                 this.platform = platforms[collisionIndex];
-                this.platform.SetColour(this.meshRenderer.material.GetColor("_Color"));
+                this.platform.SetColour(this.currentColour);
                 w_vel = this.platform.w_vel;
 				r_pos = this.platform.r_pos + (this.platform.r_size * 0.5f) + (size * 0.5f);
 				currentState = state.landed;

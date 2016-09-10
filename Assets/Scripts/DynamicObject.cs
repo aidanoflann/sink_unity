@@ -9,6 +9,9 @@ public class DynamicObject : MonoBehaviour {
     private int pointCount;
     private Vector3[] vertices;
     private Triangulator triangulator;
+    
+    protected Color oldColour;
+    protected Color currentColour;
 
     protected void createMesh(Vector2[] points, Material material)
 	{
@@ -16,6 +19,7 @@ public class DynamicObject : MonoBehaviour {
 
 		// add a MeshRenderer (cannot share these between prefab clones)
 		this.meshRenderer = gameObject.AddComponent<MeshRenderer>();
+        material.SetColor("_Color", this.currentColour);
         this.meshRenderer.material = material;
 
 		this.meshFilter = GetComponent<MeshFilter>();
@@ -32,7 +36,7 @@ public class DynamicObject : MonoBehaviour {
 		mesh.vertices = vertices;
 		mesh.triangles = triangles;
         this.meshFilter.mesh = mesh;
-	}
+    }
 
 	protected void updateMesh(Vector2[] points)
 	{
@@ -50,7 +54,8 @@ public class DynamicObject : MonoBehaviour {
 		mesh.triangles = triangles;
         mesh.RecalculateBounds();
 		this.meshFilter.mesh = mesh;
-	}
+        this.meshRenderer.material.SetColor("_Color", this.currentColour);
+    }
 
 	protected void updateTransform (float r_pos, float w_pos)
 	{
