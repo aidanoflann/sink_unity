@@ -6,8 +6,22 @@ using System.Text;
 
 public class LevelTemplate
 {
+    public virtual void Start() {}
+
     public virtual void UpdatePlatformPosition(Platform platform, float rSpeedMultiplier)
     {
+    }
+
+    public Color PlatformColor
+    {
+        get;
+        set;
+    }
+
+    public Color BackgroundColor
+    {
+        get;
+        set;
     }
 }
 
