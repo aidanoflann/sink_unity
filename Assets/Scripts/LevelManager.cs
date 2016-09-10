@@ -138,7 +138,18 @@ public class LevelManager : MonoBehaviour {
 
     public void SetTemplates(List<LevelTemplate> levelTemplates)
     {
-        this.levelTemplates = levelTemplates;
+        this.levelTemplates.Clear();
+        this.levelTemplates.AddRange(levelTemplates);
+    }
+
+    public void AddTemplate(LevelTemplate levelTemplate)
+    {
+        this.levelTemplates.Add(levelTemplate);
+    }
+
+    public void RemoveTemplate(LevelTemplate levelTemplate)
+    {
+        this.levelTemplates.Remove(levelTemplate);
     }
 
     public void SetNumPlatforms(int numPlatforms)
@@ -179,9 +190,10 @@ public class LevelManager : MonoBehaviour {
 
     public void Awake()
     {
-        levelHolder = new GameObject("Level").transform;
-        platformList = new List<GameObject>();
-        platforms = new List<Platform>();
+        this.levelHolder = new GameObject("Level").transform;
+        this.platformList = new List<GameObject>();
+        this.platforms = new List<Platform>();
+        this.levelTemplates = new List<LevelTemplate>();
         GeneratePlatformRanges();
     }
 
@@ -237,7 +249,8 @@ public class LevelManager : MonoBehaviour {
 
                 if (platformList.Count == 0 && currentState != state.completing)
                 {
-                    this.Restart();
+                    this.currentState = state.needsRestart;
+                    return;
                 }
 
             }

@@ -7,22 +7,23 @@ public class GameManager : MonoBehaviour {
 	private LevelManager levelManager;
     private CameraBehaviour cameraBehaviour;
     private Camera mainCamera;
-    private List<LevelTemplate> levelTemplates;
+    private List<LevelTemplate> baseTemplates;
+    private List<LevelTemplate> dynamicTemplates;
 
-	void Awake ()
+    void Awake ()
     {
         mainCamera = GameObject.FindObjectOfType<Camera>();
         cameraBehaviour = mainCamera.GetComponent<CameraBehaviour>();
         levelManager = GetComponent<LevelManager> ();
 
-        this.levelTemplates = new List<LevelTemplate>();
-        this.levelTemplates.Add(new RotateTemplate());
-        this.levelTemplates.Add(new FallTemplate());
+        this.baseTemplates = new List<LevelTemplate>();
+        this.baseTemplates.Add(new RotateTemplate());
+        this.baseTemplates.Add(new FallTemplate());
 
-        levelManager.SetTemplates(levelTemplates);
-        levelManager.SetNumPlatforms(5);
-        levelManager.SetCameraBehaviour(cameraBehaviour);
-        levelManager.SetupScene();
+        this.levelManager.SetTemplates(baseTemplates);
+        this.levelManager.SetNumPlatforms(5);
+        this.levelManager.SetCameraBehaviour(cameraBehaviour);
+        this.levelManager.SetupScene();
 	}
 
     // quick FPS script shamelessly copied from http://wiki.unity3d.com/index.php?title=FramesPerSecond
@@ -32,7 +33,7 @@ public class GameManager : MonoBehaviour {
     {
         if (Input.GetKeyDown("r") || levelManager.currentState == LevelManager.state.needsRestart || (Input.GetKeyDown("space") && levelManager.currentState == LevelManager.state.ending))
         {
-            this.levelManager.Restart();
+            this.RestartGame();
         }
         else if (levelManager.currentState == LevelManager.state.nextLevel)
         {
@@ -49,8 +50,13 @@ public class GameManager : MonoBehaviour {
 
     void NextLevel()
     {
-        this.levelTemplates.Add(new PulseTemplate());
-        this.levelManager.SetTemplates(this.levelTemplates);
+        this.levelManager.AddTemplate(new PulseTemplate());
+        this.levelManager.Restart();
+    }
+
+    void RestartGame()
+    {
+        this.levelManager.SetTemplates(this.baseTemplates);
         this.levelManager.Restart();
     }
 
