@@ -84,6 +84,7 @@
     <Compile Include="Assets\Scripts\LevelTemplate\LevelTemplate.cs" />
     <Compile Include="Assets\Scripts\LevelTemplate\PulseTemplate.cs" />
     <Compile Include="Assets\Scripts\LevelTemplate\RotateTemplate.cs" />
+    <Compile Include="Assets\Scripts\LevelTemplate\TickTemplate.cs" />
     <Compile Include="Assets\Scripts\Platform\Platform.cs" />
     <Compile Include="Assets\Scripts\Player\Player.cs" />
     <Compile Include="Assets\Triangulator.cs" />
