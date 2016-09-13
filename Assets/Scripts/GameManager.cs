@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour {
 
     void NextLevel()
     {
-        this.levelManager.AddTemplate(new PulseTemplate());
+        this.levelManager.AddTemplate(new TickTemplate());
         this.levelManager.Restart();
     }
 

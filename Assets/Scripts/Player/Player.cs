@@ -26,6 +26,7 @@ public class Player : DynamicObject {
     private jumpState currentJumpState;
 
     private Platform platform;
+    private float platformPosition;
 
     void Awake() {
 		//static attributes
@@ -83,11 +84,12 @@ public class Player : DynamicObject {
 
         // states
         if (currentState == state.midair) {
-			r_vel -= Globals.gravity * deltaTime;
-			r_pos += r_vel * deltaTime;
+			this.r_vel -= Globals.gravity * deltaTime;
+            this.r_pos += r_vel * deltaTime;
 		} else {
 			this.r_pos = this.platform.r_pos + this.size * 0.5f + this.platform.r_size * 0.5f;
-		}
+            this.w_pos = this.platform.w_pos + this.platformPosition * this.platform.w_size;
+        }
 
 		// inputs
 		if (needsToJump) {
@@ -97,7 +99,6 @@ public class Player : DynamicObject {
         {
             DeJump();
         }
-		w_pos = (w_pos + w_vel * deltaTime) % 360f;
 
 		updateTransform (r_pos, w_pos);
 	}
@@ -153,9 +154,8 @@ public class Player : DynamicObject {
             {
                 this.r_vel = 0;
                 this.platform = platforms[collisionIndex];
+                this.platformPosition = (this.w_pos - this.platform.w_pos)/this.platform.w_size;
                 this.platform.SetColour(this.currentColour);
-                w_vel = this.platform.w_vel;
-				r_pos = this.platform.r_pos + (this.platform.r_size * 0.5f) + (size * 0.5f);
 				currentState = state.landed;
 			} else {
                 Platform unattachedPlatform = platforms[collisionIndex];
