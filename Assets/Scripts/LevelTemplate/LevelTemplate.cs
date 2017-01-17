@@ -10,13 +10,13 @@ public class LevelTemplate
     {
     }
 
-    public Color PlatformColor
+    public virtual Color PlatformColor
     {
         get;
         set;
     }
 
-    public Color BackgroundColor
+    public virtual Color BackgroundColor
     {
         get;
         set;
