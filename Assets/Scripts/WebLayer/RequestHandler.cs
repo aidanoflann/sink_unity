@@ -4,10 +4,9 @@ using UnityEngine.Networking;
 
 public static class RequestHandler
 {
-    public static void MakeRequest(string url)
+    public static void MakeRequest(UnityWebRequest request)
     {
         //TODO: handle timeouts?
-        UnityWebRequest request = new UnityWebRequest(url);
         request.Send();
     }
 }
