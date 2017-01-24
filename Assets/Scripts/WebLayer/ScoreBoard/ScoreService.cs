@@ -5,7 +5,7 @@ public class ScoreService
 {
     private static readonly string getScores = "get_scores";
 
-    public static void GetScores()
+    public static void FetchScores()
     {
         RequestHandler.MakeRequest(Endpoints.SCORE_BOARD + getScores);
     }

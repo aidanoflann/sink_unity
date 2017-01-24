@@ -45,6 +45,11 @@ public class GameManager : MonoBehaviour {
             levelManager.Pause();
         }
 
+        if (Input.GetKeyDown("g"))
+        {
+            ScoreService.FetchScores();
+        }
+
         deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
     }
 
