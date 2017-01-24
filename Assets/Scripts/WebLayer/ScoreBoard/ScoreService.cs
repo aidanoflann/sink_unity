@@ -17,10 +17,10 @@ public class ScoreService
 
     public static void FetchScores()
     {
-        string json = JsonUtility.ToJson(new FetchRequest());
-        UnityWebRequest request = UnityWebRequest.Put(Endpoints.SCORE_BOARD + getScores, json);
-        request.method = "POST";
-        request.SetRequestHeader("Content-Type", "application/json");
-        RequestHandler.MakeRequest(request);
+        FetchRequest fetchRequest = new FetchRequest();
+        string endpoint = Endpoints.SCORE_BOARD;
+        string value = getScores;
+        
+        RequestHandler.MakeRequest(fetchRequest, endpoint, value);
     }
 }
