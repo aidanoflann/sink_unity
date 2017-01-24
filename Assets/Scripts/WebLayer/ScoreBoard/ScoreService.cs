@@ -2,6 +2,13 @@
 using System.Collections;
 using UnityEngine.Networking;
 
+public class Score
+{
+    public string user;
+    public string score;
+    public string time;
+}
+
 public class ScoreService
 {
     private static readonly string getScores = "get_scores";

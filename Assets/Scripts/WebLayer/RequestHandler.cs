@@ -11,6 +11,7 @@ public static class RequestHandler
         request.method = "POST";
         request.SetRequestHeader("Content-Type", "application/json");
         //TODO: handle timeouts?
+        //TODO: store a reference to a MonoBehaviour which can run this on a thread - requests might be slow
         request.Send();
     }
 }
