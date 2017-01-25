@@ -31,7 +31,8 @@ public class GameManager : MonoBehaviour {
 
     void Update()
     {
-        if (Input.GetKeyDown("r") || levelManager.currentState == LevelManager.state.needsRestart || (Input.GetKeyDown("space") && levelManager.currentState == LevelManager.state.ending))
+        if (Input.GetKeyDown("r") || levelManager.currentState == LevelManager.state.needsRestart ||
+            (Input.GetKeyDown("space") && levelManager.currentState == LevelManager.state.ending))
         {
             this.RestartGame();
         }

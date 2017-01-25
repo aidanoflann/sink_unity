@@ -43,6 +43,8 @@ public class LevelManager : MonoBehaviour {
 
     private float platformRSpeedMultiplier;
 
+    private float startTime;
+
     private state prepausedState;
     private int numPlatforms;
     private CameraBehaviour cameraBehaviour;
@@ -121,6 +123,7 @@ public class LevelManager : MonoBehaviour {
     
     public void SetupScene(float playerWPos = -1)
     {
+        this.startTime = Time.time;
         platformRSpeedMultiplier = 1f;
 
         currentState = state.starting;
@@ -209,6 +212,8 @@ public class LevelManager : MonoBehaviour {
                 platformRSpeedMultiplier = 24f;
                 cameraBehaviour.EndGame();
                 Destroy(playerObject);
+                // TODO: come up with a real score system, but also ignore pause time here
+                ScoreService.SubmitScore(Time.time - this.startTime);
             }
 
             // restart game if in completing state and player gets over a certain height
