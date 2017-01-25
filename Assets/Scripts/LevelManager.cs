@@ -257,11 +257,11 @@ public class LevelManager : MonoBehaviour {
             }
             if (currentState != state.ending)
             {
-                bool needsToJump = Input.GetKeyDown("space");
+                bool needsToJump = Input.GetKeyDown("space") || Input.GetMouseButtonDown(0);
                 bool needsToDeJump = false;
                 if (this.currentState != state.completing)
-                { 
-                    needsToDeJump = Input.GetKeyUp("space");
+                {
+                    needsToDeJump = Input.GetKeyUp("space") || Input.GetMouseButtonUp(0);
                 }
 
                 if (needsToJump && player.IsOnTopPlatform)
