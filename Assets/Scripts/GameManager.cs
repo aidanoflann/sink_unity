@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour {
         this.baseTemplates = new List<LevelTemplate>();
         this.baseTemplates.Add(new RotateTemplate());
         this.baseTemplates.Add(new FallTemplate());
+        // TODO: remove
+        this.baseTemplates.Add(new PulseTemplate());
 
         this.levelManager.SetTemplates(baseTemplates);
         this.levelManager.SetNumPlatforms(5);
@@ -51,6 +53,7 @@ public class GameManager : MonoBehaviour {
 
     void NextLevel()
     {
+        // TODO: randomly select template
         this.levelManager.AddTemplate(new PulseTemplate());
         this.levelManager.Restart();
     }
