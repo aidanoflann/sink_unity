@@ -20,6 +20,13 @@ internal class PulseTemplate : LevelTemplate
         this.angularSpeed = 1.0f;
         this.amplitude = 12.0f;
     }
+    
+    public override void Reload()
+    {
+        base.Reload();
+        this.currentAngle = 0.0f;
+    }
+
 
     public override void UpdatePlatformPosition(Platform platform, float rSpeedMultiplier)
     {

@@ -9,6 +9,12 @@ public class FallTemplate: LevelTemplate
     public override void UpdatePlatformPosition(Platform platform, float rSpeedMultiplier)
     {
         platform.r_pos = platform.r_pos + platform.r_vel * rSpeedMultiplier * Time.deltaTime;
+
+    }
+
+    public override void Reload()
+    {
+        base.Reload();
     }
 
     public override Color PlatformColor

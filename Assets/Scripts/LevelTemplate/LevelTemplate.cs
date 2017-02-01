@@ -10,6 +10,10 @@ public class LevelTemplate
     {
     }
 
+    public virtual void Reload()
+    {
+    }
+
     public virtual Color PlatformColor
     {
         get;

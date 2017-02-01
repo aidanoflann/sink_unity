@@ -11,6 +11,11 @@ public class RotateTemplate : LevelTemplate
         platform.w_pos = platform.w_pos + platform.w_vel * Time.deltaTime;
     }
 
+    public override void Reload()
+    {
+        base.Reload();
+    }
+
     public override Color PlatformColor
     {
         get

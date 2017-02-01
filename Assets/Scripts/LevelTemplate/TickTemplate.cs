@@ -19,6 +19,11 @@ internal class TickTemplate : LevelTemplate
         this.amplitude = 4f;
     }
 
+    public override void Reload()
+    {
+        this.currentAngle = 0.0f;
+    }
+
     public override void UpdatePlatformPosition(Platform platform, float rSpeedMultiplier)
     {
         this.currentAngle = (this.currentAngle + this.angularSpeed * Time.deltaTime) % Globals.twoPi;

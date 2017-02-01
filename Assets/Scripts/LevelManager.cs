@@ -169,6 +169,10 @@ public class LevelManager : MonoBehaviour {
         {
             newPlayerWpos = player.WPos + 180f;
         }
+        for (int i = 0; i < this.levelTemplates.Count; i++)
+        {
+            this.levelTemplates[i].Reload();
+        }
         this.Clear();
         this.SetupScene(newPlayerWpos);
     }
