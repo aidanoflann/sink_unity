@@ -14,9 +14,10 @@ public class SinkTemplate : LevelTemplate
         this.PlatformColor = new Color(0.9f, 0.1f, 0.9f);
     }
 
-    public override void UpdatePlatformPosition(Platform platform, float rSpeedMultiplier)
+    public override void UpdatePlatformPosition(int platformIndex, List<Platform> allPlatforms, float rSpeedMultiplier)
     {
         //platform.w_pos = platform.w_pos + platform.w_vel * Time.deltaTime;
+        Platform platform = allPlatforms[platformIndex];
         if (platform.hasPlayer)
         {
             platform.r_pos = platform.r_pos - this.sinkSpeed * Time.deltaTime;

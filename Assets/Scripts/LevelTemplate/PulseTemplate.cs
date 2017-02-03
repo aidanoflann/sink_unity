@@ -28,9 +28,10 @@ internal class PulseTemplate : LevelTemplate
     }
 
 
-    public override void UpdatePlatformPosition(Platform platform, List<Platform> allPlatforms, float rSpeedMultiplier)
+    public override void UpdatePlatformPosition(int platformIndex, List<Platform> allPlatforms, float rSpeedMultiplier)
     {
-        if( this.originalRVel == null)
+        Platform platform = allPlatforms[platformIndex];
+        if ( this.originalRVel == null)
         {
             this.originalRVel = platform.r_vel;
         }

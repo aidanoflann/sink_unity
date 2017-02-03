@@ -6,8 +6,9 @@ using System.Text;
 
 public class RotateTemplate : LevelTemplate
 {
-    public override void UpdatePlatformPosition(Platform platform, List<Platform> allPlatforms, float rSpeedMultiplier)
+    public override void UpdatePlatformPosition(int platformIndex, List<Platform> allPlatforms, float rSpeedMultiplier)
     {
+        Platform platform = allPlatforms[platformIndex];
         platform.w_pos = platform.w_pos + platform.w_vel * Time.deltaTime;
     }
 
