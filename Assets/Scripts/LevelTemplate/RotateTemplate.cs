@@ -10,7 +10,7 @@ public class RotateTemplate : LevelTemplate
     {
         this.BackgroundColor = Color.white;
         this.PlatformColor = Color.black;
-        this.CircleColor = Color.grey;
+        this.CircleColor = new Color(0.93f, 0.93f, 0.93f);
     }
 
     public override void UpdatePlatformPosition(int platformIndex, List<Platform> allPlatforms, float rSpeedMultiplier)
