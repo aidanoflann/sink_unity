@@ -16,7 +16,7 @@ internal class TickTemplate : LevelTemplate
         this.PlatformColor = new Color(0, 0.4f, 0);
         this.CircleColor = new Color(0.7f, 1f, 0.7f);
         this.currentAngle = 0.0f;
-        this.angularSpeed = 1f;
+        this.angularSpeed = 0.5f;
         this.amplitude = 4f;
     }
 
