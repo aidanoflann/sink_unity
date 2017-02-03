@@ -45,7 +45,7 @@ public class BackgroundCircleFactory : MonoBehaviour {
         copy.transform.position = randomPosition;
 
         // give it a random size
-        float randomScalar = (Random.value * 50) + 15;
+        float randomScalar = (Random.value * 3) + 1;
         Vector3 randomScale = new Vector3(randomScalar, randomScalar, 0);
         copy.transform.localScale = randomScale;
 
