@@ -7,7 +7,7 @@ public class BackgroundCircleFactory : MonoBehaviour {
     public GameObject originalCircle;
 
     private List<GameObject> _copies = new List<GameObject>();
-    private int _numCopies = 1;
+    private int _numCopies = 200;
     
     public void GenerateBackgroundCircles(Color colour)
     {
@@ -41,15 +41,20 @@ public class BackgroundCircleFactory : MonoBehaviour {
     private void SetPositionAndColour(GameObject copy, Color colour)
     {
         // move it to a random location
-        Vector3 randomPosition = new Vector3(Random.value * 1000, Random.value * 1000, 0);
+        Vector3 randomPosition = new Vector3(Random.value * 200 - 100, Random.value * 200 - 100, 0);
         copy.transform.position = randomPosition;
+
+        // give it a random size
+        float randomScalar = (Random.value * 50) + 15;
+        Vector3 randomScale = new Vector3(randomScalar, randomScalar, 0);
+        copy.transform.localScale = randomScale;
 
         // TODO: randomise its size
 
         // make it visible and set its colour
-        Renderer copyRenderer = copy.GetComponent<Renderer>();
+        SpriteRenderer copyRenderer = copy.GetComponent<SpriteRenderer>();
         copyRenderer.enabled = true;
-        copyRenderer.material.color = colour;
+        copyRenderer.color = colour;
     }
 
 }
