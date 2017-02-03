@@ -15,6 +15,7 @@ public class SinkTemplate : LevelTemplate
     {
         this.BackgroundColor = new Color(0.6f, 0.2f, 0.6f);
         this.PlatformColor = new Color(0.9f, 0.1f, 0.9f);
+        this.CircleColor = new Color(1f, 1f, 1f);
     }
 
     public override void UpdatePlatformPosition(int platformIndex, List<Platform> allPlatforms, float rSpeedMultiplier)

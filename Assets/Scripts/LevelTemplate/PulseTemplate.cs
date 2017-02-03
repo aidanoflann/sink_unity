@@ -16,6 +16,7 @@ internal class PulseTemplate : LevelTemplate
     {
         this.BackgroundColor = new Color(0.9f, 0.6f, 0.6f);
         this.PlatformColor = new Color(0.9f, 0.1f, 0.1f);
+        this.CircleColor = new Color(1f, 1f, 1f);
         this.currentAngle = 0.0f;
         this.angularSpeed = 1.0f;
         this.amplitude = 12.0f;

@@ -133,8 +133,9 @@ public class LevelManager : MonoBehaviour {
         }
 
         SpawnPlatforms (this.numPlatforms, player.WPos);
-        // generate the background
 
+        // generate the background
+        //this.backgroundCircleFactory.GenerateBackgroundCircles(this.levelTemplates[this.levelTemplates.Count - 1].CircleColor);
 
         // update camera
         this.cameraBehaviour.SetColour(this.levelTemplates[this.levelTemplates.Count - 1].BackgroundColor);
@@ -165,11 +166,6 @@ public class LevelManager : MonoBehaviour {
     public void SetCameraBehaviour(CameraBehaviour cameraBehaviour)
     {
         this.cameraBehaviour = cameraBehaviour;
-    }
-
-    private void GenerateBackground()
-    {
-
     }
 
     public void Restart(float newPlayerWpos = -1)

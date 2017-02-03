@@ -25,5 +25,11 @@ public class LevelTemplate
         get;
         set;
     }
+
+    public virtual Color CircleColor
+    {
+        get;
+        set;
+    }
 }
 

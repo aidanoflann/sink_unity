@@ -2,17 +2,21 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class BackgroundCircleFactory {
+public class BackgroundCircleFactory : MonoBehaviour {
 
     public GameObject originalCircle;
 
     private List<GameObject> _copies = new List<GameObject>();
+    private int _numCopies = 1;
     
     public void GenerateBackgroundCircles(Color colour)
     {
         if (this._copies.Count == 0)
         {
-            this.GenerateRandomCircle(colour);
+            for (int i = 0; i < _numCopies; i++)
+            {
+                this.GenerateRandomCircle(colour);
+            }
         }
         else
         {

@@ -6,6 +6,14 @@ using System.Text;
 
 public class FallTemplate: LevelTemplate
 {
+    public FallTemplate()
+    {
+        this.BackgroundColor = Color.white;
+        this.PlatformColor = Color.black;
+        this.CircleColor = Color.grey;
+    }
+
+
     public override void UpdatePlatformPosition(int platformIndex, List<Platform> allPlatforms, float rSpeedMultiplier)
     {
         Platform platform = allPlatforms[platformIndex];
@@ -16,14 +24,6 @@ public class FallTemplate: LevelTemplate
     public override void Reload()
     {
         base.Reload();
-    }
-
-    public override Color PlatformColor
-    {
-        get
-        {
-            return Color.black;
-        }
     }
 }
 
