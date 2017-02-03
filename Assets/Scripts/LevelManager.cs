@@ -132,8 +132,9 @@ public class LevelManager : MonoBehaviour {
         }
 
         SpawnPlatforms (this.numPlatforms, player.WPos);
-        
-        // reassign the camera's player
+
+        // update camera
+        this.cameraBehaviour.SetColour(this.levelTemplates[this.levelTemplates.Count - 1].BackgroundColor);
         this.cameraBehaviour.FindPlayer();
     }
 
@@ -161,6 +162,11 @@ public class LevelManager : MonoBehaviour {
     public void SetCameraBehaviour(CameraBehaviour cameraBehaviour)
     {
         this.cameraBehaviour = cameraBehaviour;
+    }
+
+    private void GenerateBackground()
+    {
+
     }
 
     public void Restart(float newPlayerWpos = -1)

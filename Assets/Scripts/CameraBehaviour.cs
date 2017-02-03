@@ -6,10 +6,14 @@ public class CameraBehaviour : MonoBehaviour {
 	private Player player;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		cameraObject = Camera.main;
-        FindPlayer();
 	}
+
+    void Start()
+    {
+        this.FindPlayer();
+    }
 	
 	// Update is called once per frame
 	public void FollowPlayer () {
@@ -30,5 +34,10 @@ public class CameraBehaviour : MonoBehaviour {
     public void FindPlayer()
     {
         this.player = (Player)GameObject.FindObjectOfType(typeof(Player));
+    }
+
+    public void SetColour(Color backgroundColour)
+    {
+        this.cameraObject.backgroundColor = backgroundColour;
     }
 }
