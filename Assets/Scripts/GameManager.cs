@@ -20,6 +20,11 @@ public class GameManager : MonoBehaviour {
         this.baseTemplates.Add(new RotateTemplate());
         this.baseTemplates.Add(new FallTemplate());
 
+        this.dynamicTemplates = new List<LevelTemplate>();
+        this.dynamicTemplates.Add(new PulseTemplate());
+        this.dynamicTemplates.Add(new TickTemplate());
+        this.dynamicTemplates.Add(new SinkTemplate());
+
         this.levelManager.SetTemplates(baseTemplates);
         this.levelManager.SetNumPlatforms(5);
         this.levelManager.SetCameraBehaviour(cameraBehaviour);
@@ -52,7 +57,8 @@ public class GameManager : MonoBehaviour {
     void NextLevel()
     {
         // TODO: randomly select template
-        this.levelManager.AddTemplate(new PulseTemplate());
+        LevelTemplate templateToAdd = this.dynamicTemplates[Random.Range(0, this.dynamicTemplates.Count)];
+        this.levelManager.CycleTemplate(templateToAdd);
         this.levelManager.Restart();
     }
 

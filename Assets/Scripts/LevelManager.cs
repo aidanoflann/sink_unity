@@ -148,6 +148,16 @@ public class LevelManager : MonoBehaviour {
         this.levelTemplates.AddRange(levelTemplates);
     }
 
+    public void CycleTemplate(LevelTemplate levelTemplate)
+    // remove the 3rd template and add the given one
+    {
+        if (this.levelTemplates.Count >= 3)
+        {
+            this.levelTemplates.Remove(this.levelTemplates[2]);
+        }
+        this.levelTemplates.Add(levelTemplate);
+    }
+
     public void AddTemplate(LevelTemplate levelTemplate)
     {
         this.levelTemplates.Add(levelTemplate);
