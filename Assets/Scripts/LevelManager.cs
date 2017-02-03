@@ -9,6 +9,7 @@ public class LevelManager : MonoBehaviour {
     // prepare the player and platform prefabs
     public GameObject playerPrefab;
 	public GameObject platformPrefab;
+    public BackgroundCircleFactory backgroundCircleFactory;
 
     //level status
     public enum state
@@ -132,6 +133,8 @@ public class LevelManager : MonoBehaviour {
         }
 
         SpawnPlatforms (this.numPlatforms, player.WPos);
+        // generate the background
+
 
         // update camera
         this.cameraBehaviour.SetColour(this.levelTemplates[this.levelTemplates.Count - 1].BackgroundColor);
