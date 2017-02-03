@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>Android:13</UnityBuildTarget>
     <UnityVersion>5.4.2f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -78,6 +80,7 @@
     <Compile Include="Assets\Scripts\LevelTemplate\LevelTemplate.cs" />
     <Compile Include="Assets\Scripts\LevelTemplate\PulseTemplate.cs" />
     <Compile Include="Assets\Scripts\LevelTemplate\RotateTemplate.cs" />
+    <Compile Include="Assets\Scripts\LevelTemplate\SinkTemplate.cs" />
     <Compile Include="Assets\Scripts\LevelTemplate\SlideTemplate.cs" />
     <Compile Include="Assets\Scripts\LevelTemplate\TickTemplate.cs" />
     <Compile Include="Assets\Scripts\Platform\Platform.cs" />

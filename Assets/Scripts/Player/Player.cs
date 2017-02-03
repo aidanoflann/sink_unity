@@ -155,7 +155,7 @@ public class Player : DynamicObject {
                 this.r_vel = 0;
                 this.platform = platforms[collisionIndex];
                 this.platformPosition = (this.w_pos - this.platform.w_pos)/this.platform.w_size;
-                this.platform.SetColour(this.currentColour);
+                this.platform.CatchPlayer(this);
 				currentState = state.landed;
 			} else {
                 Platform unattachedPlatform = platforms[collisionIndex];
@@ -184,7 +184,7 @@ public class Player : DynamicObject {
             this.r_pos += 0.5f;
             this.r_vel = 17 * jumpSpeedModifier + this.platform.r_vel;
             this.w_vel = 0;
-            this.platform.ResetColour();
+            this.platform.ReleasePlayer();
         }
     }
 

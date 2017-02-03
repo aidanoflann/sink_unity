@@ -12,6 +12,8 @@ public class Platform : DynamicObject {
     public float w_pos;
     public float w_vel;
 
+    public bool hasPlayer;
+
     private int num_points;
 
     // Use this for initialization
@@ -43,12 +45,24 @@ public class Platform : DynamicObject {
 
 		return points;
 	}
-    
+
     public void UpdateMesh() {
-		// update annulus based on new points
-		Vector2[] points = CalculateAnnulusPoints ();
-		updateMesh (points);
-	}
+        // update annulus based on new points
+        Vector2[] points = CalculateAnnulusPoints();
+        updateMesh(points);
+    }
+
+    public void CatchPlayer(Player player)
+    {
+        this.SetColour(player.CurrentColour);
+        this.hasPlayer = true;
+    }
+
+    public void ReleasePlayer()
+    {
+        this.ResetColour();
+        this.hasPlayer = false;
+    }
 
     public void SetColour(Color colour)
     {   

@@ -13,6 +13,14 @@ public class DynamicObject : MonoBehaviour {
     protected Color oldColour;
     protected Color currentColour;
 
+    public Color CurrentColour
+    {
+        get
+        {
+            return currentColour;
+        }
+    }
+
     protected void createMesh(Vector2[] points, Material material)
 	{
 		this.pointCount = points.Length;
