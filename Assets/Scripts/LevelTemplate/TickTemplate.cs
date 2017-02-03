@@ -24,7 +24,7 @@ internal class TickTemplate : LevelTemplate
         this.currentAngle = 0.0f;
     }
 
-    public override void UpdatePlatformPosition(Platform platform, float rSpeedMultiplier)
+    public override void UpdatePlatformPosition(Platform platform, List<Platform> allPlatforms, float rSpeedMultiplier)
     {
         this.currentAngle = (this.currentAngle + this.angularSpeed * Time.deltaTime) % Globals.twoPi;
         platform.w_pos += this.amplitude * Mathf.Sin(this.currentAngle);

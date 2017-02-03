@@ -6,7 +6,7 @@ using System.Text;
 
 public class LevelTemplate
 {
-    public virtual void UpdatePlatformPosition(Platform platform, float rSpeedMultiplier)
+    public virtual void UpdatePlatformPosition(Platform platform, List<Platform> allPlatforms, float rSpeedMultiplier)
     {
     }
 

@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour {
         this.baseTemplates = new List<LevelTemplate>();
         this.baseTemplates.Add(new RotateTemplate());
         this.baseTemplates.Add(new FallTemplate());
+        this.baseTemplates.Add(new SinkTemplate());
 
         this.levelManager.SetTemplates(baseTemplates);
         this.levelManager.SetNumPlatforms(5);

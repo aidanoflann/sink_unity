@@ -13,6 +13,7 @@ public class Platform : DynamicObject {
     public float w_vel;
 
     public bool hasPlayer;
+    public bool hadPlayer;
 
     private int num_points;
 
@@ -56,6 +57,7 @@ public class Platform : DynamicObject {
     {
         this.SetColour(player.CurrentColour);
         this.hasPlayer = true;
+        this.hadPlayer = true;
     }
 
     public void ReleasePlayer()

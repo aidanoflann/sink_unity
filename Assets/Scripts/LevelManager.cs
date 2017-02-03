@@ -235,7 +235,7 @@ public class LevelManager : MonoBehaviour {
 
                     for( int j = 0; j < levelTemplates.Count; j++)
                     {
-                        levelTemplates[j].UpdatePlatformPosition(platform, platformRSpeedMultiplier);
+                        levelTemplates[j].UpdatePlatformPosition(platform, this.platforms, platformRSpeedMultiplier);
                     }
 
                     if (platform.r_pos <= 0)
