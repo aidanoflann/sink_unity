@@ -7,8 +7,14 @@ public class BackgroundCircleFactory : MonoBehaviour {
     public GameObject originalCircle;
 
     private List<GameObject> _copies = new List<GameObject>();
+    private Transform backgroundCircleHolder;
     private int _numCopies = 200;
     
+    void Awake()
+    {
+        this.backgroundCircleHolder = new GameObject("BackgroundCircles").transform;
+    }
+
     public void GenerateBackgroundCircles(Color colour)
     {
         if (this._copies.Count == 0)
@@ -36,6 +42,7 @@ public class BackgroundCircleFactory : MonoBehaviour {
         
         // cache it
         this._copies.Add(copy);
+        copy.transform.SetParent(this.backgroundCircleHolder);
     }
 
     private void SetPositionAndColour(GameObject copy, Color colour)
