@@ -8,7 +8,6 @@ public class Player : DynamicObject {
 	private float r_pos;
 	private float r_vel;
 	private float w_pos;
-	private float w_vel;
 	private List<bool> abovePlatform;
 	private int platformIndex;
 	private enum state
@@ -42,7 +41,6 @@ public class Player : DynamicObject {
         this.startingRPos = 100f;
         this.r_pos = this.startingRPos;
         this.r_vel = 0f;
-        this.w_vel = 0f;
 
         this.currentState = state.midair;
         this.currentColour = new Color(0.1f, 0.2f, 0.9f);
@@ -204,7 +202,6 @@ public class Player : DynamicObject {
             this.currentJumpState = jumpState.holding;
             this.r_pos += 0.5f;
             this.r_vel = 17 * jumpSpeedModifier + this.platform.r_vel;
-            this.w_vel = 0;
             this.platform.ReleasePlayer();
         }
     }
