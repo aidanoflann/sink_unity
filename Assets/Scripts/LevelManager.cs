@@ -70,6 +70,7 @@ public class LevelManager : MonoBehaviour {
             // TODO: Find a way to get these into an init function - doing so as normal changes the values of the prefab, not the instance
             // TODO: Seems to be that public attributes are assumed to be accessible in-editor only - use properties where required.
             platform.w_vel = wVelRange[Random.Range(0, wVelRange.Length - 1)];
+            platform.w_size = wSizeRange[Random.Range(0, wSizeRange.Length - 1)];
             if (clockwise)
 				platform.w_vel *= 1f;
 			else
@@ -77,13 +78,13 @@ public class LevelManager : MonoBehaviour {
             if (p == 0)
             {
                 platform.w_pos = playerPosition;
+                platform.w_size = 359.9f;
             }
             else
             {
                 platform.w_pos = playerPosition + 180f;
             }
 
-            platform.w_size = wSizeRange[Random.Range(0, wSizeRange.Length - 1)];
             platform.r_pos = 2f * (float)(p + 3);
             platform.r_vel = -0.7f;
             platform.SetColour(this.levelTemplates[this.levelTemplates.Count() - 1].PlatformColor);

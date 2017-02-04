@@ -9,7 +9,7 @@ public class TailFactory : MonoBehaviour {
     private int numTailSprites = 100;
     private int indexOfOldestSprite = 0;
     private float timeSinceLastTailUpdate;
-    private float tailUpdateCooldown = 0.002f;
+    private float tailUpdateCooldown = 0.0001f;
 
     public GameObject originalTailSprite;
 
