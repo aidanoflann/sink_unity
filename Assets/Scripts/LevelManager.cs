@@ -31,8 +31,7 @@ public class LevelManager : MonoBehaviour {
     // cached GameObjects
     private List<GameObject> platformList;
     private List<Platform> platforms;
-    private GameObject playerObject;
-    private Player player;
+    public Player player;
 
 	// this is used to child all of the gameObjects for better control/organisation in the inspector.
 	private Transform levelHolder;
@@ -98,10 +97,10 @@ public class LevelManager : MonoBehaviour {
 
 	private void SpawnPlayer()
 	{
-		GameObject toInstantiate = playerPrefab;
-		playerObject = Instantiate (toInstantiate);
-        playerObject.transform.SetParent (levelHolder);
-        player = playerObject.GetComponent<Player>();
+		//GameObject toInstantiate = playerPrefab;
+		//playerObject = Instantiate (toInstantiate);
+        //playerObject.transform.SetParent (levelHolder);
+        //player = playerObject.GetComponent<Player>();
     }
 
     private void Clear()
@@ -114,7 +113,7 @@ public class LevelManager : MonoBehaviour {
         }
         platformList.Clear();
         platforms.Clear();
-        Destroy(playerObject);
+        //Destroy(playerObject);
     }
     #endregion
 
@@ -131,6 +130,7 @@ public class LevelManager : MonoBehaviour {
         {
             player.SetWPos(playerWPos);
         }
+        player.ResetRPos();
 
         SpawnPlatforms (this.numPlatforms, player.WPos);
 
@@ -227,7 +227,6 @@ public class LevelManager : MonoBehaviour {
                 currentState = state.ending;
                 platformRSpeedMultiplier = 24f;
                 cameraBehaviour.EndGame();
-                Destroy(playerObject);
             }
 
             // restart game if in completing state and player gets over a certain height

@@ -83,6 +83,7 @@
     <Compile Include="Assets\Scripts\LevelTemplate\TickTemplate.cs" />
     <Compile Include="Assets\Scripts\Platform\Platform.cs" />
     <Compile Include="Assets\Scripts\Player\Player.cs" />
+    <Compile Include="Assets\Scripts\Player\TailFactory.cs" />
     <Compile Include="Assets\Scripts\Visual\BackgroundCircleFactory.cs" />
     <Compile Include="Assets\Scripts\WebLayer\Endpoints.cs" />
     <Compile Include="Assets\Scripts\WebLayer\RequestHandler.cs" />

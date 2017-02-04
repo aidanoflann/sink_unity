@@ -27,6 +27,9 @@ public class Player : DynamicObject {
 
     private Platform platform;
     private float platformPosition;
+    private float startingRPos;
+
+    public TailFactory tailFactory;
 
     void Awake() {
 		//static attributes
@@ -36,7 +39,8 @@ public class Player : DynamicObject {
         float[] wPosRange = Enumerable.Range(0, 359).Select(i => (float)i).ToArray();
         this.w_pos = wPosRange[Random.Range(0, wPosRange.Length - 1)];
 
-        this.r_pos = 100;
+        this.startingRPos = 100f;
+        this.r_pos = this.startingRPos;
         this.r_vel = 0f;
         this.w_vel = 0f;
 
@@ -106,6 +110,13 @@ public class Player : DynamicObject {
     public void SetWPos(float wPos)
     {
         this.w_pos = wPos;
+    }
+
+    public void ResetRPos()
+    {
+        this.r_pos = startingRPos;
+        this.r_vel = 0;
+        this.abovePlatform = null;
     }
 
 	private int CheckPlatformCollisions(List<Platform> platforms)
