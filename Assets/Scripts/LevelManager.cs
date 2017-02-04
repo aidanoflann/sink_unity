@@ -218,6 +218,7 @@ public class LevelManager : MonoBehaviour {
                 currentState = state.ending;
                 platformRSpeedMultiplier = 24f;
                 cameraBehaviour.EndGame();
+                player.Hide();
             }
 
             // restart game if in completing state and player gets over a certain height

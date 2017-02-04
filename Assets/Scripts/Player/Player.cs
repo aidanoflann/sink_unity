@@ -117,6 +117,16 @@ public class Player : DynamicObject {
         this.r_pos = startingRPos;
         this.r_vel = 0;
         this.abovePlatform = null;
+        if (this.meshRenderer != null)
+        {
+            this.meshRenderer.enabled = true;
+        }
+        this.currentState = state.midair;
+    }
+
+    public void Hide()
+    {
+        this.meshRenderer.enabled = false;
     }
 
 	private int CheckPlatformCollisions(List<Platform> platforms)
