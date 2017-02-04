@@ -103,7 +103,9 @@ public class Player : DynamicObject {
         }
 
 		updateTransform (r_pos, w_pos);
-	}
+        this.tailFactory.SetPlayerPosition(this.transform.position);
+
+    }
 
     public void SetWPos(float wPos)
     {
