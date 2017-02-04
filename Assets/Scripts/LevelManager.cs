@@ -95,14 +95,6 @@ public class LevelManager : MonoBehaviour {
         }
 	}
 
-	private void SpawnPlayer()
-	{
-		//GameObject toInstantiate = playerPrefab;
-		//playerObject = Instantiate (toInstantiate);
-        //playerObject.transform.SetParent (levelHolder);
-        //player = playerObject.GetComponent<Player>();
-    }
-
     private void Clear()
     {
         // clear out all platforms & player
@@ -124,13 +116,12 @@ public class LevelManager : MonoBehaviour {
         platformRSpeedMultiplier = 1f;
 
         currentState = state.starting;
-        SpawnPlayer();
 
+        player.Reset();
         if (playerWPos != -1)
         {
             player.SetWPos(playerWPos);
         }
-        player.ResetRPos();
 
         SpawnPlatforms (this.numPlatforms, player.WPos);
 

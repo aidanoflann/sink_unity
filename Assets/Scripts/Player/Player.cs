@@ -112,7 +112,7 @@ public class Player : DynamicObject {
         this.w_pos = wPos;
     }
 
-    public void ResetRPos()
+    public void Reset()
     {
         this.r_pos = startingRPos;
         this.r_vel = 0;
