@@ -28,7 +28,7 @@ public class Player : DynamicObject {
     private float platformPosition;
     private float startingRPos;
 
-    public TailFactory tailFactory;
+    public TailSpriteFactory tailFactory;
 
     void Awake() {
 		//static attributes
