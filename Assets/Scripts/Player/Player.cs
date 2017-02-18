@@ -28,8 +28,6 @@ public class Player : DynamicObject {
     private float platformPosition;
     private float startingRPos;
 
-    public TailSpriteFactory tailFactory;
-
     void Awake() {
 		//static attributes
 		this.size = 0.5f;
@@ -103,8 +101,6 @@ public class Player : DynamicObject {
         }
 
 		updateTransform (r_pos, w_pos);
-        this.tailFactory.SetPlayerPosition(this.transform.position);
-
     }
 
     public void SetWPos(float wPos)
