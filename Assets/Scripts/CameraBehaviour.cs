@@ -20,10 +20,10 @@ public class CameraBehaviour : MonoBehaviour {
         Vector3 newPosition = cameraObject.transform.position;
 
 		newPosition.x = player.transform.position.x * 0.67f;
-		newPosition.y = player.transform.position.y * 0.67f;
+		newPosition.y = player.transform.position.y * 0.67f - 5f;
         cameraObject.transform.position = newPosition;
 
-        cameraObject.orthographicSize = 5f * Mathf.Max(0.001f, Mathf.Sqrt(Mathf.Abs(player.RPos)));
+        cameraObject.orthographicSize = 7.5f * Mathf.Max(0.001f, Mathf.Sqrt(Mathf.Abs(player.RPos)));
     }
 
     public void EndGame()
