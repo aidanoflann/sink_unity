@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class Player : DynamicObject {
 
+    public Tail tail;
+
 	private float size;
 	private float r_pos;
 	private float r_vel;
@@ -101,6 +103,7 @@ public class Player : DynamicObject {
         }
 
 		updateTransform (r_pos, w_pos);
+        this.tail.UpdateTail();
     }
 
     public void SetWPos(float wPos)

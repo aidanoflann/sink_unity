@@ -10,6 +10,7 @@ public class Tail : DynamicObject {
     private List<Vector2> _tailPositions = new List<Vector2>();
     private static int numTailPoints = 20;
     private Vector2[] _meshEdges = new Vector2[numTailPoints * 2 - 1];
+    private Vector2[] _meshRibs = new Vector2[numTailPoints - 1];
     private float[] _tailWidth = new float[numTailPoints];
     private float tailWidthAtPlayer = 0.3f;
     private float timeSinceLastTailUpdate;
@@ -36,16 +37,28 @@ public class Tail : DynamicObject {
                 // tail point has zero width, just set its edge to the tail position
                 _meshEdges[numTailPoints - 1] = _tailPositions[0];
             }
-            else
+            else if (i == numTailPoints - 1)
             {
+                // we are at the player's current point
                 // calculate normal vector to the line from the previous to current point
-                // TODO these can be stored - only need to calculate one per update
                 Vector2 fromPreviousToCurrent = _tailPositions[i] - _tailPositions[i - 1];
                 Vector2 normalVector = new Vector2(-fromPreviousToCurrent.y,
                                                    fromPreviousToCurrent.x);
 
+                // last point
+                _meshEdges[2 * numTailPoints - 2] = _tailPositions[i] + normalVector.normalized * this._tailWidth[i];
+                // first point
+                _meshEdges[0] = _tailPositions[i] - normalVector.normalized * this._tailWidth[i];
+
+                // save the nromalvector
+                this._meshRibs[numTailPoints - 2] = normalVector;
+            }
+            else
+            {
+                // can reuse mesh ribs
+                Vector2 normalVector = this._meshRibs[];
+                _meshEdges[numTailPoints - i - 1] = _tailPositions[i] + normalVector.normalized * this._tailWidth[i];
                 _meshEdges[numTailPoints + i - 1] = _tailPositions[i] + normalVector.normalized * this._tailWidth[i];
-                _meshEdges[numTailPoints - i - 1] = _tailPositions[i] - normalVector.normalized * this._tailWidth[i];
             }
         }
         this.updateMesh(this._meshEdges);
@@ -64,18 +77,19 @@ public class Tail : DynamicObject {
 
 	// Use this for initialization
 	void Awake () {
-        this.currentColour = new Color(0.4f, 0.4f, 0.9f);
+        this.currentColour = Color.blue;
         this.GenerateTail();
         this.timeSinceLastTailUpdate = Time.time;
     }
 	
 	// Update is called once per frame
-	public void UpdateTail () {
+	void Update () {
 
         if (Time.time - this.timeSinceLastTailUpdate > this.tailUpdateCooldown)
         {
             this.timeSinceLastTailUpdate = Time.time;
             this.SetPlayerPosition();
         }
+        // always update the point at the player
 	}
 }
