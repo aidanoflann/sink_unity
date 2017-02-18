@@ -36,7 +36,7 @@ public class DynamicObject : MonoBehaviour {
 
 		for(int j=0; j<pointCount; j++){
 			Vector2 actual = points[j];
-			vertices[j] = new Vector3(actual.x, actual.y, 0);
+			vertices[j] = new Vector3(actual.x, actual.y, -0.1f);
 		}
 
 		this.triangulator = new Triangulator(points);
