@@ -8,7 +8,7 @@ public class Tail : DynamicObject {
 
     private float tailUpdateCooldown = 0.002f;
     private List<Vector2> _tailPositions = new List<Vector2>();
-    private static int numTailPoints = 20;
+    private static int numTailPoints = 40;
     private Vector2[] _meshEdges = new Vector2[numTailPoints * 2 - 1];
     private float[] _tailWidth = new float[numTailPoints];
     private float tailWidthAtPlayer = 0.3f;
