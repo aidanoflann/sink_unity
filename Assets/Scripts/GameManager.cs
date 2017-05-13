@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour {
         this.dynamicTemplates = new List<LevelTemplate>();
         this.dynamicTemplates.Add(new PulseTemplate());
         this.dynamicTemplates.Add(new TickTemplate());
-        this.dynamicTemplates.Add(new SinkTemplate());
+//        this.dynamicTemplates.Add(new SinkTemplate());
 
         this.levelManager.SetTemplates(baseTemplates);
         this.levelManager.SetNumPlatforms(5);
