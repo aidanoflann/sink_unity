@@ -1,16 +1,43 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class MenuButtons : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public Canvas quitMenu;
+    public Button playButton;
+    public Button quitButton;
+
+    void Start()
+    {
+        Screen.orientation = ScreenOrientation.LandscapeLeft;
+        quitMenu = quitMenu.GetComponent<Canvas>();
+        playButton = playButton.GetComponent<Button>();
+        quitButton = quitButton.GetComponent<Button>();
+        quitMenu.enabled = false;
+    }
+
+    public void ExitPress()
+    {
+        quitMenu.enabled = true;
+        playButton.enabled = false;
+        quitButton.enabled = false;
+    }
+
+    public void NoPress()
+    {
+        quitMenu.enabled = false;
+        playButton.enabled = true;
+        quitButton.enabled = true;
+    }
+
+    public void StartLevel()
+    {
+        SceneManager.LoadScene("MainLevel");
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
 }
