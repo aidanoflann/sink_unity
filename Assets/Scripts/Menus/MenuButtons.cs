@@ -4,31 +4,26 @@ using UnityEngine.SceneManagement;
 
 public class MenuButtons : MonoBehaviour {
 
-    public Canvas quitMenu;
-    public Button playButton;
-    public Button quitButton;
+    public Canvas howToPlayMenu;
+    public Canvas startMenu;
 
     void Start()
     {
         Screen.orientation = ScreenOrientation.LandscapeLeft;
-        quitMenu = quitMenu.GetComponent<Canvas>();
-        playButton = playButton.GetComponent<Button>();
-        quitButton = quitButton.GetComponent<Button>();
-        quitMenu.enabled = false;
+        howToPlayMenu = howToPlayMenu.GetComponent<Canvas>();
+        howToPlayMenu.enabled = false;
     }
 
-    public void ExitPress()
+    public void HowToPlayButtonPress()
     {
-        quitMenu.enabled = true;
-        playButton.enabled = false;
-        quitButton.enabled = false;
+        startMenu.enabled = false;
+        howToPlayMenu.enabled = true;
     }
 
-    public void NoPress()
+    public void HowToPlayOkButtonPress()
     {
-        quitMenu.enabled = false;
-        playButton.enabled = true;
-        quitButton.enabled = true;
+        howToPlayMenu.enabled = false;
+        startMenu.enabled = true;
     }
 
     public void StartLevel()
