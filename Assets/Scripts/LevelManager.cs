@@ -93,10 +93,16 @@ public class LevelManager : MonoBehaviour {
 			instance.transform.SetParent (levelHolder);
             platformList.Add(instance);
             platforms.Add(platform);
-        }
-	}
 
-    private void Clear()
+            for (int j = 0; j < levelTemplates.Count; j++)
+            {
+                levelTemplates[j].SetPlatformParameters(p, platforms);
+            }
+        }
+
+    }
+
+private void Clear()
     {
         // clear out all platforms & player
         for (int i = 0; i < platformList.Count; i++)

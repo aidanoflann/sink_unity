@@ -10,23 +10,28 @@ public class GameManager : MonoBehaviour {
     private List<LevelTemplate> baseTemplates;
     private List<LevelTemplate> dynamicTemplates;
 
+    public int numPlatforms = 5;
+
     void Awake ()
     {
         mainCamera = GameObject.FindObjectOfType<Camera>();
         cameraBehaviour = mainCamera.GetComponent<CameraBehaviour>();
         levelManager = GetComponent<LevelManager> ();
 
+        // base templates, common to all levels
         this.baseTemplates = new List<LevelTemplate>();
         this.baseTemplates.Add(new RotateTemplate());
         this.baseTemplates.Add(new FallTemplate());
 
+        // Each dynamic template added will be used as a new level
         this.dynamicTemplates = new List<LevelTemplate>();
-        this.dynamicTemplates.Add(new PulseTemplate());
-        this.dynamicTemplates.Add(new TickTemplate());
+        //this.dynamicTemplates.Add(new PulseTemplate());
+        //this.dynamicTemplates.Add(new TickTemplate());
+        this.dynamicTemplates.Add(new DilateTemplate());
 //        this.dynamicTemplates.Add(new SinkTemplate());
 
         this.levelManager.SetTemplates(baseTemplates);
-        this.levelManager.SetNumPlatforms(5);
+        this.levelManager.SetNumPlatforms(this.numPlatforms);
         this.levelManager.SetCameraBehaviour(cameraBehaviour);
         this.levelManager.SetupScene();
 	}
@@ -45,6 +50,14 @@ public class GameManager : MonoBehaviour {
         {
             this.NextLevel();
         }
+
+#if CHEATS_ENABLED
+        // Level skip cheat
+        if (Input.GetKeyDown("s"))
+        {
+            this.NextLevel();
+        }
+#endif
 
         if (Input.GetKeyDown("x"))
         {

@@ -17,14 +17,17 @@ public class Platform : DynamicObject {
 
     private int num_points;
 
+    private Material material;
+
     // Use this for initialization
     void Start () {
 		//static attributes
 		r_size = 0.2f;
 
 		Vector2[] points = CalculateAnnulusPoints ();
+        this.material = Resources.Load<Material>("PlatformMaterial");
 
-		createMesh (points, Resources.Load<Material>("PlatformMaterial"));
+        createMesh (points, this.material);
 	}
 
 	protected Vector2[] CalculateAnnulusPoints()
