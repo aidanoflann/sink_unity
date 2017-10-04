@@ -32,17 +32,21 @@ public class Platform : DynamicObject {
 
 	protected Vector2[] CalculateAnnulusPoints()
 	{
-		//edge points of annulus with gap
-		this.num_points = (int)(this.w_size / 5f) + 1;
+        //edge points of annulus with gap
+        this.num_points = 100;
 
 		float[] d_w = new float[this.num_points];
 		Vector2[] points = new Vector2 [this.num_points * 2];
         for (int x = 0; x < this.num_points; x++) {
             //TODO: disappearing issue starts exactly when w_pos gets > w_size
-			d_w [x] = (x * 5 - this.w_size * 0.5f + this.w_pos) * Globals.degreesToRadians;
+            d_w[x] = (x * (this.w_size / this.num_points) - this.w_size * 0.5f + this.w_pos) * Globals.degreesToRadians;
+			//d_w [x] = (x * 5 - this.w_size * 0.5f + this.w_pos) * Globals.degreesToRadians;
+
+            // outer circle
 			points [x].x = (this.r_pos + this.r_size * 0.5f) * Mathf.Cos (d_w [x]);
 			points [x].y = (this.r_pos + this.r_size * 0.5f) * Mathf.Sin (d_w [x]);
 
+            // inner circle
 			points [this.num_points * 2 - 1 - x].x = (this.r_pos - this.r_size * 0.5f) * Mathf.Cos (d_w [x]);
 			points [this.num_points * 2 - 1 - x].y = (this.r_pos - this.r_size * 0.5f) * Mathf.Sin (d_w [x]);
 		}
