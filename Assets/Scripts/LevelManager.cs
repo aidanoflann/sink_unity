@@ -85,7 +85,7 @@ public class LevelManager : MonoBehaviour {
                 platform.w_pos = playerPosition + 180f;
             }
 
-            platform.r_pos = 2f * (float)(p + 3);
+            platform.r_pos = 10f + 2f * (float)p;
             platform.r_vel = -0.7f;
             platform.SetColour(this.levelTemplates[this.levelTemplates.Count() - 1].PlatformColor);
             clockwise = !clockwise;

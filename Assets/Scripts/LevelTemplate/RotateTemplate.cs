@@ -16,7 +16,7 @@ public class RotateTemplate : LevelTemplate
     public override void UpdatePlatformPosition(int platformIndex, List<Platform> allPlatforms, float rSpeedMultiplier)
     {
         Platform platform = allPlatforms[platformIndex];
-        platform.w_pos = platform.w_pos + platform.w_vel * Time.deltaTime;
+        platform.w_pos = (platform.w_pos + platform.w_vel * Time.deltaTime) % 360f;
     }
 
     public override void Reload()

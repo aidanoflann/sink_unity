@@ -36,7 +36,6 @@ public class GameManager : MonoBehaviour {
         this.levelManager.SetupScene();
 	}
 
-    // quick FPS script shamelessly copied from http://wiki.unity3d.com/index.php?title=FramesPerSecond
     float deltaTime = 0.0f;
 
     void Update()
@@ -81,6 +80,7 @@ public class GameManager : MonoBehaviour {
         this.levelManager.Restart();
     }
 
+    // quick FPS script shamelessly copied from http://wiki.unity3d.com/index.php?title=FramesPerSecond
     void OnGUI()
     {
         int w = Screen.width, h = Screen.height;

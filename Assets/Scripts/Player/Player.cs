@@ -90,7 +90,7 @@ public class Player : DynamicObject {
             this.r_pos += r_vel * deltaTime;
 		} else {
 			this.r_pos = this.platform.r_pos + this.size * 0.5f + this.platform.r_size * 0.5f;
-            this.w_pos = this.platform.w_pos + this.platformPosition * this.platform.w_size;
+            this.w_pos = (this.platform.w_pos + this.platformPosition * this.platform.w_size) % 360f;
         }
 
 		// inputs
