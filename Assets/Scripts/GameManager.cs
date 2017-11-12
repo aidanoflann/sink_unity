@@ -25,10 +25,10 @@ public class GameManager : MonoBehaviour {
 
         // Each dynamic template added will be used as a new level
         this.dynamicTemplates = new List<LevelTemplate>();
-        //this.dynamicTemplates.Add(new PulseTemplate());
-        //this.dynamicTemplates.Add(new TickTemplate());
+        this.dynamicTemplates.Add(new PulseTemplate());
+        this.dynamicTemplates.Add(new TickTemplate());
         this.dynamicTemplates.Add(new DilateTemplate());
-//        this.dynamicTemplates.Add(new SinkTemplate());
+        this.dynamicTemplates.Add(new SinkTemplate());
 
         this.levelManager.SetTemplates(baseTemplates);
         this.levelManager.SetNumPlatforms(this.numPlatforms);
