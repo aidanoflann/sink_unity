@@ -22,7 +22,7 @@ public class Platform : DynamicObject {
     // Use this for initialization
     void Start () {
 		//static attributes
-		r_size = 0.2f;
+		r_size = 0.6f;
 
 		Vector2[] points = CalculateAnnulusPoints ();
         this.material = Resources.Load<Material>("PlatformMaterial");

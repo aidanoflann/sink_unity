@@ -11,7 +11,7 @@ public class Tail : DynamicObject {
     private static int numTailPoints = 40;
     private Vector2[] _meshEdges = new Vector2[numTailPoints * 2 - 1];
     private float[] _tailWidth = new float[numTailPoints];
-    private float tailWidthAtPlayer = 0.3f;
+    private float tailWidthAtPlayer = 0.6f;
     private float timeSinceLastTailUpdate;
 
     public void SetPlayerPosition()

@@ -32,7 +32,7 @@ public class Player : DynamicObject {
 
     void Awake() {
 		//static attributes
-		this.size = 0.5f;
+		this.size = 1f;
 
         //dynamic attributes
         float[] wPosRange = Enumerable.Range(0, 359).Select(i => (float)i).ToArray();
