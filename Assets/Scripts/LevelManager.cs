@@ -261,7 +261,7 @@ private void Clear()
                     }
                     else
                     {
-                        platform.UpdateMesh();
+                        platform.RecalculateMesh();
                     }
                 }
 

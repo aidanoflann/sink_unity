@@ -46,6 +46,13 @@ public class DynamicObject : MonoBehaviour {
         this.meshFilter.mesh = mesh;
     }
 
+    public virtual int[] GenerateTriangles(Vector2[] points)
+    // Use an overkill method to generate triangles. Ideally for each subclass, this is overridden.
+    {
+        this.triangulator.UpdatePoints(points);
+        return this.triangulator.Triangulate();
+    }
+
 	protected void updateMesh(Vector2[] points)
 	{
 		Mesh mesh = this.meshFilter.mesh;
@@ -56,12 +63,10 @@ public class DynamicObject : MonoBehaviour {
             this.vertices[j].y = actual.y;
 		}
 
-        this.triangulator.UpdatePoints(points);
-        int [] triangles = this.triangulator.Triangulate();
 		mesh.vertices = this.vertices;
-		mesh.triangles = triangles;
+		mesh.triangles = GenerateTriangles(points);
         mesh.RecalculateBounds();
-		this.meshFilter.mesh = mesh;
+        this.meshFilter.mesh = mesh;
         this.meshRenderer.material.SetColor("_Color", this.currentColour);
     }
 
