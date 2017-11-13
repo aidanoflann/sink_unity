@@ -55,9 +55,6 @@ public class Platform : DynamicObject {
     public override int[] GenerateTriangles(Vector2[] points)
     {
         // first and the last vector are the leftmost inner and outer point
-        // need to do first, last, first-1
-        // then last, first-1, last-1
-        // then first-1, last-1, first-2
         // number of triangles:
         // one for the leftmost three points
         // then one more for each point right up to the end
@@ -65,21 +62,15 @@ public class Platform : DynamicObject {
         int numPoints = points.Length;
         int numberOfTriangles = numPoints - 2;
         int[] triangles = new int[numberOfTriangles * 3];
-        triangles[0] = 0;
-        triangles[1] = numPoints - 1;
-        triangles[2] = 1;
-        for (int i = 1; i < numberOfTriangles - 1; i+=3)
+        // draw two triangles (one square) per iteration
+        for (int i = 0; i < numberOfTriangles / 2; i++)
         {
-            if (i % 2 == 0)
-            {
-                triangles[i] = i;
-                triangles[i + 1] = numPoints - i - 2;
-                triangles[i + 2] = i + 1;
-            }
-            else
-                triangles[i] = i + 1;
-                triangles[i + 1] = numPoints - i - 1;
-                triangles[i + 2] = numPoints - i - 2;
+            triangles[i * 6] = i;
+            triangles[i * 6 + 1] = numPoints - i - 1;
+            triangles[i * 6 + 2] = numPoints - i - 2;
+            triangles[i * 6 + 3] = i;
+            triangles[i * 6 + 4] = numPoints - i - 2;
+            triangles[i * 6 + 5] = i + 1;
         }
         return triangles;
     }
