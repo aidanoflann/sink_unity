@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Utils;
 
 public class LevelManager : MonoBehaviour {
 
@@ -56,7 +57,7 @@ public class LevelManager : MonoBehaviour {
         wSizeRange = Enumerable.Range(3, 30).Select(i => (float)i*10f).ToArray();
     }
 
-	private void SpawnPlatforms(int numPlatforms, float playerPosition)
+	private void SpawnPlatforms(int numPlatforms, Angle playerPosition)
 	{
 		bool clockwise = true;
 		for (int p=0; p < numPlatforms; p++) {
@@ -69,8 +70,8 @@ public class LevelManager : MonoBehaviour {
 
             // TODO: Find a way to get these into an init function - doing so as normal changes the values of the prefab, not the instance
             // TODO: Seems to be that public attributes are assumed to be accessible in-editor only - use properties where required.
-            platform.w_vel = wVelRange[Random.Range(0, wVelRange.Length - 1)];
-            platform.w_size = wSizeRange[Random.Range(0, wSizeRange.Length - 1)];
+            platform.w_vel = new Angle(wVelRange[Random.Range(0, wVelRange.Length - 1)]);
+            platform.w_size = new Angle(wSizeRange[Random.Range(0, wSizeRange.Length - 1)]);
             if (clockwise)
 				platform.w_vel *= 1f;
 			else
@@ -78,11 +79,11 @@ public class LevelManager : MonoBehaviour {
             if (p == 0)
             {
                 platform.w_pos = playerPosition;
-                platform.w_size = 359.9f;
+                platform.w_size.SetValue(359.9f);
             }
             else
             {
-                platform.w_pos = playerPosition + 180f;
+                platform.w_pos = new Angle(playerPosition.GetValue() + 180f);
             }
 
             platform.r_pos = 10f + 3f * (float)p;
@@ -118,14 +119,14 @@ private void Clear()
 
     #region [Public methods]
     
-    public void SetupScene(float playerWPos = -1)
+    public void SetupScene(Angle playerWPos = null)
     {
         platformRSpeedMultiplier = 1f;
 
         currentState = state.starting;
 
         player.Reset();
-        if (playerWPos != -1)
+        if (playerWPos != null)
         {
             player.SetWPos(playerWPos);
         }
@@ -176,11 +177,11 @@ private void Clear()
         this.cameraBehaviour = cameraBehaviour;
     }
 
-    public void Restart(float newPlayerWpos = -1)
+    public void Restart(Angle newPlayerWpos = null)
     {
-        if (newPlayerWpos == -1)
+        if (newPlayerWpos == null)
         {
-            newPlayerWpos = player.WPos + 180f;
+            newPlayerWpos = new Angle(player.WPos.GetValue() + 180f);
         }
         for (int i = 0; i < this.levelTemplates.Count; i++)
         {

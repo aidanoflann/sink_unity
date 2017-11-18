@@ -35,11 +35,7 @@ internal class DilateTemplate : LevelTemplate
     {
         Platform platform = allPlatforms[platformIndex];
         this.currentAngle = (this.currentAngle + this.angularSpeed * Time.deltaTime) % Globals.twoPi;
-        platform.w_size += this.amplitude * (Mathf.Sin(this.currentAngle));
-        if (platform.w_size > 359.0f)
-        {
-            platform.w_size = 359.0f;
-        }
+        platform.w_size.SetValue(platform.w_size.GetValue() + this.amplitude * (Mathf.Sin(this.currentAngle)));
     }
 }
 
