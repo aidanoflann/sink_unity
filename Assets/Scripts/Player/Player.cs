@@ -176,7 +176,6 @@ public class Player : DynamicObject {
             {
                 this.r_vel = 0;
                 this.platform = platforms[collisionIndex];
-                // TODO: What if w_pos is 350 and this.platform.w_pos is 5?
                 this.platformPosition = (this.w_pos - this.platform.w_pos).GetValue()/this.platform.w_size.GetValue();
                 this.platform.CatchPlayer(this);
 				currentState = state.landed;
@@ -258,6 +257,17 @@ public class Player : DynamicObject {
                 }
             }
             return false;
+        }
+    }
+
+    public void Log()
+    {
+        Debug.LogFormat("size: {0}, r_pos: {1}, r_vel: {2}, w_pos: {3}, platformIndex: {4}, currentState: {5}",
+            this.size, this.r_pos, this.r_vel, this.w_pos.GetValue(), this.platformIndex, this.currentState);
+        Debug.Log("-abovePlatform");
+        for (int i = 0; i < this.abovePlatform.Count; i++)
+        {
+            Debug.LogFormat("abovePlatform index: {0}, abovePlatform value: {1}", i, this.abovePlatform[i]);
         }
     }
 }

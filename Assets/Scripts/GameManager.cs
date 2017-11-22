@@ -56,12 +56,19 @@ public class GameManager : MonoBehaviour {
         {
             this.NextLevel();
         }
-#endif
 
         if (Input.GetKeyDown("x"))
         {
             levelManager.Pause();
         }
+
+#endif
+#if EDITOR
+        if (Input.GetKeyDown("l"))
+        {
+            this.Log();
+        }
+#endif
 
         deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
     }
@@ -97,4 +104,12 @@ public class GameManager : MonoBehaviour {
         GUI.Label(rect, text, style);
     }
 
+#if EDITOR
+    private void Log()
+    {
+        Debug.LogError("=== BEGINNING LOG DUMP ===");
+        this.levelManager.Log();
+        Debug.LogError("=== ENDING LOG DUMP ===");
+    }
+#endif
 }

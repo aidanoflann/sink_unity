@@ -294,4 +294,17 @@ private void Clear()
         }
     }
     #endregion
+    
+    public void Log()
+    {
+        Debug.Log("--- LOGGING LEVEL MANAGER ---");
+        Debug.Log("--Player--");
+        this.player.Log();
+        for (int i = 0; i < this.platforms.Count; i++)
+        {
+            Debug.LogFormat("--Plaftorm {0}--", i);
+            platforms[i].Log();
+        }
+        Debug.Log("------");
+    }
 }

@@ -31,7 +31,7 @@ namespace Assets.Utils
         public bool IsWithin(Angle center, Angle size)
         // return True if this angle is within the arc defined by the given center and (full) size
         {
-            return Mathf.Abs(this.value - center.value) < size.value * 0.5;
+            return Mathf.Abs((this - center).value) < size.value * 0.5;
         }
 
         public static Angle operator +(Angle left, Angle right)
@@ -42,13 +42,11 @@ namespace Assets.Utils
         public static Angle operator -(Angle left, Angle right)
         {
             // needs to handle e.g. case where left is 5 degrees and right is 355 degrees (result should be 10)
-            float newValue = left.value - right.value;
+            float newValue = (left.value - right.value) % degreesInCircle;
             if (Mathf.Abs(newValue) > degreesInCircle * 0.5)
             {
                 // use 360 - result
-                newValue = 360f - newValue;
-                // flip the sign
-                newValue = -newValue;
+                newValue = - Mathf.Sign(newValue) * (360f - Mathf.Abs(newValue));
             }
             return new Angle(newValue);
         }
