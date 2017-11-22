@@ -21,12 +21,12 @@ public class GameManager : MonoBehaviour {
         // base templates, common to all levels
         this.baseTemplates = new List<LevelTemplate>();
         this.baseTemplates.Add(new RotateTemplate());
-        this.baseTemplates.Add(new FallTemplate());
+        // this.baseTemplates.Add(new FallTemplate());
 
         // Each dynamic template added will be used as a new level
         this.dynamicTemplates = new List<LevelTemplate>();
-        this.dynamicTemplates.Add(new PulseTemplate());
-        this.dynamicTemplates.Add(new TickTemplate());
+        // this.dynamicTemplates.Add(new PulseTemplate());
+        // this.dynamicTemplates.Add(new TickTemplate());
         this.dynamicTemplates.Add(new DilateTemplate());
         // this.dynamicTemplates.Add(new SinkTemplate());
 
@@ -56,12 +56,19 @@ public class GameManager : MonoBehaviour {
         {
             this.NextLevel();
         }
-#endif
 
         if (Input.GetKeyDown("x"))
         {
             levelManager.Pause();
         }
+
+#endif
+#if EDITOR
+        if (Input.GetKeyDown("l"))
+        {
+            this.Log();
+        }
+#endif
 
         deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
     }
@@ -97,4 +104,12 @@ public class GameManager : MonoBehaviour {
         GUI.Label(rect, text, style);
     }
 
+#if EDITOR
+    private void Log()
+    {
+        Debug.LogError("=== BEGINNING LOG DUMP ===");
+        this.levelManager.Log();
+        Debug.LogError("=== ENDING LOG DUMP ===");
+    }
+#endif
 }

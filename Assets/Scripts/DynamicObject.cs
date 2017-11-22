@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Assets.Utils;
 
 public class DynamicObject : MonoBehaviour {
     
@@ -70,17 +71,17 @@ public class DynamicObject : MonoBehaviour {
         this.meshRenderer.material.SetColor("_Color", this.currentColour);
     }
 
-	protected void updateTransform (float r_pos, float w_pos)
+	protected void updateTransform (float r_pos, Angle w_pos)
 	{
 		// update x, y position
 		Vector3 pos = transform.position;
-		pos.x = r_pos * Mathf.Cos(w_pos * Globals.degreesToRadians);
-		pos.y = r_pos * Mathf.Sin(w_pos * Globals.degreesToRadians);
+		pos.x = r_pos * w_pos.Cosine();
+		pos.y = r_pos * w_pos.Sine();
 		transform.position = pos;
 
 		// update rotation
 		Quaternion rot = transform.rotation;
-		rot.eulerAngles = new Vector3 (0, 0, w_pos);
+		rot.eulerAngles = new Vector3 (0, 0, w_pos.GetValue());
 		transform.rotation = rot;
 	}
 }

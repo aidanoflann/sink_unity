@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Linq;
 using System.Collections.Generic;
+using Assets.Utils;
 
 public class Player : DynamicObject {
 
@@ -9,7 +10,7 @@ public class Player : DynamicObject {
 	private float size;
 	private float r_pos;
 	private float r_vel;
-	private float w_pos;
+	private Angle w_pos;
 	private List<bool> abovePlatform;
 	private int platformIndex;
 	private enum state
@@ -36,7 +37,7 @@ public class Player : DynamicObject {
 
         //dynamic attributes
         float[] wPosRange = Enumerable.Range(0, 359).Select(i => (float)i).ToArray();
-        this.w_pos = wPosRange[Random.Range(0, wPosRange.Length - 1)];
+        this.w_pos = new Angle(wPosRange[Random.Range(0, wPosRange.Length - 1)]);
 
         this.startingRPos = 100f;
         this.r_pos = this.startingRPos;
@@ -90,7 +91,7 @@ public class Player : DynamicObject {
             this.r_pos += r_vel * deltaTime;
 		} else {
 			this.r_pos = this.platform.r_pos + this.size * 0.5f + this.platform.r_size * 0.5f;
-            this.w_pos = (this.platform.w_pos + this.platformPosition * this.platform.w_size) % 360f;
+            this.w_pos = this.platform.w_pos + this.platformPosition * this.platform.w_size;
         }
 
 		// inputs
@@ -106,7 +107,7 @@ public class Player : DynamicObject {
         this.tail.UpdateTail();
     }
 
-    public void SetWPos(float wPos)
+    public void SetWPos(Angle wPos)
     {
         this.w_pos = wPos;
     }
@@ -152,8 +153,9 @@ public class Player : DynamicObject {
 				abovePlatformNew.Add(Mathf.Abs (r_pos + size * 0.5f) >= (platforms [platformIndex].r_pos - platforms[platformIndex].r_size * 0.5f));
 			}
 			if (abovePlatform != null && abovePlatformNew [platformIndex] != abovePlatform [platformIndex]) {
-				// check if outside of the angular range of the platform
-				if (Mathf.Abs(Mathf.Abs ((this.w_pos - platforms [platformIndex].w_pos) + 180) % 360 - 180) < platforms [platformIndex].w_size * 0.5) {
+                // check if outside of the angular range of the platform
+                Platform platform = platforms[platformIndex];
+				if (this.w_pos.IsWithin(platform.w_pos, platform.w_size)) {
 					collisionIndex = platformIndex;
 					//set the abovePlatform value back to its original
 					abovePlatformNew [platformIndex] = abovePlatform [platformIndex];
@@ -174,7 +176,7 @@ public class Player : DynamicObject {
             {
                 this.r_vel = 0;
                 this.platform = platforms[collisionIndex];
-                this.platformPosition = (this.w_pos - this.platform.w_pos)/this.platform.w_size;
+                this.platformPosition = (this.w_pos - this.platform.w_pos).GetValue()/this.platform.w_size.GetValue();
                 this.platform.CatchPlayer(this);
 				currentState = state.landed;
 			} else {
@@ -227,7 +229,7 @@ public class Player : DynamicObject {
         }
     }
     
-    public float WPos
+    public Angle WPos
     {
         get
         {
@@ -255,6 +257,17 @@ public class Player : DynamicObject {
                 }
             }
             return false;
+        }
+    }
+
+    public void Log()
+    {
+        Debug.LogFormat("size: {0}, r_pos: {1}, r_vel: {2}, w_pos: {3}, platformIndex: {4}, currentState: {5}",
+            this.size, this.r_pos, this.r_vel, this.w_pos.GetValue(), this.platformIndex, this.currentState);
+        Debug.Log("-abovePlatform");
+        for (int i = 0; i < this.abovePlatform.Count; i++)
+        {
+            Debug.LogFormat("abovePlatform index: {0}, abovePlatform value: {1}", i, this.abovePlatform[i]);
         }
     }
 }
