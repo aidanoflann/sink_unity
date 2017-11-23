@@ -22,6 +22,7 @@ internal class DilateTemplate : LevelTemplate
 
     public override void Reload()
     {
+        base.Reload();
         this.currentAngle = 0.0f;
     }
 

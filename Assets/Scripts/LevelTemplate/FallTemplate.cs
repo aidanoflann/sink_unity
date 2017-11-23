@@ -18,7 +18,6 @@ public class FallTemplate: LevelTemplate
     {
         Platform platform = allPlatforms[platformIndex];
         platform.r_pos = platform.r_pos + platform.r_vel * rSpeedMultiplier * Time.deltaTime;
-
     }
 
     public override void Reload()

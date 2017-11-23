@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour {
         // base templates, common to all levels
         this.baseTemplates = new List<LevelTemplate>();
         this.baseTemplates.Add(new RotateTemplate());
-        // this.baseTemplates.Add(new FallTemplate());
+        this.baseTemplates.Add(new FallTemplate());
 
         // Each dynamic template added will be used as a new level
         this.dynamicTemplates = new List<LevelTemplate>();
@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour {
         this.dynamicTemplates.Add(new DilateTemplate());
         // this.dynamicTemplates.Add(new SinkTemplate());
 
-        this.levelManager.SetTemplates(baseTemplates);
+        this.levelManager.SetBaseTemplates(baseTemplates);
         this.levelManager.SetNumPlatforms(this.numPlatforms);
         this.levelManager.SetCameraBehaviour(cameraBehaviour);
         this.levelManager.SetupScene();
@@ -83,7 +83,7 @@ public class GameManager : MonoBehaviour {
 
     void RestartGame()
     {
-        this.levelManager.SetTemplates(this.baseTemplates);
+        this.levelManager.SetBaseTemplates(this.baseTemplates);
         this.levelManager.Restart();
     }
 

@@ -48,6 +48,7 @@ public class LevelManager : MonoBehaviour {
     private int numPlatforms;
     private CameraBehaviour cameraBehaviour;
     private List<LevelTemplate> levelTemplates;
+    private int numBaseTemplates;
     #endregion
 
     #region [Private Methods]
@@ -141,18 +142,19 @@ private void Clear()
         this.cameraBehaviour.FindPlayer();
     }
 
-    public void SetTemplates(List<LevelTemplate> levelTemplates)
+    public void SetBaseTemplates(List<LevelTemplate> levelTemplates)
     {
         this.levelTemplates.Clear();
         this.levelTemplates.AddRange(levelTemplates);
+        this.numBaseTemplates = this.levelTemplates.Count();
     }
 
     public void CycleTemplate(LevelTemplate levelTemplate)
     // remove the 3rd template and add the given one
     {
-        if (this.levelTemplates.Count >= 3)
+        if (this.levelTemplates.Count > this.numBaseTemplates)
         {
-            this.levelTemplates.Remove(this.levelTemplates[2]);
+            this.levelTemplates.Remove(this.levelTemplates[this.numBaseTemplates]);
         }
         this.levelTemplates.Add(levelTemplate);
     }
