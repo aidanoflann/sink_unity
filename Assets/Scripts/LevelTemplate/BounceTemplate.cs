@@ -17,7 +17,7 @@ public class BounceTemplate : LevelTemplate
         base.UpdatePlayer(player);
         if(player.IsLanded)
         {
-            player.Jump(0.02f);
+            player.Jump(1.0f);
         }
     }
 

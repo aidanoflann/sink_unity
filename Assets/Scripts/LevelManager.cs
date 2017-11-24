@@ -282,25 +282,21 @@ private void Clear()
         }
         if (currentState != state.ending)
         {
-            bool needsToJump = Input.GetKeyDown("space") || Input.GetMouseButtonDown(0);
-            bool needsToDeJump = false;
-            if (this.currentState != state.completing)
-            {
-                needsToDeJump = Input.GetKeyUp("space") || Input.GetMouseButtonUp(0);
-            }
+            player.HandleInputs(this.currentState == state.completing);
 
-            if (needsToJump && player.IsOnTopPlatform)
+            if (player.IsReadyToEndGame)
             {
                 currentState = state.completing;
-                player.UpdatePosition(needsToJump, false, platforms, 20f);
+                player.UpdatePosition(platforms, 20f);
             }
 
-            player.UpdatePosition(needsToJump, needsToDeJump, platforms);
-
+            // This needs to happen before the standard UpdatePosition
             for (int j = 0; j < levelTemplates.Count; j++)
             {
                 levelTemplates[j].UpdatePlayer(player);
             }
+
+            player.UpdatePosition(platforms);
             player.UpdateVisuals();
             cameraBehaviour.FollowPlayer();
         }

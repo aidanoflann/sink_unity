@@ -13,6 +13,8 @@ public class Player : DynamicObject {
 	private Angle w_pos;
 	private List<bool> abovePlatform;
 	private int platformIndex;
+    private bool needsToJump;
+    private bool needsToDeJump;
 	private enum state
 	{
 		midair = 0,
@@ -66,9 +68,19 @@ public class Player : DynamicObject {
 
 	}
 
-	public void UpdatePosition(bool needsToJump, bool needsToDeJump, List<Platform> platforms, float jumpSpeedModifier = 1f) {
+	public void UpdatePosition(List<Platform> platforms, float jumpSpeedModifier = 1f) {
 		// update position in polar coordinates
 		float deltaTime = Time.deltaTime;
+
+        // inputs
+        if (this.needsToJump)
+        {
+            Jump(jumpSpeedModifier);
+        }
+        if (this.needsToDeJump)
+        {
+            DeJump();
+        }
 
         // collisions
         if (currentState == state.midair)
@@ -92,15 +104,6 @@ public class Player : DynamicObject {
 		} else {
 			this.r_pos = this.platform.r_pos + this.size * 0.5f + this.platform.r_size * 0.5f;
             this.w_pos = this.platform.w_pos + this.platformPosition * this.platform.w_size;
-        }
-
-		// inputs
-		if (needsToJump) {
-			Jump (jumpSpeedModifier);
-		}
-        if (needsToDeJump)
-        {
-            DeJump();
         }
     }
 
@@ -202,7 +205,7 @@ public class Player : DynamicObject {
 
     public void Jump( float jumpSpeedModifier )
     {
-        if (currentState != state.midair)
+        if (IsLanded)
         {
             this.currentState = state.midair;
             this.currentJumpState = jumpState.holding;
@@ -265,6 +268,23 @@ public class Player : DynamicObject {
                 }
             }
             return false;
+        }
+    }
+
+    public void HandleInputs(bool inCompletingState)
+    {
+        this.needsToJump = Input.GetKeyDown("space") || Input.GetMouseButtonDown(0);
+        if (!inCompletingState)
+        {
+            needsToDeJump = Input.GetKeyUp("space") || Input.GetMouseButtonUp(0);
+        }
+    }
+
+    public bool IsReadyToEndGame
+    {
+        get
+        {
+            return this.IsOnTopPlatform && this.needsToJump;
         }
     }
 
