@@ -4,6 +4,8 @@ using Assets.Utils;
 
 public class BounceTemplate : LevelTemplate
 {
+    private static int numBouncesPerJump = 3;
+    private int numBouncesRemaining = numBouncesPerJump;
 
     public BounceTemplate()
     {
@@ -15,9 +17,18 @@ public class BounceTemplate : LevelTemplate
     public override void UpdatePlayer(Player player)
     {
         base.UpdatePlayer(player);
-        if(player.IsLanded)
+        if(player.IsLanded && this.numBouncesRemaining > 1)
         {
-            player.Jump(1.0f);
+            player.Jump(0.4f * this.numBouncesRemaining);
+            this.numBouncesRemaining--;
+        }
+        else if (player.IsLanded && this.numBouncesRemaining == 1)
+        {
+            this.numBouncesRemaining--;
+        }
+        else if (!player.IsLanded && this.numBouncesRemaining == 0)
+        {
+            this.numBouncesRemaining = numBouncesPerJump;
         }
     }
 
