@@ -12,10 +12,17 @@ public class LevelTemplate
     }
 
     public virtual void UpdatePlatformPosition(int platformIndex, List<Platform> allPlatforms, float rSpeedMultiplier)
+    // called every update, primarily for adjusting platform motion for the level mechanic
     {
     }
 
     public virtual void Reload()
+    // reset any variables that are stored on the class instance
+    {
+    }
+
+    public virtual void UpdatePlayer(Player player)
+    // called every update, for forcing player movement, bouncing them on land, etc.
     {
     }
 

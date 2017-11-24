@@ -102,14 +102,17 @@ public class Player : DynamicObject {
         {
             DeJump();
         }
+    }
 
-		updateTransform (r_pos, w_pos);
+    public void UpdateVisuals()
+    {
+        this.UpdateTransform(this.r_pos, this.w_pos);
         this.tail.UpdateTail();
     }
 
-    public void SetWPos(Angle wPos)
+    public void SetWPos(float wPos)
     {
-        this.w_pos = wPos;
+        this.w_pos.SetValue(wPos);
     }
 
     public void Reset()
@@ -197,7 +200,7 @@ public class Player : DynamicObject {
 		}
 	}
 
-    private void Jump( float jumpSpeedModifier )
+    public void Jump( float jumpSpeedModifier )
     {
         if (currentState != state.midair)
         {
@@ -243,6 +246,11 @@ public class Player : DynamicObject {
         {
             return r_pos;
         }
+    }
+
+    public void AddRPos(float amountToAdd)
+    {
+        this.r_pos += amountToAdd;
     }
 
     public bool IsOnTopPlatform

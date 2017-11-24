@@ -129,7 +129,7 @@ private void Clear()
         player.Reset();
         if (playerWPos != null)
         {
-            player.SetWPos(playerWPos);
+            player.SetWPos(playerWPos.GetValue());
         }
 
         SpawnPlatforms (this.numPlatforms, player.WPos);
@@ -220,79 +220,89 @@ private void Clear()
 
     public void Update()
     {
-        if (currentState != state.paused)
+        // if paused, don't do anything
+        if (currentState == state.paused)
         {
-            // restart game if player has died
-            if (player.RPos <= 0 && currentState != state.ending)
-            {
-                currentState = state.ending;
-                platformRSpeedMultiplier = 24f;
-                cameraBehaviour.EndGame();
-                player.Hide();
-            }
+            return;
+        }
 
-            // restart game if in completing state and player gets over a certain height
-            if (currentState == state.completing && player.RPos > 400f)
-            {
-                this.currentState = state.nextLevel;
-            }
+        // restart game if player has died
+        if (player.RPos <= 0 && currentState != state.ending)
+        {
+            currentState = state.ending;
+            platformRSpeedMultiplier = 24f;
+            cameraBehaviour.EndGame();
+            player.Hide();
+        }
 
-            // check if player has landed for the first time
-            if (currentState == state.starting && player.IsLanded)
+        // restart game if in completing state and player gets over a certain height
+        if (currentState == state.completing && player.RPos > 400f)
+        {
+            this.currentState = state.nextLevel;
+        }
+
+        // check if player has landed for the first time
+        if (currentState == state.starting && player.IsLanded)
+        {
+            currentState = state.main;
+        }
+        else if (currentState == state.main || currentState == state.ending || currentState == state.completing)
+        {
+            // update all platform positions based on level templates
+            for (int i = 0; i < platformList.Count; i++)
             {
-                currentState = state.main;
-            }
-            else if (currentState == state.main || currentState == state.ending || currentState == state.completing)
-            {
-                for (int i = 0; i < platformList.Count; i++)
+                GameObject platformObject = platformList[i];
+                Platform platform = platformObject.GetComponent<Platform>();
+
+                for( int j = 0; j < levelTemplates.Count; j++)
                 {
-                    GameObject platformObject = platformList[i];
-                    Platform platform = platformObject.GetComponent<Platform>();
-
-                    for( int j = 0; j < levelTemplates.Count; j++)
-                    {
-                        levelTemplates[j].UpdatePlatformPosition(i, this.platforms, platformRSpeedMultiplier);
-                    }
-
-                    if (platform.r_pos <= 0)
-                    {
-                        Destroy(platformObject);
-                        Destroy(platform);
-                        platformList.Remove(platformObject);
-                        platforms.Remove(platform);
-                        i -= 1;
-                    }
-                    else
-                    {
-                        platform.RecalculateMesh();
-                    }
+                    levelTemplates[j].UpdatePlatformPosition(i, this.platforms, platformRSpeedMultiplier);
                 }
 
-                if (platformList.Count == 0 && currentState != state.completing)
+                if (platform.r_pos <= 0)
                 {
-                    this.currentState = state.needsRestart;
-                    return;
+                    Destroy(platformObject);
+                    Destroy(platform);
+                    platformList.Remove(platformObject);
+                    platforms.Remove(platform);
+                    i -= 1;
                 }
-
+                else
+                {
+                    platform.RecalculateMesh();
+                }
             }
-            if (currentState != state.ending)
+
+            if (platformList.Count == 0 && currentState != state.completing)
             {
-                bool needsToJump = Input.GetKeyDown("space") || Input.GetMouseButtonDown(0);
-                bool needsToDeJump = false;
-                if (this.currentState != state.completing)
-                {
-                    needsToDeJump = Input.GetKeyUp("space") || Input.GetMouseButtonUp(0);
-                }
-
-                if (needsToJump && player.IsOnTopPlatform)
-                {
-                    currentState = state.completing;
-                    player.UpdatePosition(needsToJump, false, platforms, 20f);
-                }
-
-                player.UpdatePosition(needsToJump, needsToDeJump, platforms);
-                cameraBehaviour.FollowPlayer();
+                this.currentState = state.needsRestart;
+                return;
             }
+
+        }
+        if (currentState != state.ending)
+        {
+            bool needsToJump = Input.GetKeyDown("space") || Input.GetMouseButtonDown(0);
+            bool needsToDeJump = false;
+            if (this.currentState != state.completing)
+            {
+                needsToDeJump = Input.GetKeyUp("space") || Input.GetMouseButtonUp(0);
+            }
+
+            if (needsToJump && player.IsOnTopPlatform)
+            {
+                currentState = state.completing;
+                player.UpdatePosition(needsToJump, false, platforms, 20f);
+            }
+
+            player.UpdatePosition(needsToJump, needsToDeJump, platforms);
+
+            for (int j = 0; j < levelTemplates.Count; j++)
+            {
+                levelTemplates[j].UpdatePlayer(player);
+            }
+            player.UpdateVisuals();
+            cameraBehaviour.FollowPlayer();
         }
     }
     #endregion

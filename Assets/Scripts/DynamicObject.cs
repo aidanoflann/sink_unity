@@ -71,7 +71,7 @@ public class DynamicObject : MonoBehaviour {
         this.meshRenderer.material.SetColor("_Color", this.currentColour);
     }
 
-	protected void updateTransform (float r_pos, Angle w_pos)
+	public void UpdateTransform (float r_pos, Angle w_pos)
 	{
 		// update x, y position
 		Vector3 pos = transform.position;
