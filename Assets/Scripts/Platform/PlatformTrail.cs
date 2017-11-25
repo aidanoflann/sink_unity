@@ -7,10 +7,10 @@ using System.Linq;
 public class PlatformTrail : AnnulusShapedObject
 {
     private float timeSinceLastTailUpdate;
-    private static float trailUpdateCoolDown = 0.1f;
+    private static float trailUpdateCoolDown = 0.001f;
     Vector2[][] previousAnnulusPoints;
     private int previousAnnulusPointsIndex = 0;
-    private static int totalNumPreviousPoints = 20;
+    private static int totalNumPreviousPoints = 10;
 
     // Use this for initialization
     void Awake() {
@@ -40,8 +40,8 @@ public class PlatformTrail : AnnulusShapedObject
         // reset the last refresh time and trigger the actual trail recalculation
         this.timeSinceLastTailUpdate = Time.time;
         // first half
-        Vector2[] firstHalf = this.previousAnnulusPoints[this.previousAnnulusPointsIndex].Take(numAnnulusPoints / 2).ToArray();
-        Vector2[] secondHalf = this.previousAnnulusPoints[nextIndex].Skip(numAnnulusPoints / 2).ToArray();
+        Vector2[] firstHalf = this.previousAnnulusPoints[nextIndex].Take(numAnnulusPoints / 2).ToArray();
+        Vector2[] secondHalf = this.previousAnnulusPoints[this.previousAnnulusPointsIndex].Skip(numAnnulusPoints / 2).ToArray();
         Vector2[] trailPoints = (firstHalf).Concat(secondHalf).ToArray();
         this.updateMesh(trailPoints);
         this.previousAnnulusPointsIndex = nextIndex;
