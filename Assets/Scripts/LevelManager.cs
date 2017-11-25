@@ -80,7 +80,7 @@ public class LevelManager : MonoBehaviour {
             if (p == 0)
             {
                 platform.w_pos = playerPosition;
-                platform.w_size.SetValue(359.9f);
+                platform.w_size.SetValue(359.9999f);
             }
             else
             {
