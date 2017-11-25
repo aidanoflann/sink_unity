@@ -13,16 +13,10 @@ public class AnnulusShapedObject : DynamicObject {
     public Angle w_pos;
     public Angle w_vel;
 
-    public GameObject platformTrailPrefab;
-    private PlatformTrail platformTrail;
-
-    public bool hasPlayer;
-    public bool hadPlayer;
-
     //edge points of annulus with gap
     private static int numPoints = 100;
 
-    private Material material;
+    protected Material material;
 
 	protected Vector2[] CalculateAnnulusPoints()
 	{

@@ -5,7 +5,6 @@ using Assets.Utils;
 
 public class PlatformTrail : AnnulusShapedObject
 {
-    private Material material;
     private float timeSinceLastTailUpdate;
     private static float trailUpdateCoolDown = 1f;
 

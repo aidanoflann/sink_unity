@@ -10,8 +10,6 @@ public class Platform : AnnulusShapedObject {
     //edge points of annulus with gap
     private static int numPoints = 100;
 
-    private Material material;
-
     // Use this for initialization
     void Start () {
 		//static attributes
@@ -50,22 +48,5 @@ public class Platform : AnnulusShapedObject {
     {
         this.ResetColour();
         this.hasPlayer = false;
-    }
-
-    public void SetColour(Color colour)
-    {   
-        this.oldColour = this.currentColour;
-        this.currentColour = colour;
-    }
-
-    public void ResetColour()
-    {
-        this.currentColour = this.oldColour;
-    }
-
-    public void Log()
-    {
-        Debug.LogFormat("r_size: {0}, w_size: {1}, r_pos: {2}, r_vel: {3}, w_pos: {4}, w_vel: {5}",
-            this.r_size, this.w_size.GetValue(), this.r_pos, this.r_vel, this.w_pos.GetValue(), this.w_vel.GetValue());
     }
 }
