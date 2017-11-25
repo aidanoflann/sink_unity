@@ -110,7 +110,7 @@ public class Player : DynamicObject {
     public void UpdateVisuals()
     {
         this.UpdateTransform(this.r_pos, this.w_pos);
-        this.tail.UpdateTail();
+        //this.tail.UpdateTail();
     }
 
     public void SetWPos(float wPos)
