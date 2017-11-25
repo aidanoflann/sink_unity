@@ -16,7 +16,8 @@ public class Platform : DynamicObject {
     public bool hasPlayer;
     public bool hadPlayer;
 
-    private int num_points;
+    //edge points of annulus with gap
+    private static int numPoints = 100;
 
     private Material material;
 
@@ -33,21 +34,18 @@ public class Platform : DynamicObject {
 
 	protected Vector2[] CalculateAnnulusPoints()
 	{
-        //edge points of annulus with gap
-        this.num_points = 100;
-        
-		Vector2[] points = new Vector2 [this.num_points * 2];
-        for (int x = 0; x < this.num_points; x++) {
+		Vector2[] points = new Vector2 [numPoints * 2];
+        for (int x = 0; x < numPoints; x++) {
             //TODO: disappearing issue starts exactly when w_pos gets > w_size
-            Angle d_w = ((this.w_size) * ((float)x / (float)this.num_points) - this.w_size * 0.5f + this.w_pos);
+            Angle d_w = ((this.w_size) * ((float)x / (float)numPoints) - this.w_size * 0.5f + this.w_pos);
 
             // outer circle
 			points [x].x = (this.r_pos + this.r_size * 0.5f) * d_w.Cosine();
 			points [x].y = (this.r_pos + this.r_size * 0.5f) * d_w.Sine();
 
             // inner circle
-			points [this.num_points * 2 - 1 - x].x = (this.r_pos - this.r_size * 0.5f) * d_w.Cosine();
-			points [this.num_points * 2 - 1 - x].y = (this.r_pos - this.r_size * 0.5f) * d_w.Sine();
+			points [numPoints * 2 - 1 - x].x = (this.r_pos - this.r_size * 0.5f) * d_w.Cosine();
+			points [numPoints * 2 - 1 - x].y = (this.r_pos - this.r_size * 0.5f) * d_w.Sine();
 		}
 
 		return points;
@@ -110,5 +108,5 @@ public class Platform : DynamicObject {
     {
         Debug.LogFormat("r_size: {0}, w_size: {1}, r_pos: {2}, r_vel: {3}, w_pos: {4}, w_vel: {5}",
             this.r_size, this.w_size.GetValue(), this.r_pos, this.r_vel, this.w_pos.GetValue(), this.w_vel.GetValue());
-}
+    }
 }
