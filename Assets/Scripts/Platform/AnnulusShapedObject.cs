@@ -15,10 +15,11 @@ public class AnnulusShapedObject : DynamicObject {
 
     //edge points of annulus with gap
     private static int numPoints = 100;
+    protected Vector2[] annulusPoints;
 
     protected Material material;
 
-	protected Vector2[] CalculateAnnulusPoints()
+	protected void CalculateAnnulusPoints()
 	{
 		Vector2[] points = new Vector2 [numPoints * 2];
         for (int x = 0; x < numPoints; x++) {
@@ -34,7 +35,7 @@ public class AnnulusShapedObject : DynamicObject {
 			points [numPoints * 2 - 1 - x].y = (this.r_pos - this.r_size * 0.5f) * d_w.Sine();
 		}
 
-		return points;
+		this.annulusPoints = points;
 	}
 
     public override int[] GenerateTriangles(Vector2[] points)

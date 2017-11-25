@@ -8,28 +8,26 @@ public class PlatformTrail : AnnulusShapedObject
     private float timeSinceLastTailUpdate;
     private static float trailUpdateCoolDown = 1f;
 
-    // The platform this trail is following
-    private Platform platform;
-
     // Use this for initialization
-    void Start () {
+    void Awake() {
         // TODO: change to specific trail material
-        this.meshRenderer = gameObject.AddComponent<MeshRenderer>();
-        this.meshRenderer.material = Resources.Load<Material>("PlatformMaterial");
+        this.material = Resources.Load<Material>("PlatformMaterial");
         this.meshFilter = GetComponent<MeshFilter>();
     }
 
-    public void UpdateTrail()
+    public void UpdateTrail(Vector2[] annulusPoints)
     {
+        // if the set duration of refreshing the trail has passed...
         if (Time.time - this.timeSinceLastTailUpdate > trailUpdateCoolDown)
         {
+            // reset the last refresh time and trigger the actual trail recalculation
             this.timeSinceLastTailUpdate = Time.time;
-            this.meshFilter.mesh = this.platform.GetMeshFilter().mesh;
+            this.updateMesh(annulusPoints);
         }
     }
 
-    public void SetPlatform(Platform platform)
+    public void SetPlatform(Vector2[] initialAnnulusPoints)
     {
-        this.platform = platform;
+        this.createMesh(initialAnnulusPoints, this.material);
     }
 }

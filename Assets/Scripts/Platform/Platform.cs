@@ -7,34 +7,32 @@ public class Platform : AnnulusShapedObject {
     public bool hasPlayer;
     public bool hadPlayer;
 
-    //edge points of annulus with gap
-    private static int numPoints = 100;
-
     // Use this for initialization
     void Start () {
 		//static attributes
 		r_size = 0.6f;
 
-		Vector2[] points = CalculateAnnulusPoints ();
+		this.CalculateAnnulusPoints();
         this.material = Resources.Load<Material>("PlatformMaterial");
 
-        createMesh (points, this.material);
+        createMesh (this.annulusPoints, this.material);
 
         // generate the tail gameobject
         GameObject toInstantiate = platformTrailPrefab;
         GameObject instance = Instantiate(toInstantiate) as GameObject;
         // grab the behaviour
         this.platformTrail = instance.GetComponent<PlatformTrail>();
-        this.platformTrail.SetPlatform(this);
+        this.platformTrail.SetColour(this.currentColour);
+        this.platformTrail.SetPlatform(this.annulusPoints);
         // set self as parent transform
         instance.transform.SetParent(this.transform);
     }
 
     public void RecalculateMesh() {
         // update annulus based on new points
-        Vector2[] points = CalculateAnnulusPoints();
-        updateMesh(points);
-        this.platformTrail.UpdateTrail();
+        this.CalculateAnnulusPoints();
+        this.updateMesh(this.annulusPoints);
+        this.platformTrail.UpdateTrail(this.annulusPoints);
     }
 
     public void CatchPlayer(Player player)
