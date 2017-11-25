@@ -22,7 +22,7 @@ public class Platform : AnnulusShapedObject {
         GameObject instance = Instantiate(toInstantiate) as GameObject;
         // grab the behaviour
         this.platformTrail = instance.GetComponent<PlatformTrail>();
-        this.platformTrail.SetColour(this.currentColour);
+        this.platformTrail.SetColour(new Color(this.currentColour.r, this.currentColour.g, this.currentColour.b, 0.3f));
         this.platformTrail.SetPlatform(this.annulusPoints);
         // set self as parent transform
         instance.transform.SetParent(this.transform);
