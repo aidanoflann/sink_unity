@@ -21,6 +21,17 @@ public class DynamicObject : MonoBehaviour {
             return currentColour;
         }
     }
+    
+    public void SetColour(Color colour)
+    {
+        this.oldColour = this.currentColour;
+        this.currentColour = colour;
+    }
+
+    public void ResetColour()
+    {
+        this.currentColour = this.oldColour;
+    }
 
     protected void createMesh(Vector2[] points, Material material)
 	{
@@ -45,6 +56,11 @@ public class DynamicObject : MonoBehaviour {
 		mesh.vertices = vertices;
 		mesh.triangles = triangles;
         this.meshFilter.mesh = mesh;
+    }
+
+    public MeshFilter GetMeshFilter()
+    {
+        return this.meshFilter;
     }
 
     public virtual int[] GenerateTriangles(Vector2[] points)
