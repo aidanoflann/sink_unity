@@ -98,7 +98,7 @@ public class LevelManager : MonoBehaviour {
 
             for (int j = 0; j < levelTemplates.Count; j++)
             {
-                levelTemplates[j].SetPlatformParameters(p, platforms);
+                levelTemplates[j].SetPlatformParameters(platform, p, numPlatforms);
             }
         }
 

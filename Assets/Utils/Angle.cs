@@ -28,6 +28,11 @@ namespace Assets.Utils
             return this.value;
         }
 
+        public void MultiplyValue(float multiplier)
+        {
+            this.value *= multiplier;
+        }
+
         public bool IsWithin(Angle center, Angle size)
         // return True if this angle is within the arc defined by the given center and (full) size
         {

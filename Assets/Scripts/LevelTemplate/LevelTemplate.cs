@@ -6,7 +6,7 @@ using System.Text;
 
 public class LevelTemplate
 {
-    public virtual void SetPlatformParameters(int platformIndex, List<Platform> allPlatforms)
+    public virtual void SetPlatformParameters(Platform platform, int platformIndex, int numPlatforms)
     // Called once at start of level - use to set w_size, r_size, etc
     {
     }
