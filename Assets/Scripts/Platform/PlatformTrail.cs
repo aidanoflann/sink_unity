@@ -15,7 +15,7 @@ public class PlatformTrail : AnnulusShapedObject
     // Use this for initialization
     void Awake() {
         // TODO: change to specific trail material
-        this.material = Resources.Load<Material>("PlatformMaterial");
+        this.material = Resources.Load<Material>("PlatformTrailMaterial");
         this.meshFilter = GetComponent<MeshFilter>();
     }
 
