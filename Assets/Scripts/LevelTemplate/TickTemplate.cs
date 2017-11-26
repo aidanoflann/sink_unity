@@ -7,9 +7,9 @@ using System.Text;
 internal class TickTemplate : LevelTemplate
 {
     private float timeSinceLastTick;
-    private static float tickDuration = 2.5f; // time during which the tick is actually happening
-    private static float tickPeriod = 5f; // how often the tick occurs
-    private static float wVelocityMaxMultiplier = 200f;
+    private static float tickDuration = 0.2f; // time during which the tick is actually happening
+    private static float tickPeriod = 1f; // how often the tick occurs
+    private static float wVelocityMaxMultiplier = 250f;
     private static float wVelocityMinMultiplier = 0.01f;
     private bool isTicking = false;
 
@@ -30,12 +30,12 @@ internal class TickTemplate : LevelTemplate
     {
         // Remove the constant background speed from all platforms
         platform.w_vel *= wVelocityMinMultiplier;
+        // consider widening w_size, this one's tricky
     }
 
-    public override void UpdatePlatformPosition(int platformIndex, List<Platform> allPlatforms, float rSpeedMultiplier)
+    public override void UpdateTemplate()
     {
-        Platform platform = allPlatforms[platformIndex];
-
+        base.UpdateTemplate();
         // modulo the time since last tick by the total period
         this.timeSinceLastTick = (this.timeSinceLastTick + Time.deltaTime) % tickPeriod;
         // if the platform is not ticking but the time falls within the tick duration, start ticking
@@ -48,6 +48,11 @@ internal class TickTemplate : LevelTemplate
         {
             this.isTicking = false;
         }
+    }
+
+    public override void UpdatePlatformPosition(int platformIndex, List<Platform> allPlatforms, float rSpeedMultiplier)
+    {
+        Platform platform = allPlatforms[platformIndex];
 
         if (this.isTicking)
         {

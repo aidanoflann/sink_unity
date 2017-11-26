@@ -293,6 +293,7 @@ private void Clear()
             // This needs to happen before the standard UpdatePosition
             for (int j = 0; j < levelTemplates.Count; j++)
             {
+                levelTemplates[j].UpdateTemplate();
                 levelTemplates[j].UpdatePlayer(player);
             }
 

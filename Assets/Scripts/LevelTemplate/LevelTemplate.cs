@@ -26,6 +26,12 @@ public class LevelTemplate
     {
     }
 
+    public virtual void UpdateTemplate()
+    // called every update, for updating params on the template (not specific to player or platforms)
+    {
+
+    }
+
     public virtual Color PlatformColor
     {
         get;
