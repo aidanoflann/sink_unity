@@ -17,7 +17,7 @@ internal class TwirlTemplate : LevelTemplate
         this.PlatformColor = new Color(0, 0.4f, 0);
         this.CircleColor = new Color(0.7f, 1f, 0.7f);
         this.currentAngle = 0.0f;
-        this.angularSpeed = 0.5f;
+        this.angularSpeed = 3f;
         this.amplitude = 4f;
     }
 
@@ -26,10 +26,15 @@ internal class TwirlTemplate : LevelTemplate
         this.currentAngle = 0.0f;
     }
 
+    public override void UpdateTemplate()
+    {
+        base.UpdateTemplate();
+        this.currentAngle = (this.currentAngle + this.angularSpeed * Time.deltaTime) % Globals.twoPi;
+    }
+
     public override void UpdatePlatformPosition(int platformIndex, List<Platform> allPlatforms, float rSpeedMultiplier)
     {
         Platform platform = allPlatforms[platformIndex];
-        this.currentAngle = (this.currentAngle + this.angularSpeed * Time.deltaTime) % Globals.twoPi;
         platform.w_pos += this.amplitude * Mathf.Sin(this.currentAngle);
     }
 }

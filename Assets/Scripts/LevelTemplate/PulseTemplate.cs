@@ -18,8 +18,8 @@ internal class PulseTemplate : LevelTemplate
         this.PlatformColor = new Color(0.9f, 0.1f, 0.1f);
         this.CircleColor = new Color(1f, 0.7f, 0.6f);
         this.currentAngle = 0.0f;
-        this.angularSpeed = 1.0f;
-        this.amplitude = 12.0f;
+        this.angularSpeed = 6.0f;
+        this.amplitude = 12f;
     }
     
     public override void Reload()
@@ -28,6 +28,12 @@ internal class PulseTemplate : LevelTemplate
         this.currentAngle = 0.0f;
     }
 
+    public override void UpdateTemplate()
+    // Update the template's internally-stored currentAngle
+    {
+        base.UpdateTemplate();
+        this.currentAngle = (this.currentAngle + this.angularSpeed * Time.deltaTime) % Globals.twoPi;
+    }
 
     public override void UpdatePlatformPosition(int platformIndex, List<Platform> allPlatforms, float rSpeedMultiplier)
     {
@@ -36,7 +42,6 @@ internal class PulseTemplate : LevelTemplate
         {
             this.originalRVel = platform.r_vel;
         }
-        this.currentAngle = (this.currentAngle + this.angularSpeed * Time.deltaTime) % Globals.twoPi;
         platform.r_vel = this.originalRVel.Value +  this.amplitude * Mathf.Sin(this.currentAngle);
     }
 }
