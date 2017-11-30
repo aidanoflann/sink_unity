@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour {
         //this.dynamicTemplates.Add(new BounceTemplate());
         //this.dynamicTemplates.Add(new TwirlTemplate());
         //this.dynamicTemplates.Add(new SinkTemplate());
+        //this.dynamicTemplates.Add(new FattenTemplate());
 
         this.levelManager.SetBaseTemplates(baseTemplates);
         this.levelManager.SetNumPlatforms(this.numPlatforms);
