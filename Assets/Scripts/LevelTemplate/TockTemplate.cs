@@ -7,8 +7,6 @@ using System.Text;
 internal class TockTemplate : SquareWaveTemplate
 {
     private float timeSinceLastTick;
-    private static float tickDuration = 0.3f; // time during which the tick is actually happening
-    private static float tickPeriod = 1f; // how often the tick occurs
     private static float maxRVel = -5f;
     private static float minRVel = 0f;
 
@@ -17,6 +15,8 @@ internal class TockTemplate : SquareWaveTemplate
         this.BackgroundColor = new Color(0.8f, 0.8f, 0.2f);
         this.PlatformColor = new Color(0.5f, 0.5f, 0.16f);
         this.CircleColor = new Color(0.9f, 0.9f, 0.3f);
+        tickDuration = 0.3f;
+        tickPeriod = 1f;
     }
 
     public override void SetPlatformParameters(Platform platform, int platformIndex, int numPlatforms)

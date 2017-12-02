@@ -4,12 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-internal class PulseTemplate : LevelTemplate
+internal class PulseTemplate : SinWaveTemplate
 {
-    private float angularSpeed;
-    private float currentAngle;
-    private float amplitude;
-
     private float? originalRVel;
 
     public PulseTemplate()
@@ -17,22 +13,8 @@ internal class PulseTemplate : LevelTemplate
         this.BackgroundColor = new Color(1, 0.77f, 0.7f);
         this.PlatformColor = new Color(0.9f, 0.1f, 0.1f);
         this.CircleColor = new Color(1f, 0.7f, 0.6f);
-        this.currentAngle = 0.0f;
-        this.angularSpeed = 6.0f;
-        this.amplitude = 12f;
-    }
-    
-    public override void Reload()
-    {
-        base.Reload();
-        this.currentAngle = 0.0f;
-    }
-
-    public override void UpdateTemplate()
-    // Update the template's internally-stored currentAngle
-    {
-        base.UpdateTemplate();
-        this.currentAngle = (this.currentAngle + this.angularSpeed * Time.deltaTime) % Globals.twoPi;
+        angularSpeed = 3.0f;
+        amplitude = 12f;
     }
 
     public override void UpdatePlatformPosition(int platformIndex, List<Platform> allPlatforms, float rSpeedMultiplier)
@@ -42,6 +24,6 @@ internal class PulseTemplate : LevelTemplate
         {
             this.originalRVel = platform.r_vel;
         }
-        platform.r_vel = this.originalRVel.Value +  this.amplitude * Mathf.Sin(this.currentAngle);
+        platform.r_vel = this.originalRVel.Value +  amplitude * Mathf.Sin(this.currentAngle);
     }
 }
