@@ -29,12 +29,13 @@ public class GameManager : MonoBehaviour {
         this.dynamicTemplates.Add(new PulseTemplate());
         this.dynamicTemplates.Add(new DilateTemplate());
         this.dynamicTemplates.Add(new TickTemplate());
+        this.dynamicTemplates.Add(new TockTemplate());
+        this.dynamicTemplates.Add(new FattenTemplate());
 
         // Experimental templates (usually either low quality or very very difficult)
         //this.dynamicTemplates.Add(new BounceTemplate());
         //this.dynamicTemplates.Add(new TwirlTemplate());
         //this.dynamicTemplates.Add(new SinkTemplate());
-        //this.dynamicTemplates.Add(new FattenTemplate());
 
         this.levelManager.SetBaseTemplates(baseTemplates);
         this.levelManager.SetNumPlatforms(this.numPlatforms);
