@@ -6,9 +6,6 @@ using System.Text;
 
 internal class FattenTemplate : SinWaveTemplate
 {
-    private static float RAmplitude = 0.7f;
-    private static float WAmplitude = 1f;
-
     private float? originalRSize;
 
     public FattenTemplate()
@@ -16,8 +13,8 @@ internal class FattenTemplate : SinWaveTemplate
         this.BackgroundColor = new Color(1, 0.9f, 0.7f);
         this.PlatformColor = new Color(0.9f, 0.4f, 0.1f);
         this.CircleColor = new Color(1f, 0.9f, 0.6f);
-        this.angularSpeed = 1f;
-        this.amplitude = 1f;
+        this.angularSpeed = 3f;
+        this.amplitude = 0.7f;
     }
 
     public override void SetPlatformParameters(Platform platform, int platformIndex, int numPlatforms)
@@ -33,7 +30,6 @@ internal class FattenTemplate : SinWaveTemplate
         {
             this.originalRSize = platform.r_size;
         }
-        platform.r_size = this.originalRSize.Value + RAmplitude * this.SignedSinValue;
-        platform.w_size.SetValue(platform.w_size.GetValue() + WAmplitude * this.SignedSinValue);
+        platform.r_size = this.originalRSize.Value + this.amplitude * this.SignedSinValue + 0.1f;
     }
 }
