@@ -11,8 +11,8 @@ internal class TickTemplate : SquareWaveTemplate
 
     public TickTemplate()
     {
-        tickDuration = 0.25f;
-        tickPeriod = 1f;
+        this.tickDuration = 0.25f;
+        this.tickPeriod = 1f;
         this.BackgroundColor = new Color(0.8f, 0.48f, 0.2f);
         this.PlatformColor = new Color(0.95f, 0.88f, 0.16f);
         this.CircleColor = new Color(0.9f, 0.58f, 0.3f);

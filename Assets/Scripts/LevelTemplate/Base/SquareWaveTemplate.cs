@@ -8,8 +8,8 @@ public class SquareWaveTemplate: LevelTemplate
 {
     private float timeSinceLastTick;
     private bool isTicking;
-    protected static float tickDuration; // time during which the tick is actually happening
-    protected static float tickPeriod; // how often the tick occurs
+    protected float tickDuration; // time during which the tick is actually happening
+    protected float tickPeriod; // how often the tick occurs
 
     protected bool IsTicking
     {

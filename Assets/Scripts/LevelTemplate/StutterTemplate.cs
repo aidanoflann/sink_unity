@@ -15,8 +15,8 @@ internal class StutterTemplate : SquareWaveTemplate
         this.BackgroundColor = new Color(0.3f, 0.2f, 0.2f);
         this.PlatformColor = new Color(0.2f, 0.1f, 0.16f);
         this.CircleColor = new Color(0.4f, 0.2f, 0.3f);
-        tickDuration = 0.1f;
-        tickPeriod = 1f;
+        this.tickDuration = 0.1f;
+        this.tickPeriod = 1f;
     }
 
     public override void SetPlatformParameters(Platform platform, int platformIndex, int numPlatforms)

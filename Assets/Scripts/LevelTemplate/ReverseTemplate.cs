@@ -12,8 +12,8 @@ internal class ReverseTemplate : SquareWaveTemplate
 
     public ReverseTemplate()
     {
-        tickDuration = 0.5f;
-        tickPeriod = 1.5f;
+        this.tickDuration = 0.5f;
+        this.tickPeriod = 1.5f;
         this.BackgroundColor = new Color(0.2f, 0.2f, 0.2f);
         this.PlatformColor = new Color(0.8f, 0.8f, 0.8f);
         this.CircleColor = new Color(0.3f, 0.3f, 0.3f);

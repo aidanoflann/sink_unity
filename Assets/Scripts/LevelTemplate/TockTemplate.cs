@@ -14,8 +14,8 @@ internal class TockTemplate : SquareWaveTemplate
         this.BackgroundColor = new Color(0.8f, 0.8f, 0.2f);
         this.PlatformColor = new Color(0.5f, 0.5f, 0.16f);
         this.CircleColor = new Color(0.9f, 0.9f, 0.3f);
-        tickDuration = 0.3f;
-        tickPeriod = 1f;
+        this.tickDuration = 0.3f;
+        this.tickPeriod = 1f;
     }
 
     public override void SetPlatformParameters(Platform platform, int platformIndex, int numPlatforms)
