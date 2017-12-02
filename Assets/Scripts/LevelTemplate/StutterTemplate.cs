@@ -4,23 +4,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-internal class TockTemplate : SquareWaveTemplate
+internal class StutterTemplate : SquareWaveTemplate
 {
-    private static float maxRVel = -4f;
-    private static float minRVel = 0f;
+    private float timeSinceLastTick;
+    private static float upRVel = +40f;
+    private static float downRVel = -5f;
 
-    public TockTemplate()
+    public StutterTemplate()
     {
-        this.BackgroundColor = new Color(0.8f, 0.8f, 0.2f);
-        this.PlatformColor = new Color(0.5f, 0.5f, 0.16f);
-        this.CircleColor = new Color(0.9f, 0.9f, 0.3f);
-        tickDuration = 0.3f;
+        this.BackgroundColor = new Color(0.3f, 0.2f, 0.2f);
+        this.PlatformColor = new Color(0.2f, 0.1f, 0.16f);
+        this.CircleColor = new Color(0.4f, 0.2f, 0.3f);
+        tickDuration = 0.1f;
         tickPeriod = 1f;
     }
 
     public override void SetPlatformParameters(Platform platform, int platformIndex, int numPlatforms)
     {
-        platform.r_vel = minRVel;
+        platform.r_vel = downRVel;
     }
 
     public override void UpdatePlatformPosition(int platformIndex, List<Platform> allPlatforms, float rSpeedMultiplier)
@@ -29,11 +30,11 @@ internal class TockTemplate : SquareWaveTemplate
 
         if (this.IsTicking)
         {
-            platform.r_vel = maxRVel;
+            platform.r_vel = upRVel;
         }
         else
         {
-            platform.r_vel = minRVel;
+            platform.r_vel = downRVel;
         }
     }
 }

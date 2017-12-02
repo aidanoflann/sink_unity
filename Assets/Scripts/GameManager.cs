@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour {
         this.dynamicTemplates.Add(new TockTemplate());
         this.dynamicTemplates.Add(new FattenTemplate());
         this.dynamicTemplates.Add(new ReverseTemplate());
+        this.dynamicTemplates.Add(new StutterTemplate());
 
         // Experimental templates (usually either low quality or very very difficult)
         //this.dynamicTemplates.Add(new BounceTemplate());
