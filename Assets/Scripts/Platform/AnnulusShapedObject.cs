@@ -13,6 +13,17 @@ public class AnnulusShapedObject : DynamicObject {
     public Angle w_pos;
     public Angle w_vel;
 
+    // originals, handy to store for certain behaviours
+    private float original_r_size;
+    private Angle original_w_size = new Angle(0f);
+    private float original_r_vel;
+    private Angle original_w_vel = new Angle(0f);
+
+    public float OriginalRsize { get { return this.original_r_size; } }
+    public Angle OriginalWsize { get { return this.original_w_size; } }
+    public float OriginalRvel { get { return this.original_r_vel; } }
+    public Angle OriginalWvel { get { return this.original_w_vel; } }
+
     //edge points of annulus with gap
     private static int numPoints = 100;
     protected Vector2[] annulusPoints;
@@ -59,6 +70,14 @@ public class AnnulusShapedObject : DynamicObject {
             triangles[i * 6 + 5] = i + 1;
         }
         return triangles;
+    }
+
+    public void SetOriginalValues()
+    {
+        this.original_r_size = this.r_size;
+        this.original_w_size.SetValue(this.w_size.GetValue());
+        this.original_r_vel = this.r_vel;
+        this.original_w_vel.SetValue(this.w_vel.GetValue());
     }
 
     public void Log()

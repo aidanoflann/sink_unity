@@ -100,8 +100,10 @@ public class LevelManager : MonoBehaviour {
             {
                 levelTemplates[j].SetPlatformParameters(platform, p, numPlatforms);
             }
-        }
 
+            // update all original values
+            platform.SetOriginalValues();
+        }
     }
 
 private void Clear()
