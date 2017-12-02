@@ -6,8 +6,8 @@ using System.Text;
 
 public class SinWaveTemplate: LevelTemplate
 {
-    protected static float angularSpeed = 1f;
-    protected static float amplitude = 2.0f;
+    protected float angularSpeed;
+    protected float amplitude;
     public float currentAngle = 0f;
 
     public override void Reload()
@@ -17,10 +17,27 @@ public class SinWaveTemplate: LevelTemplate
     }
 
     public override void UpdateTemplate()
-    // Update the template's internally-stored currentAngle
     {
         base.UpdateTemplate();
         this.currentAngle = (this.currentAngle + angularSpeed * Time.deltaTime) % Globals.twoPi;
+    }
+
+    protected float NormalizedSinValue
+    // value from 0 -> amplitude between which the template oscillates.
+    {
+        get
+        {
+            return amplitude * (0.5f + Mathf.Sin(this.currentAngle));
+        }
+    }
+
+    protected float SignedSinValue
+    // value from -amplitude -> amplitude between which the template oscillates.
+    {
+        get
+        {
+            return amplitude * (Mathf.Sin(this.currentAngle));
+        }
     }
 }
 

@@ -11,8 +11,8 @@ internal class DilateTemplate : SinWaveTemplate
         this.BackgroundColor = new Color(0.2f, 0.9f, 0.7f);
         this.PlatformColor = new Color(0, 0.4f, 0.3f);
         this.CircleColor = new Color(0.1f, 8f, 0.6f);
-        angularSpeed = 1f;
-        amplitude = 2.0f;
+        this.angularSpeed = 3.0f;
+        this.amplitude = 1f;
     }
 
     public override void SetPlatformParameters(Platform platform, int platformIndex, int numPlatforms)
@@ -23,7 +23,7 @@ internal class DilateTemplate : SinWaveTemplate
     public override void UpdatePlatformPosition(int platformIndex, List<Platform> allPlatforms, float rSpeedMultiplier)
     {
         Platform platform = allPlatforms[platformIndex];
-        platform.w_size.SetValue(platform.w_size.GetValue() + amplitude * (Mathf.Sin(this.currentAngle)));
+        platform.w_size.SetValue(platform.w_size.GetValue() + this.SignedSinValue);
     }
 }
 
