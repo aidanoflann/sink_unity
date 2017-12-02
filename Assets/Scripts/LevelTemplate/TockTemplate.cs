@@ -7,7 +7,7 @@ using System.Text;
 internal class TockTemplate : SquareWaveTemplate
 {
     private float timeSinceLastTick;
-    private static float maxRVel = -5f;
+    private static float maxRVel = -4f;
     private static float minRVel = 0f;
 
     public TockTemplate()
@@ -21,7 +21,7 @@ internal class TockTemplate : SquareWaveTemplate
 
     public override void SetPlatformParameters(Platform platform, int platformIndex, int numPlatforms)
     {
-        //platform.r_vel *= 2;
+        platform.r_vel *= minRVel;
     }
 
     public override void UpdatePlatformPosition(int platformIndex, List<Platform> allPlatforms, float rSpeedMultiplier)
