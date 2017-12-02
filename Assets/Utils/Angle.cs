@@ -36,7 +36,7 @@ namespace Assets.Utils
         public bool IsWithin(Angle center, Angle size)
         // return True if this angle is within the arc defined by the given center and (full) size
         {
-            return Mathf.Abs((this - center).value) < size.value * 0.5;
+            return Mathf.Abs((this - center).value) < Mathf.Abs(size.value) * 0.5;
         }
 
         public static Angle operator +(Angle left, Angle right)
