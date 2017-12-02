@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour {
         //this.dynamicTemplates.Add(new WaveTemplate());
         //this.dynamicTemplates.Add(new PulseTemplate());
         //this.dynamicTemplates.Add(new DilateTemplate());
-        //this.dynamicTemplates.Add(new TickTemplate());
+        this.dynamicTemplates.Add(new TickTemplate());
         this.dynamicTemplates.Add(new TockTemplate());
 
         // Experimental templates (usually either low quality or very very difficult)
