@@ -6,7 +6,7 @@ using System.Text;
 
 public class LevelTemplate
 {
-    public virtual void SetPlatformParameters(int platformIndex, List<Platform> allPlatforms)
+    public virtual void SetPlatformParameters(Platform platform, int platformIndex, int numPlatforms)
     // Called once at start of level - use to set w_size, r_size, etc
     {
     }
@@ -24,6 +24,12 @@ public class LevelTemplate
     public virtual void UpdatePlayer(Player player)
     // called every update, for forcing player movement, bouncing them on land, etc.
     {
+    }
+
+    public virtual void UpdateTemplate()
+    // called every update, for updating params on the template (not specific to player or platforms)
+    {
+
     }
 
     public virtual Color PlatformColor

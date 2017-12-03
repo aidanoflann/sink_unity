@@ -80,7 +80,7 @@ public class LevelManager : MonoBehaviour {
             if (p == 0)
             {
                 platform.w_pos = playerPosition;
-                platform.w_size.SetValue(359.9f);
+                platform.w_size.SetValue(359.9999f);
             }
             else
             {
@@ -98,10 +98,12 @@ public class LevelManager : MonoBehaviour {
 
             for (int j = 0; j < levelTemplates.Count; j++)
             {
-                levelTemplates[j].SetPlatformParameters(p, platforms);
+                levelTemplates[j].SetPlatformParameters(platform, p, numPlatforms);
             }
-        }
 
+            // update all original values
+            platform.SetOriginalValues();
+        }
     }
 
 private void Clear()
@@ -293,6 +295,7 @@ private void Clear()
             // This needs to happen before the standard UpdatePosition
             for (int j = 0; j < levelTemplates.Count; j++)
             {
+                levelTemplates[j].UpdateTemplate();
                 levelTemplates[j].UpdatePlayer(player);
             }
 

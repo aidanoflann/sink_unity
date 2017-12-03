@@ -4,32 +4,39 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-internal class TickTemplate : LevelTemplate
+internal class TickTemplate : SquareWaveTemplate
 {
-    private float angularSpeed;
-    private float currentAngle;
-    private float amplitude;
+    private static float wVelocityMaxMultiplier = 250f;
+    private static float wVelocityMinMultiplier = 0.01f;
 
     public TickTemplate()
     {
-        this.BackgroundColor = new Color(0.6f, 0.9f, 0.6f);
-        this.PlatformColor = new Color(0, 0.4f, 0);
-        this.CircleColor = new Color(0.7f, 1f, 0.7f);
-        this.currentAngle = 0.0f;
-        this.angularSpeed = 0.5f;
-        this.amplitude = 4f;
+        this.tickDuration = 0.25f;
+        this.tickPeriod = 1f;
+        this.BackgroundColor = new Color(0.8f, 0.48f, 0.2f);
+        this.PlatformColor = new Color(0.95f, 0.88f, 0.16f);
+        this.CircleColor = new Color(0.9f, 0.58f, 0.3f);
     }
 
-    public override void Reload()
+    public override void SetPlatformParameters(Platform platform, int platformIndex, int numPlatforms)
     {
-        this.currentAngle = 0.0f;
+        // Remove the constant background speed from all platforms
+        platform.w_vel *= wVelocityMinMultiplier;
+        // consider widening w_size, this one's tricky
     }
 
     public override void UpdatePlatformPosition(int platformIndex, List<Platform> allPlatforms, float rSpeedMultiplier)
     {
         Platform platform = allPlatforms[platformIndex];
-        this.currentAngle = (this.currentAngle + this.angularSpeed * Time.deltaTime) % Globals.twoPi;
-        platform.w_pos += this.amplitude * Mathf.Sin(this.currentAngle);
+
+        if (this.IsTicking)
+        {
+            platform.w_vel.SetValue(Mathf.Sign(platform.w_vel.GetValue()) * wVelocityMaxMultiplier);
+        }
+        else
+        {
+            platform.w_vel.SetValue(Mathf.Sign(platform.w_vel.GetValue()) * wVelocityMinMultiplier);
+        }
     }
 }
 
