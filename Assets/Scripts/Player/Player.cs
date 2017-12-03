@@ -32,6 +32,7 @@ public class Player : DynamicObject {
     private Platform platform;
     private float platformPosition;
     private float startingRPos;
+    private TrailRenderer trailRenderer;
 
     void Awake() {
 		//static attributes
@@ -47,6 +48,8 @@ public class Player : DynamicObject {
 
         this.currentState = state.midair;
         this.currentColour = new Color(0.1f, 0.2f, 0.9f);
+
+        this.trailRenderer = GetComponent<TrailRenderer>();
 	}
 
 	void Start() {
@@ -128,6 +131,12 @@ public class Player : DynamicObject {
             this.meshRenderer.enabled = true;
         }
         this.currentState = state.midair;
+        this.trailRenderer.Clear();
+    }
+
+    public void ResetTail()
+    {
+        this.trailRenderer.Clear();
     }
 
     public void Hide()

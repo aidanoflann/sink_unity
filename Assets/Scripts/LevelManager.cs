@@ -133,6 +133,8 @@ private void Clear()
         {
             player.SetWPos(playerWPos.GetValue());
         }
+        player.UpdateVisuals();
+        player.ResetTail();
 
         SpawnPlatforms (this.numPlatforms, player.WPos);
 
