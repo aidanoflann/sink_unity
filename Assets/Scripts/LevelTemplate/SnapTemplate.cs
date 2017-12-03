@@ -6,8 +6,9 @@ using System.Text;
 
 internal class SnapTemplate : SquareWaveTemplate
 {
-    private static float wVelocityMaxMultiplier = 250f;
-    private static float wVelocityMinMultiplier = 0.01f;
+    private static float speedDuringSnap = 2000f;
+    private static float maxSizeMultiplier = 2f;
+    private static float platformWSizeModifier = 0.5f;
 
     public SnapTemplate()
     {
@@ -23,7 +24,7 @@ internal class SnapTemplate : SquareWaveTemplate
         base.SetPlatformParameters(platform, platformIndex, numPlatforms);
         if(platformIndex != 0)
         {
-            platform.w_size *= 0.5f;
+            platform.w_size *= platformWSizeModifier;
         }
     }
 
@@ -31,13 +32,13 @@ internal class SnapTemplate : SquareWaveTemplate
     {
         Platform platform = allPlatforms[platformIndex];
 
-        if (this.IsTicking && platform.w_size < platform.OriginalWsize * 2f)
+        if (this.IsTicking && platform.w_size < platform.OriginalWsize * maxSizeMultiplier)
         {
-            platform.w_size.SetValue(platform.w_size.GetValue() + 2000f * Time.deltaTime);
+            platform.w_size.SetValue(platform.w_size.GetValue() + speedDuringSnap * Time.deltaTime);
         }
         if (!this.IsTicking && platform.w_size > platform.OriginalWsize)
         {
-            platform.w_size.SetValue(platform.w_size.GetValue() - 2000f * Time.deltaTime);
+            platform.w_size.SetValue(platform.w_size.GetValue() - speedDuringSnap * Time.deltaTime);
         }
     }
 }
