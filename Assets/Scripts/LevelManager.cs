@@ -11,6 +11,7 @@ public class LevelManager : MonoBehaviour {
     public GameObject playerPrefab;
 	public GameObject platformPrefab;
     public BackgroundCircleFactory backgroundCircleFactory;
+    public int numStackedTemplates;
 
     //level status
     public enum state
@@ -156,7 +157,7 @@ private void Clear()
     public void CycleTemplate(LevelTemplate levelTemplate)
     // remove the 3rd template and add the given one
     {
-        if (this.levelTemplates.Count > this.numBaseTemplates)
+        if (this.levelTemplates.Count > this.numBaseTemplates + this.numStackedTemplates)
         {
             this.levelTemplates.Remove(this.levelTemplates[this.numBaseTemplates]);
         }
