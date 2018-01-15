@@ -73,13 +73,19 @@ public class GameManager : MonoBehaviour {
             levelManager.Pause();
         }
 
-#endif
-#if EDITOR
+        if (Input.GetKeyDown("q"))
+        {
+            Debug.Log("SHAKETIME");
+            levelManager.ShakeCamera();
+        }
+
+    #endif
+    #if EDITOR
         if (Input.GetKeyDown("l"))
         {
             this.Log();
         }
-#endif
+    #endif
 
         deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
     }
