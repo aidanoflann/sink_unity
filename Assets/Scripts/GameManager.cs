@@ -4,9 +4,10 @@ using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour {
 
-	private LevelManager levelManager;
+    public Camera mainCamera;
+
+    private LevelManager levelManager;
     private CameraBehaviour cameraBehaviour;
-    private Camera mainCamera;
     private List<LevelTemplate> baseTemplates;
     private List<LevelTemplate> dynamicTemplates;
 
@@ -14,7 +15,6 @@ public class GameManager : MonoBehaviour {
 
     void Awake ()
     {
-        mainCamera = GameObject.FindObjectOfType<Camera>();
         cameraBehaviour = mainCamera.GetComponent<CameraBehaviour>();
         levelManager = GetComponent<LevelManager> ();
 

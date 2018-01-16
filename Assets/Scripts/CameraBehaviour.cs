@@ -2,15 +2,15 @@
 
 public class CameraBehaviour : MonoBehaviour {
 
-	private Camera cameraObject;
+	public Camera cameraObject;
 	private Player player;
     private float panSpeed = 5f;
-    private float shakeSpeed = 15f;
+    private float shakeSpeed = 3f;
     private float? shakeStartTime = null; // null means not shaking
     private float shakeDuration = 0.2f;
 
     private Vector3 currentShakeTarget = new Vector3();
-    private float shakeStepDuration = 0.005f;
+    private float shakeStepDuration = 0.005f;  // currently unused
 
 
 	// Use this for initialization
@@ -62,7 +62,7 @@ public class CameraBehaviour : MonoBehaviour {
                     this.currentShakeTarget.y = this.cameraObject.transform.position.y + Random.Range(-20f, 20f);
                     this.currentShakeTarget.z = this.cameraObject.transform.position.z;
                 //}
-                this.ApproachPoint(this.currentShakeTarget, 3f);
+                this.ApproachPoint(this.currentShakeTarget, this.shakeSpeed);
             }
         }
     }

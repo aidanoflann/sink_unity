@@ -126,6 +126,8 @@ private void Clear()
     
     public void SetupScene(Angle playerWPos = null)
     {
+        // TODO: Trigger text animation here
+        // TODO: Needs to move texxt around on a canvas that moves with the camera
         platformRSpeedMultiplier = 1f;
 
         currentState = state.starting;
