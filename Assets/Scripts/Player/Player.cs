@@ -71,8 +71,9 @@ public class Player : DynamicObject {
 
 	}
 
-	public void UpdatePosition(List<Platform> platforms, float jumpSpeedModifier = 1f) {
-		// update position in polar coordinates
+	public bool UpdatePosition(List<Platform> platforms, float jumpSpeedModifier = 1f) {
+        // update position in polar coordinates - return True if a collision occurred
+        bool collisionOccured = false;
 		float deltaTime = Time.deltaTime;
 
         // inputs
@@ -89,6 +90,7 @@ public class Player : DynamicObject {
         if (currentState == state.midair)
         {
             platformIndex = CheckPlatformCollisions(platforms);
+            collisionOccured = (platformIndex != -1);
             applyCollisions(platformIndex, platforms);
         }
         else
@@ -108,6 +110,7 @@ public class Player : DynamicObject {
 			this.r_pos = this.platform.r_pos + this.size * 0.5f + this.platform.r_size * 0.5f;
             this.w_pos = this.platform.w_pos + this.platformPosition * this.platform.w_size;
         }
+        return collisionOccured;
     }
 
     public void UpdateVisuals()

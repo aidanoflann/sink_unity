@@ -22,7 +22,8 @@ public class LevelManager : MonoBehaviour {
         paused = 3,
         ending = 4,
         completing = 5,
-        nextLevel = 6
+        nextLevel = 6,
+        showingLevelText = 7,
     }
     public state currentState;
 
@@ -302,7 +303,11 @@ private void Clear()
                 levelTemplates[j].UpdatePlayer(player);
             }
 
-            player.UpdatePosition(platforms);
+            bool playerCollided = player.UpdatePosition(platforms);
+            if (playerCollided)
+            {
+                this.ShakeCamera();
+            }
             player.UpdateVisuals();
             cameraBehaviour.FollowPlayer();
         }
