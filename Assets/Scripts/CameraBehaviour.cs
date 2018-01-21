@@ -22,8 +22,13 @@ public class CameraBehaviour : MonoBehaviour {
     {
         this.FindPlayer();
     }
-	
-	public void FollowPlayer ()
+
+    private void Update()
+    {
+        this.Shake();
+    }
+
+    public void FollowPlayer ()
     // Sets the camera's current point to the player (offset to show level, etc.)
     {
         Vector3 newPosition = cameraObject.transform.position;
@@ -35,7 +40,6 @@ public class CameraBehaviour : MonoBehaviour {
         cameraObject.orthographicSize = 7.5f * Mathf.Max(0.001f, Mathf.Sqrt(Mathf.Abs(player.RPos)));
         
         this.ApproachPoint(newPosition, this.panSpeed);
-        this.Shake();
     }
 
     private void ApproachPoint(Vector3 pointToApproach, float speed)
