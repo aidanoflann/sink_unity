@@ -16,11 +16,13 @@ public class MovingTextBehaviour : MonoBehaviour {
 
     // components of parent text UI object - it's this behaviour's job to dynamically manipulate these.
     private Text textComponent;
+    private RectTransform rectTransform;
 
 	// Use this for initialization
 	void Start () {
         // fetch sibling components
         this.textComponent = transform.parent.GetComponentInChildren<Text>();
+        this.rectTransform = transform.parent.GetComponentInChildren<RectTransform>();
 
         // set values
         this.textComponent.text = this.TextToDisplay;
@@ -33,7 +35,7 @@ public class MovingTextBehaviour : MonoBehaviour {
         {
             this.animationSpeed += this.animationAcceleration * Time.deltaTime;
             this.fracDistanceCovered += this.animationSpeed * Time.deltaTime;
-            transform.position = Vector3.Lerp(this.animationStartingPoint, this.animationTargetPoint, fracDistanceCovered);
+            rectTransform.pivot = Vector3.Lerp(this.animationStartingPoint, this.animationTargetPoint, fracDistanceCovered);
         }
 	}
 }
