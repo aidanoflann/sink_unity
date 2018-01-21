@@ -23,7 +23,7 @@ public class MovingTextBehaviour : MonoBehaviour {
     private RectTransform rectTransform;
 
 	// Use this for initialization
-	void Start () {
+	void Awake() {
         // fetch sibling components
         this.textComponent = transform.parent.GetComponentInChildren<Text>();
         this.rectTransform = transform.parent.GetComponentInChildren<RectTransform>();
@@ -39,7 +39,8 @@ public class MovingTextBehaviour : MonoBehaviour {
         {
             this.animationSpeed += this.animationAcceleration * Time.deltaTime;
             this.fracDistanceCovered += this.animationSpeed * Time.deltaTime;
-            rectTransform.pivot = Vector3.Lerp(this.animationStartingPoint, this.animationTargetPoint, fracDistanceCovered);
+            this.rectTransform.pivot = Vector3.Lerp(this.animationStartingPoint, this.animationTargetPoint, fracDistanceCovered);
+            Debug.LogFormat("Setting movingText pivot to : {0}", rectTransform.pivot.ToString());
         }
         else if (!this.animationComplete && this.fracDistanceCovered > 1f)
         {
