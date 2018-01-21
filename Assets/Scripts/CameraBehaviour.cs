@@ -69,12 +69,12 @@ public class CameraBehaviour : MonoBehaviour {
             }
             else
             {
-                //if (timeSinceShakeStart % this.shakeDuration < Time.deltaTime)
-                //{
-                    this.currentShakeTarget.x = this.cameraObject.transform.position.x + Random.Range(-20f, 20f);
-                    this.currentShakeTarget.y = this.cameraObject.transform.position.y + Random.Range(-20f, 20f);
-                    this.currentShakeTarget.z = this.cameraObject.transform.position.z;
-                //}
+                float targetDistance = 1 * this.cameraObject.orthographicSize;
+
+                this.currentShakeTarget.x = this.cameraObject.transform.position.x + Random.Range(- targetDistance, targetDistance);
+                this.currentShakeTarget.y = this.cameraObject.transform.position.y + Random.Range(- targetDistance, targetDistance);
+                this.currentShakeTarget.z = this.cameraObject.transform.position.z;
+
                 this.ApproachPoint(this.currentShakeTarget, this.shakeSpeed);
             }
         }
