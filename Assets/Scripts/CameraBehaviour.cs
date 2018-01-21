@@ -12,9 +12,18 @@ public class CameraBehaviour : MonoBehaviour {
     private Vector3 currentShakeTarget = new Vector3();
     private float shakeStepDuration = 0.005f;  // currently unused
 
+    private void OnEnable()
+    {
+        MovingTextBehaviour.OnTextArrive += StartShake;
+    }
 
-	// Use this for initialization
-	void Awake () {
+    private void OnDisable()
+    {
+        MovingTextBehaviour.OnTextArrive -= StartShake;
+    }
+
+    // Use this for initialization
+    void Awake () {
 		cameraObject = Camera.main;
 	}
 

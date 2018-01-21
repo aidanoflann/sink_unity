@@ -329,10 +329,8 @@ private void Clear()
         Debug.Log("------");
     }
 
-    #if CHEATS_ENABLED
     public void ShakeCamera()
     {
         this.cameraBehaviour.StartShake();
     }
-    #endif
 }
