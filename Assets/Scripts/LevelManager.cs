@@ -35,6 +35,7 @@ public class LevelManager : MonoBehaviour {
     private List<GameObject> platformList;
     private List<Platform> platforms;
     public Player player;
+    private MovingTextCanvasBehaviour movingTextCanvasBehaviour;
 
 	// this is used to child all of the gameObjects for better control/organisation in the inspector.
 	private Transform levelHolder;
@@ -126,6 +127,7 @@ private void Clear()
     
     public void SetupScene(Angle playerWPos = null)
     {
+        this.movingTextCanvasBehaviour.ResetAnimations();
         // TODO: Trigger text animation here
         // TODO: Needs to move texxt around on a canvas that moves with the camera
         platformRSpeedMultiplier = 1f;
@@ -223,6 +225,7 @@ private void Clear()
         this.platformList = new List<GameObject>();
         this.platforms = new List<Platform>();
         this.levelTemplates = new List<LevelTemplate>();
+        this.movingTextCanvasBehaviour = FindObjectOfType<MovingTextCanvasBehaviour>();
         GeneratePlatformRanges();
     }
 

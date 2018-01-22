@@ -11,9 +11,10 @@ public class MovingTextBehaviour : MonoBehaviour {
     public string TextToDisplay;
 
     // Animation
-    public Vector3 animationStartingPoint;
-    public Vector3 animationTargetPoint;
-    private float animationSpeed = 1.0f;
+    private Vector3 animationStartingPoint;
+    private Vector3 animationTargetPoint;
+    private static float startingAnimationSpeed = 1.0f;
+    private float animationSpeed = startingAnimationSpeed;
     private float animationAcceleration = 1f;
     private float fracDistanceCovered = 0f;
     private bool animationComplete = false;
@@ -22,8 +23,8 @@ public class MovingTextBehaviour : MonoBehaviour {
     private Text textComponent;
     private RectTransform rectTransform;
 
-	// Use this for initialization
-	void Awake() {
+    // Use this for initialization
+    void Start() {
         // fetch sibling components
         this.textComponent = transform.parent.GetComponentInChildren<Text>();
         this.rectTransform = transform.parent.GetComponentInChildren<RectTransform>();
@@ -39,8 +40,8 @@ public class MovingTextBehaviour : MonoBehaviour {
         {
             this.animationSpeed += this.animationAcceleration * Time.deltaTime;
             this.fracDistanceCovered += this.animationSpeed * Time.deltaTime;
-            this.rectTransform.pivot = Vector3.Lerp(this.animationStartingPoint, this.animationTargetPoint, fracDistanceCovered);
-            Debug.LogFormat("Setting movingText pivot to : {0}", rectTransform.pivot.ToString());
+            this.transform.position = Vector3.Lerp(this.animationStartingPoint, this.animationTargetPoint, fracDistanceCovered);
+            Debug.LogFormat("Setting movingText pivot to : {0}", this.transform.position.ToString());
         }
         else if (!this.animationComplete && this.fracDistanceCovered > 1f)
         {
@@ -48,4 +49,18 @@ public class MovingTextBehaviour : MonoBehaviour {
             this.animationComplete = true;
         }
 	}
+
+    public void Restart()
+    {
+        this.rectTransform.pivot = this.animationStartingPoint;
+        this.animationComplete = false;
+        this.fracDistanceCovered = 0f;
+        this.animationSpeed = startingAnimationSpeed;
+    }
+
+    public void SetStartAndEndPoints(Vector3 animationStartingPoint, Vector3 animationTargetPoint)
+    {
+        this.animationStartingPoint = animationStartingPoint;
+        this.animationTargetPoint = animationTargetPoint;
+    }
 }
