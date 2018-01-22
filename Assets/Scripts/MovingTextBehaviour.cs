@@ -13,9 +13,9 @@ public class MovingTextBehaviour : MonoBehaviour {
     // Animation
     private Vector3 animationStartingPoint;
     private Vector3 animationTargetPoint;
-    private static float startingAnimationSpeed = 1.0f;
+    private static float startingAnimationSpeed = 3.0f;
     private float animationSpeed = startingAnimationSpeed;
-    private float animationAcceleration = 1f;
+    private float animationAcceleration = 2f;
     private float fracDistanceCovered = 0f;
     private bool animationComplete = false;
 
