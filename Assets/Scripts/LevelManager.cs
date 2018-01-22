@@ -145,8 +145,9 @@ private void Clear()
         this.backgroundCircleFactory.GenerateBackgroundCircles(this.levelTemplates[this.levelTemplates.Count - 1].CircleColor);
 
         // prepare the level entry text animation
-        this.movingTextCanvasBehaviour.ResetAnimations();
         this.movingTextCanvasBehaviour.SetTextColor(this.levelTemplates[this.levelTemplates.Count - 1].PlatformColor);
+        this.movingTextCanvasBehaviour.SetText("HEY");
+        this.movingTextCanvasBehaviour.ResetAnimations();
 
         // update camera
         this.cameraBehaviour.SetColour(this.levelTemplates[this.levelTemplates.Count - 1].BackgroundColor);

@@ -7,10 +7,10 @@ public class MovingTextCanvasBehaviour : MonoBehaviour {
     public GameObject movingTextPrefab;
     private List<MovingTextBehaviour> movingTextBehaviours = new List<MovingTextBehaviour>();
     private List<GameObject> movingTextGameObjects = new List<GameObject>();
+    private string[] wordsToDisplay;
 
 	// Use this for initialization
 	void Start () {
-        SpawnMovingTexts(1);
     }
 	
 	// Update is called once per frame
@@ -33,6 +33,23 @@ public class MovingTextCanvasBehaviour : MonoBehaviour {
 
             // Set start and end points
             movingTextBehaviour.SetStartAndEndPoints(new Vector3(1000, 1000, 1), new Vector3(0, 0, 1));
+        }
+    }
+
+    public void SetText(string textToDisplay)
+    {
+        // break the text into substrings
+        this.wordsToDisplay = textToDisplay.Split(' ');
+        // maybe move this inside SpawnMovingText
+        int amountToSpawn = this.wordsToDisplay.Length - this.movingTextBehaviours.Count;
+        // spawn more if we need
+        this.SpawnMovingTexts(amountToSpawn);
+        for (int i = 0; i < this.wordsToDisplay.Length; i++)
+        {
+            if (i < this.movingTextBehaviours.Count)
+            {
+                this.movingTextBehaviours[i].SetText(this.wordsToDisplay[i]);
+            }
         }
     }
 

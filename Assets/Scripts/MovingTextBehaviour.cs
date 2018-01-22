@@ -8,7 +8,7 @@ public class MovingTextBehaviour : MonoBehaviour {
     public delegate void TextArrivedAction();
     public static event TextArrivedAction OnTextArrive;
 
-    public string TextToDisplay;
+    private string TextToDisplay = "!NN!";
 
     // Animation
     private Vector3 animationStartingPoint;
@@ -52,7 +52,7 @@ public class MovingTextBehaviour : MonoBehaviour {
 
     public void Restart()
     {
-        this.rectTransform.pivot = this.animationStartingPoint;
+        this.transform.position = this.animationStartingPoint;
         this.animationComplete = false;
         this.fracDistanceCovered = 0f;
         this.animationSpeed = startingAnimationSpeed;
@@ -67,5 +67,10 @@ public class MovingTextBehaviour : MonoBehaviour {
     public void SetTextColor(Color colour)
     {
         this.textComponent.color = colour;
+    }
+
+    public void SetText(string text)
+    {
+        this.TextToDisplay = text;
     }
 }
