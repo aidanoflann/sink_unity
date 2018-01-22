@@ -127,9 +127,6 @@ private void Clear()
     
     public void SetupScene(Angle playerWPos = null)
     {
-        this.movingTextCanvasBehaviour.ResetAnimations();
-        // TODO: Trigger text animation here
-        // TODO: Needs to move texxt around on a canvas that moves with the camera
         platformRSpeedMultiplier = 1f;
 
         currentState = state.starting;
@@ -146,6 +143,10 @@ private void Clear()
 
         // generate the background
         this.backgroundCircleFactory.GenerateBackgroundCircles(this.levelTemplates[this.levelTemplates.Count - 1].CircleColor);
+
+        // prepare the level entry text animation
+        this.movingTextCanvasBehaviour.ResetAnimations();
+        this.movingTextCanvasBehaviour.SetTextColor(this.levelTemplates[this.levelTemplates.Count - 1].PlatformColor);
 
         // update camera
         this.cameraBehaviour.SetColour(this.levelTemplates[this.levelTemplates.Count - 1].BackgroundColor);

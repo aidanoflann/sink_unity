@@ -43,4 +43,12 @@ public class MovingTextCanvasBehaviour : MonoBehaviour {
             this.movingTextBehaviours[i].Restart();
         }
     }
+
+    public void SetTextColor(Color colour)
+    {
+        for (int i = 0; i < this.movingTextBehaviours.Count; i++)
+        {
+            this.movingTextBehaviours[i].SetTextColor(colour);
+        }
+    }
 }

@@ -63,4 +63,9 @@ public class MovingTextBehaviour : MonoBehaviour {
         this.animationStartingPoint = animationStartingPoint;
         this.animationTargetPoint = animationTargetPoint;
     }
+
+    public void SetTextColor(Color colour)
+    {
+        this.textComponent.color = colour;
+    }
 }
