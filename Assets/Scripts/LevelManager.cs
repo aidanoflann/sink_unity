@@ -55,6 +55,15 @@ public class LevelManager : MonoBehaviour {
     #endregion
 
     #region [Private Methods]
+
+    private Camera _camera
+    {
+        get
+        {
+            return this.cameraBehaviour.cameraObject;
+        }
+    }
+
     private void GeneratePlatformRanges()
     {
         wVelRange = Enumerable.Range(6, 12).Select(i => (float)i * 10f).ToArray();

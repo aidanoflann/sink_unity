@@ -61,7 +61,7 @@ public class MovingTextCanvasBehaviour : MonoBehaviour {
         for(int i = 0; i < this.movingTextBehaviours.Count; i++)
         {
             // TODO: randomise start point, should be off screen on the side nearest to its arrival point, + some scatter.
-            movingTextBehaviours[i].SetStartAndEndPoints(new Vector3(1000 , 1000, 1), point);
+            movingTextBehaviours[i].SetStartAndEndPoints(new Vector3(10 , 10, 1), point);
         }
     }
 
