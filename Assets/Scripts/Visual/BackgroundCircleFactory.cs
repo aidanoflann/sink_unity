@@ -48,7 +48,7 @@ public class BackgroundCircleFactory : MonoBehaviour {
     private void SetPositionAndColour(GameObject copy, Color colour)
     {
         // move it to a random location
-        Vector3 randomPosition = new Vector3(Random.value * 200 - 100, Random.value * 200 - 100, 0);
+        Vector3 randomPosition = new Vector3(Random.value * 200 - 100, Random.value * 200 - 100, 1);
         copy.transform.position = randomPosition;
 
         // give it a random size
