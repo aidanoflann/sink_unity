@@ -34,6 +34,7 @@ public class CameraBehaviour : MonoBehaviour {
 
     private void Update()
     {
+        // shake screen if needed
         this.Shake();
     }
 

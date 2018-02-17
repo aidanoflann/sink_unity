@@ -17,7 +17,7 @@ public class MovingTextBehaviour : MonoBehaviour {
     private float animationSpeed = startingAnimationSpeed;
     private float animationAcceleration = 2f;
     private float fracDistanceCovered = 0f;
-    private bool animationComplete = false;
+    private bool animationComplete = true;
 
     // components of parent text UI object - it's this behaviour's job to dynamically manipulate these.
     private Text textComponent;
@@ -31,17 +31,16 @@ public class MovingTextBehaviour : MonoBehaviour {
 
         // set values
         this.textComponent.text = this.TextToDisplay;
-        this.transform.position = this.animationStartingPoint;
-	}
+        this.rectTransform.anchoredPosition = this.animationStartingPoint;
+    }
 	
-	// Update is called once per frame
-	void Update () {
+	public void UpdatePosition (float timeElapsed) {
         if (!this.animationComplete && this.fracDistanceCovered <= 1f)
         {
-            this.animationSpeed += this.animationAcceleration * Time.deltaTime;
-            this.fracDistanceCovered += this.animationSpeed * Time.deltaTime;
+            this.animationSpeed += this.animationAcceleration * timeElapsed;
+            this.fracDistanceCovered += this.animationSpeed * timeElapsed;
             this.transform.position = Vector3.Lerp(this.animationStartingPoint, this.animationTargetPoint, fracDistanceCovered);
-            Debug.LogFormat("Setting movingText pivot to : {0}", this.transform.position.ToString());
+            Debug.LogFormat("MovingText position: {0}.", this.transform.position.ToString());
         }
         else if (!this.animationComplete && this.fracDistanceCovered > 1f)
         {
@@ -50,18 +49,24 @@ public class MovingTextBehaviour : MonoBehaviour {
         }
 	}
 
+    public void ResetRectTransform()
+    {
+    }
+
     public void Restart()
     {
-        this.transform.position = this.animationStartingPoint;
+        //this.transform.position = this.animationStartingPoint;
         this.animationComplete = false;
         this.fracDistanceCovered = 0f;
         this.animationSpeed = startingAnimationSpeed;
     }
 
     public void SetStartAndEndPoints(Vector3 animationStartingPoint, Vector3 animationTargetPoint)
+    // Set new start and end point and refresh any variables required to start a new animation
     {
         this.animationStartingPoint = animationStartingPoint;
         this.animationTargetPoint = animationTargetPoint;
+        this.Restart();
     }
 
     public void SetTextColor(Color colour)

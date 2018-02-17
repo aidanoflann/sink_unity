@@ -5,6 +5,7 @@ using UnityEngine;
 public class MovingTextCanvasBehaviour : MonoBehaviour {
 
     public GameObject movingTextPrefab;
+
     private List<MovingTextBehaviour> movingTextBehaviours = new List<MovingTextBehaviour>();
     private List<GameObject> movingTextGameObjects = new List<GameObject>();
     private string[] wordsToDisplay;
@@ -15,24 +16,25 @@ public class MovingTextCanvasBehaviour : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+        // update children text's positions
+        for (int i = 0; i < this.movingTextBehaviours.Count; i++)
+        {
+            movingTextBehaviours[i].UpdatePosition(Time.deltaTime);
+        }
+    }
 
     private void SpawnMovingTexts(int numToSpawn)
     {
         for (int i = 0; i < numToSpawn; i++)
         {
             // instansiate the movingText gameobject and set it as a child of this transform
-            GameObject newMovingText = GameObject.Instantiate(this.movingTextPrefab);
+            // NOTE: set parent on instantiate to avoid your positions getting jiggled.
+            GameObject newMovingText = GameObject.Instantiate(this.movingTextPrefab, this.transform);
             MovingTextBehaviour movingTextBehaviour = newMovingText.GetComponent<MovingTextBehaviour>();
-            newMovingText.transform.SetParent(this.transform);
 
             // store references to the gameobject and its behaviour
             this.movingTextGameObjects.Add(newMovingText);
             this.movingTextBehaviours.Add(movingTextBehaviour);
-
-            // Set start and end points
-            movingTextBehaviour.SetStartAndEndPoints(new Vector3(1000, 1000, 1), new Vector3(0, 0, 1));
         }
     }
 
@@ -53,7 +55,17 @@ public class MovingTextCanvasBehaviour : MonoBehaviour {
         }
     }
 
-    public void ResetAnimations()
+    public void AnimateToPoint(Vector3 point)
+    // Set up animation params (and start animation) towards given game-space point
+    {
+        for(int i = 0; i < this.movingTextBehaviours.Count; i++)
+        {
+            // TODO: randomise start point, should be off screen on the side nearest to its arrival point, + some scatter.
+            movingTextBehaviours[i].SetStartAndEndPoints(new Vector3(1000 , 1000, 1), point);
+        }
+    }
+
+    private void ResetAnimations()
     {
         for (int i = 0; i < this.movingTextBehaviours.Count; i++)
         {
