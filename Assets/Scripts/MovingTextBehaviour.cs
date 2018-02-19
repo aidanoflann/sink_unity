@@ -49,10 +49,6 @@ public class MovingTextBehaviour : MonoBehaviour {
         }
 	}
 
-    public void ResetRectTransform()
-    {
-    }
-
     public void Restart()
     {
         //this.transform.position = this.animationStartingPoint;

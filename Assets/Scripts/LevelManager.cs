@@ -34,8 +34,8 @@ public class LevelManager : MonoBehaviour {
     // cached GameObjects
     private List<GameObject> platformList;
     private List<Platform> platforms;
+    private AnimationManager animationManager;
     public Player player;
-    private MovingTextCanvasBehaviour movingTextCanvasBehaviour;
 
 	// this is used to child all of the gameObjects for better control/organisation in the inspector.
 	private Transform levelHolder;
@@ -153,14 +153,10 @@ private void Clear()
         // generate the background
         this.backgroundCircleFactory.GenerateBackgroundCircles(this.levelTemplates[this.levelTemplates.Count - 1].CircleColor);
 
-        // prepare the level entry text animation
-        this.movingTextCanvasBehaviour.SetTextColor(this.levelTemplates[this.levelTemplates.Count - 1].PlatformColor);
-        this.movingTextCanvasBehaviour.SetText("HEY THERE");
-        this.movingTextCanvasBehaviour.AnimateToPoint(this.player.transform.position);
-
         // update camera
         this.cameraBehaviour.SetColour(this.levelTemplates[this.levelTemplates.Count - 1].BackgroundColor);
         this.cameraBehaviour.FindPlayer();
+        this.animationManager.Reset();
     }
 
     public void SetBaseTemplates(List<LevelTemplate> levelTemplates)
@@ -198,6 +194,7 @@ private void Clear()
     public void SetCameraBehaviour(CameraBehaviour cameraBehaviour)
     {
         this.cameraBehaviour = cameraBehaviour;
+        this.animationManager.SetCameraBehaviour(cameraBehaviour);
     }
 
     public void Restart(Angle newPlayerWpos = null)
@@ -236,7 +233,9 @@ private void Clear()
         this.platformList = new List<GameObject>();
         this.platforms = new List<Platform>();
         this.levelTemplates = new List<LevelTemplate>();
-        this.movingTextCanvasBehaviour = FindObjectOfType<MovingTextCanvasBehaviour>();
+        this.animationManager = new AnimationManager(
+            FindObjectOfType<MovingTextCanvasBehaviour>(),
+            this.levelTemplates, this.player);
         GeneratePlatformRanges();
     }
 
@@ -265,7 +264,7 @@ private void Clear()
 
         if (currentState == state.preStartAnimation)
         {
-            if (this.HandleStartingAnimation())
+            if (this.animationManager.HandleStartingAnimation())
             {
                 this.currentState = state.starting;
             }
@@ -338,15 +337,6 @@ private void Clear()
                 cameraBehaviour.FollowPlayer();
             }
         }
-    }
-
-    // This function is responsible for all behaviour from the level load to the initial fall of the player onto the level.
-    // It needs to trigger all text animations, focus the camera correctly, then return True when completed.
-    private bool HandleStartingAnimation()
-    {
-        this.cameraBehaviour.SnapToPlayer();
-        // if higher than 100f, keep animating - THIS MIGHT GO BAD
-        return this.player.RPos < 100f;
     }
 
     #endregion

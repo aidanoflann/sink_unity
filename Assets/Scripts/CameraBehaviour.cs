@@ -38,19 +38,28 @@ public class CameraBehaviour : MonoBehaviour {
         this.Shake();
     }
 
-    public void FollowPlayer ()
+    public void FollowPlayer (bool dynamicZoom = true, float? panSpeedOverride = null)
     // Sets the camera's current point to the player (offset to show level, etc.)
     {
         Vector3 newPosition = cameraObject.transform.position;
 
-		newPosition.x = player.transform.position.x * 0.67f;
-		newPosition.y = player.transform.position.y * 0.67f - 5f;
-
         // zoom to ensure the level and player are both visible
-        cameraObject.orthographicSize = 7.5f * Mathf.Max(0.001f, Mathf.Sqrt(Mathf.Abs(player.RPos)));
-        
-        // TODO: also approach orthographicSize
-        this.ApproachPoint(newPosition, this.panSpeed);
+        if (dynamicZoom)
+        {
+
+            newPosition.x = player.transform.position.x * 0.67f;
+            newPosition.y = player.transform.position.y * 0.67f - 5f;
+            // TODO: also approach orthographicSize
+            cameraObject.orthographicSize = 7.5f * Mathf.Max(0.001f, Mathf.Sqrt(Mathf.Abs(player.RPos)));
+        }
+        else
+        {
+            newPosition.x = player.transform.position.x;
+            newPosition.y = player.transform.position.y;
+            cameraObject.orthographicSize = 10f;
+        }
+        float panSpeedToUse = panSpeedOverride.GetValueOrDefault(this.panSpeed);
+        this.ApproachPoint(newPosition, panSpeedToUse);
     }
 
     public void SnapToPlayer()
@@ -62,7 +71,7 @@ public class CameraBehaviour : MonoBehaviour {
         newPosition.y = player.transform.position.y;
 
         cameraObject.orthographicSize = 20f;
-        this.ApproachPoint(newPosition, 20f);
+        cameraObject.transform.position = newPosition;
     }
 
     private void ApproachPoint(Vector3 pointToApproach, float speed)
