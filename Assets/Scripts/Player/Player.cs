@@ -42,7 +42,7 @@ public class Player : DynamicObject {
         float[] wPosRange = Enumerable.Range(0, 359).Select(i => (float)i).ToArray();
         this.w_pos = new Angle(wPosRange[Random.Range(0, wPosRange.Length - 1)]);
 
-        this.startingRPos = 100f;
+        this.startingRPos = 500f;
         this.r_pos = this.startingRPos;
         this.r_vel = 0f;
 

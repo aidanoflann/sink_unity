@@ -49,7 +49,20 @@ public class CameraBehaviour : MonoBehaviour {
         // zoom to ensure the level and player are both visible
         cameraObject.orthographicSize = 7.5f * Mathf.Max(0.001f, Mathf.Sqrt(Mathf.Abs(player.RPos)));
         
+        // TODO: also approach orthographicSize
         this.ApproachPoint(newPosition, this.panSpeed);
+    }
+
+    public void SnapToPlayer()
+    // Snap to the player's current position and set an appropriate zoom level
+    {
+        Vector3 newPosition = cameraObject.transform.position;
+
+        newPosition.x = player.transform.position.x;
+        newPosition.y = player.transform.position.y;
+
+        cameraObject.orthographicSize = 20f;
+        this.ApproachPoint(newPosition, 20f);
     }
 
     private void ApproachPoint(Vector3 pointToApproach, float speed)

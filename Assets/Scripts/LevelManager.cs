@@ -17,13 +17,13 @@ public class LevelManager : MonoBehaviour {
     public enum state
     {
         needsRestart = 0,
-        starting = 1,
-        main = 2,
-        paused = 3,
-        ending = 4,
-        completing = 5,
-        nextLevel = 6,
-        showingLevelText = 7,
+        preStartAnimation = 1,
+        starting = 2,
+        main = 3,
+        paused = 4,
+        ending = 5,
+        completing = 6,
+        nextLevel = 7,
     }
     public state currentState;
 
@@ -138,7 +138,7 @@ private void Clear()
     {
         platformRSpeedMultiplier = 1f;
 
-        currentState = state.starting;
+        currentState = state.preStartAnimation;
 
         player.Reset();
         if (playerWPos != null)
@@ -154,7 +154,6 @@ private void Clear()
         this.backgroundCircleFactory.GenerateBackgroundCircles(this.levelTemplates[this.levelTemplates.Count - 1].CircleColor);
 
         // prepare the level entry text animation
-        Debug.LogFormat("Player position: {0}", this.player.transform.position);
         this.movingTextCanvasBehaviour.SetTextColor(this.levelTemplates[this.levelTemplates.Count - 1].PlatformColor);
         this.movingTextCanvasBehaviour.SetText("HEY THERE");
         this.movingTextCanvasBehaviour.AnimateToPoint(this.player.transform.position);
@@ -264,6 +263,14 @@ private void Clear()
             this.currentState = state.nextLevel;
         }
 
+        if (currentState == state.preStartAnimation)
+        {
+            if (this.HandleStartingAnimation())
+            {
+                this.currentState = state.starting;
+            }
+        }
+
         // check if player has landed for the first time
         if (currentState == state.starting && player.IsLanded)
         {
@@ -326,11 +333,24 @@ private void Clear()
                 this.ShakeCamera();
             }
             player.UpdateVisuals();
-            cameraBehaviour.FollowPlayer();
+            if (currentState != state.preStartAnimation)
+            {
+                cameraBehaviour.FollowPlayer();
+            }
         }
     }
+
+    // This function is responsible for all behaviour from the level load to the initial fall of the player onto the level.
+    // It needs to trigger all text animations, focus the camera correctly, then return True when completed.
+    private bool HandleStartingAnimation()
+    {
+        this.cameraBehaviour.SnapToPlayer();
+        // if higher than 100f, keep animating - THIS MIGHT GO BAD
+        return this.player.RPos < 100f;
+    }
+
     #endregion
-    
+
     public void Log()
     {
         Debug.Log("--- LOGGING LEVEL MANAGER ---");
