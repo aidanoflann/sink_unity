@@ -49,5 +49,11 @@ public class LevelTemplate
         get;
         set;
     }
+
+    public virtual string Word  // Descriptive action word, e.g. "sink", "tick", etc.
+    {
+        get;
+        set;
+    }
 }
 

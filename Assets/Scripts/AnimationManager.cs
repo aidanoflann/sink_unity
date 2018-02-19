@@ -6,16 +6,14 @@ using Assets.Utils;
 public class AnimationManager {
 
     private MovingTextCanvasBehaviour movingTextCanvasBehaviour;
-    private List<LevelTemplate> levelTemplates;
     private Player player;
     private CameraBehaviour cameraBehaviour;
 
     private bool animationStarted = false;
 
-    public AnimationManager(MovingTextCanvasBehaviour mtcb, List<LevelTemplate> lts, Player p)
+    public AnimationManager(MovingTextCanvasBehaviour mtcb, Player p)
     {
         this.movingTextCanvasBehaviour = mtcb;
-        this.levelTemplates = lts;
         this.player = p;
     }
 
@@ -29,6 +27,16 @@ public class AnimationManager {
         this.animationStarted = false;
     }
 
+    public void SetWords(string words)
+    {
+        this.movingTextCanvasBehaviour.SetText(words);
+    }
+
+    public void SetTextColour(Color colour)
+    {
+        this.movingTextCanvasBehaviour.SetTextColor(colour);
+    }
+
     // This function is responsible for all behaviour from the level load to the initial fall of the player onto the level.
     // It needs to trigger all text animations, focus the camera correctly, then return True when completed.
     public bool HandleStartingAnimation()
@@ -37,9 +45,6 @@ public class AnimationManager {
         if (!this.animationStarted)
         {
             this.cameraBehaviour.SnapToPlayer();
-
-            this.movingTextCanvasBehaviour.SetTextColor(this.levelTemplates[this.levelTemplates.Count - 1].PlatformColor);
-            this.movingTextCanvasBehaviour.SetText("SINK AND TICK");
             this.movingTextCanvasBehaviour.AnimateToPoint(new Vector3(100, 100, -1));
             this.animationStarted = true;
         }

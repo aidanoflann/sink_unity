@@ -156,7 +156,14 @@ private void Clear()
         // update camera
         this.cameraBehaviour.SetColour(this.levelTemplates[this.levelTemplates.Count - 1].BackgroundColor);
         this.cameraBehaviour.FindPlayer();
+        this.SetupAnimationManager();
+    }
+
+    private void SetupAnimationManager()
+    {
         this.animationManager.Reset();
+        this.animationManager.SetTextColour(this.levelTemplates[this.levelTemplates.Count - 1].PlatformColor);
+        this.animationManager.SetWords("DANK AND SWAM");
     }
 
     public void SetBaseTemplates(List<LevelTemplate> levelTemplates)
@@ -233,9 +240,7 @@ private void Clear()
         this.platformList = new List<GameObject>();
         this.platforms = new List<Platform>();
         this.levelTemplates = new List<LevelTemplate>();
-        this.animationManager = new AnimationManager(
-            FindObjectOfType<MovingTextCanvasBehaviour>(),
-            this.levelTemplates, this.player);
+        this.animationManager = new AnimationManager(FindObjectOfType<MovingTextCanvasBehaviour>(), this.player);
         GeneratePlatformRanges();
     }
 
