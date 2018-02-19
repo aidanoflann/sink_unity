@@ -42,6 +42,14 @@ internal class ReverseTemplate : SquareWaveTemplate
             this.ticked = false;
         }
     }
+
+    public override string Word
+    {
+        get
+        {
+            return "REVERSE";
+        }
+    }
 }
 
 

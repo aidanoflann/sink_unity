@@ -163,7 +163,17 @@ private void Clear()
     {
         this.animationManager.Reset();
         this.animationManager.SetTextColour(this.levelTemplates[this.levelTemplates.Count - 1].PlatformColor);
-        this.animationManager.SetWords("DANK AND SWAM");
+        string stringToSet = "SINK";
+        int maxIndex = Mathf.Min(this.levelTemplates.Count, this.numStackedTemplates + this.numBaseTemplates);
+        for (int i = this.numBaseTemplates; i < maxIndex; i++)
+        {
+            if (i != this.numStackedTemplates - 1)
+            {
+                stringToSet += " AND ";
+            }
+            stringToSet += (this.levelTemplates[i].Word);
+        }
+        this.animationManager.SetWords(stringToSet);
     }
 
     public void SetBaseTemplates(List<LevelTemplate> levelTemplates)

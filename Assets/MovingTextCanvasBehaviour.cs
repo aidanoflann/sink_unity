@@ -43,9 +43,9 @@ public class MovingTextCanvasBehaviour : MonoBehaviour {
         // break the text into substrings
         this.wordsToDisplay = textToDisplay.Split(' ');
         // maybe move this inside SpawnMovingText
-        int amountToSpawn = this.wordsToDisplay.Length - this.movingTextBehaviours.Count;
+        int amountMoreToSpawn = this.wordsToDisplay.Length - this.movingTextBehaviours.Count;
         // spawn more if we need
-        this.SpawnMovingTexts(amountToSpawn);
+        this.SpawnMovingTexts(amountMoreToSpawn);
         for (int i = 0; i < this.wordsToDisplay.Length; i++)
         {
             if (i < this.movingTextBehaviours.Count)

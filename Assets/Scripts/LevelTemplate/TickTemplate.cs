@@ -38,6 +38,14 @@ internal class TickTemplate : SquareWaveTemplate
             platform.w_vel.SetValue(Mathf.Sign(platform.w_vel.GetValue()) * wVelocityMinMultiplier);
         }
     }
+
+    public override string Word
+    {
+        get
+        {
+            return "TICK";
+        }
+    }
 }
 
 
