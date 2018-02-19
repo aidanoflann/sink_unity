@@ -19,6 +19,10 @@ public class MovingTextBehaviour : MonoBehaviour {
     private float fracDistanceCovered = 0f;
     private bool animationComplete = true;
 
+    // tracking startup time
+    private float warmUpTime = 0f;
+    private float timeElapsed = 0f;
+
     // components of parent text UI object - it's this behaviour's job to dynamically manipulate these.
     private Text textComponent;
     private RectTransform rectTransform;
@@ -26,19 +30,30 @@ public class MovingTextBehaviour : MonoBehaviour {
     // Use this for initialization
     void Start() {
         // fetch sibling components
-        this.textComponent = transform.parent.GetComponentInChildren<Text>();
-        this.rectTransform = transform.parent.GetComponentInChildren<RectTransform>();
+        this.textComponent = GetComponent<Text>();
+        this.rectTransform = GetComponent<RectTransform>();
 
         // set values
         this.textComponent.text = this.TextToDisplay;
-        this.rectTransform.anchoredPosition = this.animationStartingPoint;
+        this.transform.position = this.animationStartingPoint;
+    }
+
+    public void SetWarmUpTime(float warmUpTime)
+    {
+        this.warmUpTime = warmUpTime;
     }
 	
-	public void UpdatePosition (float timeElapsed) {
+	public void UpdatePosition (float timeDelta) {
+        this.timeElapsed += timeDelta;
+        if (this.timeElapsed < this.warmUpTime)
+        {
+            // don't start any animations yet, the moving text is in its warmup period
+            return;
+        }
         if (!this.animationComplete && this.fracDistanceCovered <= 1f)
         {
-            this.animationSpeed += this.animationAcceleration * timeElapsed;
-            this.fracDistanceCovered += this.animationSpeed * timeElapsed;
+            this.animationSpeed += this.animationAcceleration * timeDelta;
+            this.fracDistanceCovered += this.animationSpeed * timeDelta;
             this.transform.position = Vector3.Lerp(this.animationStartingPoint, this.animationTargetPoint, fracDistanceCovered);
             Debug.LogFormat("MovingText position: {0}.", this.transform.position.ToString());
         }
@@ -55,6 +70,7 @@ public class MovingTextBehaviour : MonoBehaviour {
         this.animationComplete = false;
         this.fracDistanceCovered = 0f;
         this.animationSpeed = startingAnimationSpeed;
+        this.timeElapsed = 0f;
     }
 
     public void SetStartAndEndPoints(Vector3 animationStartingPoint, Vector3 animationTargetPoint)

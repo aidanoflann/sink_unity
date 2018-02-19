@@ -39,7 +39,7 @@ public class AnimationManager {
             this.cameraBehaviour.SnapToPlayer();
 
             this.movingTextCanvasBehaviour.SetTextColor(this.levelTemplates[this.levelTemplates.Count - 1].PlatformColor);
-            this.movingTextCanvasBehaviour.SetText("HEY THERE");
+            this.movingTextCanvasBehaviour.SetText("SINK AND TICK");
             this.movingTextCanvasBehaviour.AnimateToPoint(this.player.transform.position);
             this.animationStarted = true;
         }
