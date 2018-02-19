@@ -20,7 +20,8 @@ public class MovingTextBehaviour : MonoBehaviour {
     private bool animationComplete = true;
 
     // tracking startup time
-    private float warmUpTime = 0f;
+    private float warmUpTime = 0f;  // Time before starting first animation
+    private float sitStillTime = 0f; // Time after arriving at target and before exiting
     private float timeElapsed = 0f;
 
     // components of parent text UI object - it's this behaviour's job to dynamically manipulate these.
@@ -42,6 +43,11 @@ public class MovingTextBehaviour : MonoBehaviour {
     {
         this.warmUpTime = warmUpTime;
     }
+
+    public void SetSitStillTime(float sitStillTime)
+    {
+        this.sitStillTime = sitStillTime;
+    }
 	
 	public void UpdatePosition (float timeDelta) {
         this.timeElapsed += timeDelta;
@@ -61,6 +67,11 @@ public class MovingTextBehaviour : MonoBehaviour {
         {
             OnTextArrive();
             this.animationComplete = true;
+        }
+        else if (this.timeElapsed > this.sitStillTime)
+        {
+            this.fracDistanceCovered += this.animationSpeed * timeDelta;
+            this.rectTransform.anchoredPosition = Vector3.Lerp(this.animationTargetPoint, this.animationStartingPoint, fracDistanceCovered - 1f);
         }
 	}
 
