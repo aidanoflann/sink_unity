@@ -35,7 +35,7 @@ public class MovingTextBehaviour : MonoBehaviour {
 
         // set values
         this.textComponent.text = this.TextToDisplay;
-        this.transform.position = this.animationStartingPoint;
+        this.rectTransform.anchoredPosition = this.animationStartingPoint;
     }
 
     public void SetWarmUpTime(float warmUpTime)
@@ -54,8 +54,8 @@ public class MovingTextBehaviour : MonoBehaviour {
         {
             this.animationSpeed += this.animationAcceleration * timeDelta;
             this.fracDistanceCovered += this.animationSpeed * timeDelta;
-            this.transform.position = Vector3.Lerp(this.animationStartingPoint, this.animationTargetPoint, fracDistanceCovered);
-            Debug.LogFormat("MovingText position: {0}.", this.transform.position.ToString());
+            this.rectTransform.anchoredPosition = Vector3.Lerp(this.animationStartingPoint, this.animationTargetPoint, fracDistanceCovered);
+            Debug.LogFormat("MovingText position: {0}.", this.rectTransform.anchoredPosition.ToString());
         }
         else if (!this.animationComplete && this.fracDistanceCovered > 1f)
         {
@@ -71,6 +71,7 @@ public class MovingTextBehaviour : MonoBehaviour {
         this.fracDistanceCovered = 0f;
         this.animationSpeed = startingAnimationSpeed;
         this.timeElapsed = 0f;
+        this.rectTransform.anchoredPosition = this.animationStartingPoint;
     }
 
     public void SetStartAndEndPoints(Vector3 animationStartingPoint, Vector3 animationTargetPoint)

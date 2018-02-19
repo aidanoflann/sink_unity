@@ -61,7 +61,7 @@ public class MovingTextCanvasBehaviour : MonoBehaviour {
         for(int i = 0; i < this.movingTextBehaviours.Count; i++)
         {
             // TODO: randomise start point? currently just comes from the blackhole.
-            movingTextBehaviours[i].SetStartAndEndPoints(new Vector3(0, 0, -1), point);
+            movingTextBehaviours[i].SetStartAndEndPoints(new Vector3(1000, 1000, -1), point);
             movingTextBehaviours[i].SetWarmUpTime((float)i);
         }
     }

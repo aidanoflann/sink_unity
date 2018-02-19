@@ -40,7 +40,7 @@ public class AnimationManager {
 
             this.movingTextCanvasBehaviour.SetTextColor(this.levelTemplates[this.levelTemplates.Count - 1].PlatformColor);
             this.movingTextCanvasBehaviour.SetText("SINK AND TICK");
-            this.movingTextCanvasBehaviour.AnimateToPoint(this.player.transform.position);
+            this.movingTextCanvasBehaviour.AnimateToPoint(new Vector3(100, 100, -1));
             this.animationStarted = true;
         }
         this.cameraBehaviour.FollowPlayer(false, 20f);
