@@ -45,7 +45,7 @@ public class AnimationManager {
         if (!this.animationStarted)
         {
             this.cameraBehaviour.SnapToPlayer();
-            this.movingTextCanvasBehaviour.AnimateToPoint(new Vector3(100, 100, -1));
+            this.movingTextCanvasBehaviour.AnimateToPoint(new Vector3(0, 200, -1));
             this.animationStarted = true;
         }
         this.cameraBehaviour.FollowPlayer(false, 20f);
