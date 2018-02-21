@@ -41,6 +41,14 @@ internal class SnapTemplate : SquareWaveTemplate
             platform.w_size.SetValue(platform.w_size.GetValue() - speedDuringSnap * Time.deltaTime);
         }
     }
+
+    public override string Word
+    {
+        get
+        {
+            return "SNAP";
+        }
+    }
 }
 
 

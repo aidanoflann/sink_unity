@@ -25,6 +25,14 @@ internal class DilateTemplate : SinWaveTemplate
         Platform platform = allPlatforms[platformIndex];
         platform.w_size.SetValue(platform.w_size.GetValue() + this.SignedSinValue);
     }
+
+    public override string Word
+    {
+        get
+        {
+            return "DILATE";
+        }
+    }
 }
 
 

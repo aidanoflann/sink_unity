@@ -29,4 +29,12 @@ internal class WaveTemplate : SinWaveTemplate
         float angleWithOffset = (this.currentAngle + platformIndex * phaseOffSet) % Globals.twoPi;
         platform.r_vel = this.originalRVel.Value + amplitude * Mathf.Sin(angleWithOffset);
     }
+
+    public override string Word
+    {
+        get
+        {
+            return "WAVE";
+        }
+    }
 }

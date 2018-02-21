@@ -37,6 +37,14 @@ internal class StutterTemplate : SquareWaveTemplate
             platform.r_vel = downRVel;
         }
     }
+
+    public override string Word
+    {
+        get
+        {
+            return "STUTTER";
+        }
+    }
 }
 
 

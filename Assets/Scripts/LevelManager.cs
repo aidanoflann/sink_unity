@@ -17,13 +17,13 @@ public class LevelManager : MonoBehaviour {
     public enum state
     {
         needsRestart = 0,
-        starting = 1,
-        main = 2,
-        paused = 3,
-        ending = 4,
-        completing = 5,
-        nextLevel = 6,
-        showingLevelText = 7,
+        preStartAnimation = 1,
+        starting = 2,
+        main = 3,
+        paused = 4,
+        ending = 5,
+        completing = 6,
+        nextLevel = 7,
     }
     public state currentState;
 
@@ -34,6 +34,7 @@ public class LevelManager : MonoBehaviour {
     // cached GameObjects
     private List<GameObject> platformList;
     private List<Platform> platforms;
+    private AnimationManager animationManager;
     public Player player;
 
 	// this is used to child all of the gameObjects for better control/organisation in the inspector.
@@ -54,6 +55,15 @@ public class LevelManager : MonoBehaviour {
     #endregion
 
     #region [Private Methods]
+
+    private Camera _camera
+    {
+        get
+        {
+            return this.cameraBehaviour.cameraObject;
+        }
+    }
+
     private void GeneratePlatformRanges()
     {
         wVelRange = Enumerable.Range(6, 12).Select(i => (float)i * 10f).ToArray();
@@ -126,11 +136,9 @@ private void Clear()
     
     public void SetupScene(Angle playerWPos = null)
     {
-        // TODO: Trigger text animation here
-        // TODO: Needs to move texxt around on a canvas that moves with the camera
         platformRSpeedMultiplier = 1f;
 
-        currentState = state.starting;
+        currentState = state.preStartAnimation;
 
         player.Reset();
         if (playerWPos != null)
@@ -148,6 +156,24 @@ private void Clear()
         // update camera
         this.cameraBehaviour.SetColour(this.levelTemplates[this.levelTemplates.Count - 1].BackgroundColor);
         this.cameraBehaviour.FindPlayer();
+        this.SetupAnimationManager();
+    }
+
+    private void SetupAnimationManager()
+    {
+        this.animationManager.Reset();
+        string stringToSet = "SINK";
+        int maxIndex = Mathf.Min(this.levelTemplates.Count, this.numStackedTemplates + this.numBaseTemplates);
+        for (int i = this.numBaseTemplates; i < maxIndex; i++)
+        {
+            if (i != this.numStackedTemplates - 1)
+            {
+                stringToSet += " AND ";
+            }
+            stringToSet += (this.levelTemplates[i].Word);
+        }
+        this.animationManager.SetWords(stringToSet);
+        this.animationManager.SetTextColour(this.levelTemplates[this.levelTemplates.Count - 1].PlatformColor);
     }
 
     public void SetBaseTemplates(List<LevelTemplate> levelTemplates)
@@ -160,11 +186,12 @@ private void Clear()
     public void CycleTemplate(LevelTemplate levelTemplate)
     // remove the 3rd template and add the given one
     {
-        if (this.levelTemplates.Count > this.numBaseTemplates + this.numStackedTemplates)
+        this.levelTemplates.Add(levelTemplate);
+        while (this.levelTemplates.Count > this.numBaseTemplates + this.numStackedTemplates)
         {
+            // should only happen once, but keep removing leveltemplates from the back of the stacked dynamic templates (i.e. the oldest)
             this.levelTemplates.Remove(this.levelTemplates[this.numBaseTemplates]);
         }
-        this.levelTemplates.Add(levelTemplate);
     }
 
     public void AddTemplate(LevelTemplate levelTemplate)
@@ -185,6 +212,7 @@ private void Clear()
     public void SetCameraBehaviour(CameraBehaviour cameraBehaviour)
     {
         this.cameraBehaviour = cameraBehaviour;
+        this.animationManager.SetCameraBehaviour(cameraBehaviour);
     }
 
     public void Restart(Angle newPlayerWpos = null)
@@ -223,6 +251,7 @@ private void Clear()
         this.platformList = new List<GameObject>();
         this.platforms = new List<Platform>();
         this.levelTemplates = new List<LevelTemplate>();
+        this.animationManager = new AnimationManager(FindObjectOfType<MovingTextCanvasBehaviour>(), this.player);
         GeneratePlatformRanges();
     }
 
@@ -247,6 +276,14 @@ private void Clear()
         if (currentState == state.completing && player.RPos > 400f)
         {
             this.currentState = state.nextLevel;
+        }
+
+        if (currentState == state.preStartAnimation)
+        {
+            if (this.animationManager.HandleStartingAnimation())
+            {
+                this.currentState = state.starting;
+            }
         }
 
         // check if player has landed for the first time
@@ -311,11 +348,15 @@ private void Clear()
                 this.ShakeCamera();
             }
             player.UpdateVisuals();
-            cameraBehaviour.FollowPlayer();
+            if (currentState != state.preStartAnimation)
+            {
+                cameraBehaviour.FollowPlayer();
+            }
         }
     }
+
     #endregion
-    
+
     public void Log()
     {
         Debug.Log("--- LOGGING LEVEL MANAGER ---");
@@ -329,10 +370,8 @@ private void Clear()
         Debug.Log("------");
     }
 
-    #if CHEATS_ENABLED
     public void ShakeCamera()
     {
         this.cameraBehaviour.StartShake();
     }
-    #endif
 }

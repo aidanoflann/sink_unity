@@ -21,6 +21,14 @@ internal class TwirlTemplate : SinWaveTemplate
         Platform platform = allPlatforms[platformIndex];
         platform.w_pos += amplitude * Mathf.Sin(this.currentAngle);
     }
+
+    public override string Word
+    {
+        get
+        {
+            return "TWIRL";
+        }
+    }
 }
 
 

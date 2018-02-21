@@ -36,6 +36,14 @@ internal class TockTemplate : SquareWaveTemplate
             platform.r_vel = minRVel;
         }
     }
+
+    public override string Word
+    {
+        get
+        {
+            return "TOCK";
+        }
+    }
 }
 
 

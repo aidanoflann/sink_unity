@@ -36,5 +36,12 @@ public class BounceTemplate : LevelTemplate
     {
         base.Reload();
     }
-}
 
+    public override string Word
+    {
+        get
+        {
+            return "BOUNCE";
+        }
+    }
+}

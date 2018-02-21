@@ -21,5 +21,13 @@ public class SlideTemplate : LevelTemplate
     {
         base.Reload();
     }
+
+    public override string Word
+    {
+        get
+        {
+            return "SLIDE";
+        }
+    }
 }
 

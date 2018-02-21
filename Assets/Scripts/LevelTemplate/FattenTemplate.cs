@@ -32,4 +32,12 @@ internal class FattenTemplate : SinWaveTemplate
         }
         platform.r_size = this.originalRSize.Value + this.amplitude * this.SignedSinValue + 0.1f;
     }
+
+    public override string Word
+    {
+        get
+        {
+            return "FATTEN";
+        }
+    }
 }

@@ -26,4 +26,12 @@ internal class PulseTemplate : SinWaveTemplate
         }
         platform.r_vel = this.originalRVel.Value +  amplitude * Mathf.Sin(this.currentAngle);
     }
+
+    public override string Word
+    {
+        get
+        {
+            return "PULSE";
+        }
+    }
 }

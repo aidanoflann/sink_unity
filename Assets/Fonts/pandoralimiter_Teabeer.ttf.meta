@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 9386180112609434d805fd0303a36a86
+timeCreated: 1516118307
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: pandora limiter
+  fontNames:
+  - pandora limiter
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

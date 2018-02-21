@@ -32,6 +32,14 @@ internal class PinchTemplate : SquareWaveTemplate
             platform.r_pos -= speedDuringSnap * rVelSign * Time.deltaTime;
         }
     }
+
+    public override string Word
+    {
+        get
+        {
+            return "PINCH";
+        }
+    }
 }
 
 
