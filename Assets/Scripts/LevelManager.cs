@@ -162,7 +162,6 @@ private void Clear()
     private void SetupAnimationManager()
     {
         this.animationManager.Reset();
-        this.animationManager.SetTextColour(this.levelTemplates[this.levelTemplates.Count - 1].PlatformColor);
         string stringToSet = "SINK";
         int maxIndex = Mathf.Min(this.levelTemplates.Count, this.numStackedTemplates + this.numBaseTemplates);
         for (int i = this.numBaseTemplates; i < maxIndex; i++)
@@ -174,6 +173,7 @@ private void Clear()
             stringToSet += (this.levelTemplates[i].Word);
         }
         this.animationManager.SetWords(stringToSet);
+        this.animationManager.SetTextColour(this.levelTemplates[this.levelTemplates.Count - 1].PlatformColor);
     }
 
     public void SetBaseTemplates(List<LevelTemplate> levelTemplates)
@@ -186,11 +186,12 @@ private void Clear()
     public void CycleTemplate(LevelTemplate levelTemplate)
     // remove the 3rd template and add the given one
     {
-        if (this.levelTemplates.Count > this.numBaseTemplates + this.numStackedTemplates)
+        this.levelTemplates.Add(levelTemplate);
+        while (this.levelTemplates.Count > this.numBaseTemplates + this.numStackedTemplates)
         {
+            // should only happen once, but keep removing leveltemplates from the back of the stacked dynamic templates (i.e. the oldest)
             this.levelTemplates.Remove(this.levelTemplates[this.numBaseTemplates]);
         }
-        this.levelTemplates.Add(levelTemplate);
     }
 
     public void AddTemplate(LevelTemplate levelTemplate)

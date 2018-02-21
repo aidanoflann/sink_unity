@@ -24,18 +24,31 @@ public class MovingTextCanvasBehaviour : MonoBehaviour {
     }
 
     private void SpawnMovingTexts(int numToSpawn)
+    // numToSpawn can be negative, meaning despawn the specified amount
     {
-        for (int i = 0; i < numToSpawn; i++)
+        for (int i = 0; i < Mathf.Abs(numToSpawn); i++)
         {
             // instansiate the movingText gameobject and set it as a child of this transform
             // NOTE: set parent on instantiate to avoid your positions getting jiggled.
-            GameObject newMovingText = GameObject.Instantiate(this.movingTextPrefab, this.transform);
-            MovingTextBehaviour movingTextBehaviour = newMovingText.GetComponent<MovingTextBehaviour>();
+            if(numToSpawn > 0)
+            {
+                GameObject newMovingText = GameObject.Instantiate(this.movingTextPrefab, this.transform);
+                MovingTextBehaviour movingTextBehaviour = newMovingText.GetComponent<MovingTextBehaviour>();
 
-            // store references to the gameobject and its behaviour
-            this.movingTextGameObjects.Add(newMovingText);
-            this.movingTextBehaviours.Add(movingTextBehaviour);
+                // store references to the gameobject and its behaviour
+                this.movingTextGameObjects.Add(newMovingText);
+                this.movingTextBehaviours.Add(movingTextBehaviour);
+            }
+            else
+            {
+                int lastIndex = this.movingTextGameObjects.Count - 1;
+                GameObject.Destroy(this.movingTextGameObjects[lastIndex]);
+                this.movingTextGameObjects.RemoveAt(lastIndex);
+                this.movingTextBehaviours.RemoveAt(lastIndex);
+            }
         }
+
+
     }
 
     public void SetText(string textToDisplay)
@@ -44,7 +57,7 @@ public class MovingTextCanvasBehaviour : MonoBehaviour {
         this.wordsToDisplay = textToDisplay.Split(' ');
         // maybe move this inside SpawnMovingText
         int amountMoreToSpawn = this.wordsToDisplay.Length - this.movingTextBehaviours.Count;
-        // spawn more if we need
+        // spawn or remove if we need
         this.SpawnMovingTexts(amountMoreToSpawn);
         for (int i = 0; i < this.wordsToDisplay.Length; i++)
         {

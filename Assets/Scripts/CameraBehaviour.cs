@@ -50,7 +50,7 @@ public class CameraBehaviour : MonoBehaviour {
             newPosition.x = player.transform.position.x * 0.67f;
             newPosition.y = player.transform.position.y * 0.67f - 5f;
             // TODO: also approach orthographicSize
-            cameraObject.orthographicSize = 7.5f * Mathf.Max(0.001f, Mathf.Sqrt(Mathf.Abs(player.RPos)));
+            cameraObject.orthographicSize = 8.5f * Mathf.Max(0.001f, Mathf.Sqrt(Mathf.Abs(player.RPos)));
         }
         else
         {

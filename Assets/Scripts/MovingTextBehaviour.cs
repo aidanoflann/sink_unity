@@ -29,7 +29,7 @@ public class MovingTextBehaviour : MonoBehaviour {
     private RectTransform rectTransform;
 
     // Use this for initialization
-    void Start() {
+    void Awake() {
         // fetch sibling components
         this.textComponent = GetComponent<Text>();
         this.rectTransform = GetComponent<RectTransform>();
@@ -101,5 +101,6 @@ public class MovingTextBehaviour : MonoBehaviour {
     public void SetText(string text)
     {
         this.TextToDisplay = text;
+        this.textComponent.text = text;
     }
 }
