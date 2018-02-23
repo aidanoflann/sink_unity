@@ -251,7 +251,7 @@ private void Clear()
         this.platformList = new List<GameObject>();
         this.platforms = new List<Platform>();
         this.levelTemplates = new List<LevelTemplate>();
-        this.animationManager = new AnimationManager(FindObjectOfType<MovingTextCanvasBehaviour>(), this.player);
+        this.animationManager = new AnimationManager(FindObjectOfType<MovingTextCanvasBehaviour>());
         GeneratePlatformRanges();
     }
 

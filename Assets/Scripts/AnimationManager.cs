@@ -10,11 +10,12 @@ public class AnimationManager {
     private CameraBehaviour cameraBehaviour;
 
     private bool animationStarted = false;
+    private float timeSinceAnimationStart = 0;
+    private float timeToSpendAnimating = 3; // seconds
 
-    public AnimationManager(MovingTextCanvasBehaviour mtcb, Player p)
+    public AnimationManager(MovingTextCanvasBehaviour mtcb)
     {
         this.movingTextCanvasBehaviour = mtcb;
-        this.player = p;
     }
 
     public void SetCameraBehaviour(CameraBehaviour cameraBehaviour)
@@ -25,6 +26,7 @@ public class AnimationManager {
     public void Reset()
     {
         this.animationStarted = false;
+        this.timeSinceAnimationStart = 0f;
     }
 
     public void SetWords(string words)
@@ -48,10 +50,14 @@ public class AnimationManager {
             this.movingTextCanvasBehaviour.AnimateToPoint(new Vector3(0, 200, -1));
             this.animationStarted = true;
         }
+        else
+        {
+            this.timeSinceAnimationStart += Time.deltaTime;
+        }
         this.cameraBehaviour.FollowPlayer(false, 20f);
 
         // if higher than 100f, keep animating - THIS MIGHT GO BAD
-        if (this.player.RPos < 100f)
+        if (this.timeSinceAnimationStart > this.timeToSpendAnimating)
         {
             this.Reset();
             return true;
