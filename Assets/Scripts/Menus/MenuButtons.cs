@@ -4,25 +4,25 @@ using UnityEngine.SceneManagement;
 
 public class MenuButtons : MonoBehaviour {
 
-    public Canvas howToPlayMenu;
+    public GameObject howToPlayMenu;
     public Canvas startMenu;
 
     void Start()
     {
         Screen.orientation = ScreenOrientation.LandscapeLeft;
-        howToPlayMenu = howToPlayMenu.GetComponent<Canvas>();
-        howToPlayMenu.enabled = false;
+        //howToPlayMenu = GameObject.FindGameObjectWithTag("HowToPlay");
+        howToPlayMenu.SetActive(false);
     }
 
     public void HowToPlayButtonPress()
     {
         startMenu.enabled = false;
-        howToPlayMenu.enabled = true;
+        howToPlayMenu.SetActive(true);
     }
 
     public void HowToPlayOkButtonPress()
     {
-        howToPlayMenu.enabled = false;
+        howToPlayMenu.SetActive(false);
         startMenu.enabled = true;
     }
 
