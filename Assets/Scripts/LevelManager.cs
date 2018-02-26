@@ -131,7 +131,6 @@ private void Clear()
         }
         platformList.Clear();
         platforms.Clear();
-        this.statManagerBehaviour.Reset();
         //Destroy(playerObject);
     }
     #endregion
@@ -185,6 +184,7 @@ private void Clear()
         this.levelTemplates.Clear();
         this.levelTemplates.AddRange(levelTemplates);
         this.numBaseTemplates = this.levelTemplates.Count();
+        this.statManagerBehaviour.Reset();
     }
 
     public void CycleTemplate(LevelTemplate levelTemplate)
