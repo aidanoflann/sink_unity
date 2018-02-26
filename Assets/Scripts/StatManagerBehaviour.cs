@@ -25,7 +25,7 @@ public class StatManagerBehaviour : MonoBehaviour {
         public int CalculateScore()
         {
             // TODO: actually care about this equation.
-            return (int)Mathf.Round(Mathf.Pow(this.numPlatforms, (1 + this.numDynamicTemplates)) / this.levelDuration);
+            return (int)Mathf.Round(Mathf.Pow(this.numPlatforms, (1 + this.numDynamicTemplates)) / (this.levelDuration / 60f));
         }
 
         public void Log()
@@ -60,6 +60,12 @@ public class StatManagerBehaviour : MonoBehaviour {
             totalScore += allLevelStats[i].CalculateScore();
         }
         return totalScore;
+    }
+
+    public void Reset()
+    {
+        this.startTime = 0f;
+        this.allLevelStats.Clear();
     }
 
     public void Log()

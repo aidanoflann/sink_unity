@@ -130,6 +130,7 @@ private void Clear()
         }
         platformList.Clear();
         platforms.Clear();
+        this.statManagerBehaviour.Reset();
         //Destroy(playerObject);
     }
     #endregion
