@@ -10,6 +10,7 @@ public class LevelManager : MonoBehaviour {
     // prepare the player and platform prefabs
     public GameObject playerPrefab;
 	public GameObject platformPrefab;
+    public GameObject statManagerGameObject;
     public BackgroundCircleFactory backgroundCircleFactory;
     public int numStackedTemplates;
 
@@ -35,6 +36,7 @@ public class LevelManager : MonoBehaviour {
     private List<GameObject> platformList;
     private List<Platform> platforms;
     private AnimationManager animationManager;
+    private StatManagerBehaviour statManagerBehaviour;
     public Player player;
 
 	// this is used to child all of the gameObjects for better control/organisation in the inspector.
@@ -252,6 +254,8 @@ private void Clear()
         this.platforms = new List<Platform>();
         this.levelTemplates = new List<LevelTemplate>();
         this.animationManager = new AnimationManager(FindObjectOfType<MovingTextCanvasBehaviour>());
+        this.statManagerBehaviour = this.statManagerGameObject.GetComponent<StatManagerBehaviour>();
+
         GeneratePlatformRanges();
     }
 
