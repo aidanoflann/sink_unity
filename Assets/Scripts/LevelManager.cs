@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Utils;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour {
 
@@ -329,7 +330,8 @@ private void Clear()
             if (platformList.Count == 0 && currentState != state.completing)
             {
                 this.currentState = state.needsRestart;
-                return;
+                SceneManager.LoadScene("EndGame");
+                //return;
             }
 
         }
