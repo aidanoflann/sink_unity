@@ -22,6 +22,12 @@ public class StatManagerBehaviour : MonoBehaviour {
             this.numDynamicTemplates = numDynamicTemplates;
         }
 
+        public int CalculateScore()
+        {
+            // TODO: actually care about this equation.
+            return (int)Mathf.Round(Mathf.Pow(this.numPlatforms, (1 + this.numDynamicTemplates)) / this.levelDuration);
+        }
+
         public void Log()
         {
             Debug.LogFormat("levelDuration: {0}, numPlatforms: {1}, numDynamicTemplates: {2}",
@@ -46,6 +52,16 @@ public class StatManagerBehaviour : MonoBehaviour {
         this.allLevelStats.Add(new LevelStats(levelDuration, numPlatforms, numDynamicTemplates));
     }
 
+    public int GetTotalScore()
+    {
+        int totalScore = 0;
+        for (int i = 0; i < this.allLevelStats.Count; i++)
+        {
+            totalScore += allLevelStats[i].CalculateScore();
+        }
+        return totalScore;
+    }
+
     public void Log()
     {
         Debug.Log("--- LOGGING STAT MANAGER ---");
@@ -54,6 +70,7 @@ public class StatManagerBehaviour : MonoBehaviour {
         {
             Debug.LogFormat("--LevelStats {0}--", i);
             allLevelStats[i].Log();
+            Debug.LogFormat("--Score for level: {0} --", allLevelStats[i].CalculateScore());
         }
         Debug.Log("------");
     }
