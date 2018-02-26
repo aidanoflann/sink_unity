@@ -61,7 +61,6 @@ public class MovingTextBehaviour : MonoBehaviour {
             this.animationSpeed += this.animationAcceleration * timeDelta;
             this.fracDistanceCovered += this.animationSpeed * timeDelta;
             this.rectTransform.anchoredPosition = Vector3.Lerp(this.animationStartingPoint, this.animationTargetPoint, fracDistanceCovered);
-            Debug.LogFormat("MovingText position: {0}.", this.rectTransform.anchoredPosition.ToString());
         }
         else if (!this.animationComplete && this.fracDistanceCovered > 1f)
         {

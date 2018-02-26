@@ -10,6 +10,7 @@ public class LevelManager : MonoBehaviour {
     // prepare the player and platform prefabs
     public GameObject playerPrefab;
 	public GameObject platformPrefab;
+    public GameObject statManagerGameObject;
     public BackgroundCircleFactory backgroundCircleFactory;
     public int numStackedTemplates;
 
@@ -35,6 +36,7 @@ public class LevelManager : MonoBehaviour {
     private List<GameObject> platformList;
     private List<Platform> platforms;
     private AnimationManager animationManager;
+    private StatManagerBehaviour statManagerBehaviour;
     public Player player;
 
 	// this is used to child all of the gameObjects for better control/organisation in the inspector.
@@ -128,6 +130,7 @@ private void Clear()
         }
         platformList.Clear();
         platforms.Clear();
+        this.statManagerBehaviour.Reset();
         //Destroy(playerObject);
     }
     #endregion
@@ -252,6 +255,8 @@ private void Clear()
         this.platforms = new List<Platform>();
         this.levelTemplates = new List<LevelTemplate>();
         this.animationManager = new AnimationManager(FindObjectOfType<MovingTextCanvasBehaviour>());
+        this.statManagerBehaviour = this.statManagerGameObject.GetComponent<StatManagerBehaviour>();
+
         GeneratePlatformRanges();
     }
 
@@ -267,6 +272,7 @@ private void Clear()
         if (player.RPos <= 0 && currentState != state.ending)
         {
             currentState = state.ending;
+            this.UpdateStats();
             platformRSpeedMultiplier = 24f;
             cameraBehaviour.EndGame();
             player.Hide();
@@ -275,6 +281,7 @@ private void Clear()
         // restart game if in completing state and player gets over a certain height
         if (currentState == state.completing && player.RPos > 400f)
         {
+            this.UpdateStats();
             this.currentState = state.nextLevel;
         }
 
@@ -289,6 +296,7 @@ private void Clear()
         // check if player has landed for the first time
         if (currentState == state.starting && player.IsLanded)
         {
+            this.statManagerBehaviour.SetStartTime();
             currentState = state.main;
         }
         else if (currentState == state.main || currentState == state.ending || currentState == state.completing)
@@ -355,6 +363,11 @@ private void Clear()
         }
     }
 
+    private void UpdateStats()
+    {
+        this.statManagerBehaviour.UpdateStatsOnLevelEnd(this.numBaseTemplates, this.levelTemplates, this.numPlatforms);
+    }
+
     #endregion
 
     public void Log()
@@ -367,6 +380,8 @@ private void Clear()
             Debug.LogFormat("--Plaftorm {0}--", i);
             platforms[i].Log();
         }
+        Debug.Log("--Stats--");
+        this.statManagerBehaviour.Log();
         Debug.Log("------");
     }
 
