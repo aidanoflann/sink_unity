@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class EndGameBehaviour : MonoBehaviour {
 
@@ -14,11 +13,15 @@ public class EndGameBehaviour : MonoBehaviour {
         GameObject scoreNumberTextGO = GameObject.Find("ScoreNumber");
         this.scoreNumberText = scoreNumberTextGO.GetComponent<Text>();
         this.scoreNumberText.text = this.statManagerBehaviour.GetTotalScore().ToString();
-        this.statManagerBehaviour.Log();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
+    public void StartLevel()
+    {
+        SceneManager.LoadScene("MainLevel");
+    }
+
+    public void GoToMainMenu()
+    {
+        SceneManager.LoadScene("StartMenu");
+    }
 }
