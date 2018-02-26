@@ -92,7 +92,6 @@ public class GameManager : MonoBehaviour {
 
     void NextLevel()
     {
-        // TODO: randomly select template
         LevelTemplate templateToAdd = this.dynamicTemplates[Random.Range(0, this.dynamicTemplates.Count)];
         this.levelManager.CycleTemplate(templateToAdd);
         this.levelManager.Restart();

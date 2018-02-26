@@ -271,6 +271,7 @@ private void Clear()
         if (player.RPos <= 0 && currentState != state.ending)
         {
             currentState = state.ending;
+            this.UpdateStats();
             platformRSpeedMultiplier = 24f;
             cameraBehaviour.EndGame();
             player.Hide();
@@ -279,6 +280,7 @@ private void Clear()
         // restart game if in completing state and player gets over a certain height
         if (currentState == state.completing && player.RPos > 400f)
         {
+            this.UpdateStats();
             this.currentState = state.nextLevel;
         }
 
@@ -293,6 +295,7 @@ private void Clear()
         // check if player has landed for the first time
         if (currentState == state.starting && player.IsLanded)
         {
+            this.statManagerBehaviour.SetStartTime();
             currentState = state.main;
         }
         else if (currentState == state.main || currentState == state.ending || currentState == state.completing)
@@ -359,6 +362,11 @@ private void Clear()
         }
     }
 
+    private void UpdateStats()
+    {
+        this.statManagerBehaviour.UpdateStatsOnLevelEnd(this.numBaseTemplates, this.levelTemplates, this.numPlatforms);
+    }
+
     #endregion
 
     public void Log()
@@ -371,6 +379,8 @@ private void Clear()
             Debug.LogFormat("--Plaftorm {0}--", i);
             platforms[i].Log();
         }
+        Debug.Log("--Stats--");
+        this.statManagerBehaviour.Log();
         Debug.Log("------");
     }
 
