@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EndGameManagerBehaviour : MonoBehaviour {
+public class EndGameManagerScreen : MonoBehaviour {
 
     private StatManagerBehaviour statManagerBehaviour;
 
