@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
@@ -52,7 +52,11 @@ public class GameManager : MonoBehaviour {
 
     void Update()
     {
-        if (Input.GetKeyDown("r") || levelManager.currentState == LevelManager.state.needsRestart ||
+        if (levelManager.currentState == LevelManager.state.needsRestart)
+        {
+            SceneManager.LoadScene("EndGame");
+        }
+        if (Input.GetKeyDown("r") ||
             ((Input.GetKeyDown("space") || Input.GetMouseButtonDown(0)) && levelManager.currentState == LevelManager.state.ending))
         {
             this.RestartGame();
