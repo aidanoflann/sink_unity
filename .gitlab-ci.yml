@@ -15,5 +15,6 @@ build_android:
 		-quit 
   only:
     - master
+	- automated_builds
   tags:
     - unity
