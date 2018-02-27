@@ -5,14 +5,7 @@ build_android:
   stage: build
   script:
 	- echo Attempting to build for Android
-    - START "Program Files\Unity\Editor\Unity.exe" \
-		-batchmode \
-		-nographics \
-		-silent-crashes \
-		-logFile unity.log \
-		-projectPath . \
-		-buildTarget Android \
-		-quit 
+    - START "Program Files\Unity\Editor\Unity.exe" -batchmode -nographics -silent-crashes -logFile unity.log -projectPath . -buildTarget Android -quit
   only:
     - master
 	- automated_builds
