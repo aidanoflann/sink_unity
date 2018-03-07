@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour {
     private CameraBehaviour cameraBehaviour;
     private List<LevelTemplate> baseTemplates;
     private List<LevelTemplate> dynamicTemplates;
+    private List<int> availableDynamicTemplateIndices;
 
     public int numPlatforms = 5;
     public bool showFPS;
@@ -36,6 +37,12 @@ public class GameManager : MonoBehaviour {
         this.dynamicTemplates.Add(new StutterTemplate()); // love it
         this.dynamicTemplates.Add(new SnapTemplate()); // love it
         this.dynamicTemplates.Add(new PinchTemplate()); // meh
+
+        this.availableDynamicTemplateIndices = new List<int>();
+        for (int i = 0; i < this.dynamicTemplates.Count; i++)
+        {
+            this.availableDynamicTemplateIndices.Add(i);
+        }
 
         // Experimental templates (usually either low quality or very very difficult)
         //this.dynamicTemplates.Add(new BounceTemplate());
@@ -97,8 +104,15 @@ public class GameManager : MonoBehaviour {
 
     void NextLevel()
     {
-        LevelTemplate templateToAdd = this.dynamicTemplates[Random.Range(0, this.dynamicTemplates.Count)];
-        this.levelManager.CycleTemplate(templateToAdd);
+
+        int indexToAdd = this.availableDynamicTemplateIndices[Random.Range(0, this.availableDynamicTemplateIndices.Count)];
+        this.availableDynamicTemplateIndices.Remove(indexToAdd);
+        LevelTemplate templateToAdd = this.dynamicTemplates[indexToAdd];
+        List<LevelTemplate> templatesRemoved = this.levelManager.CycleTemplate(templateToAdd);
+        for(int i = 0; i < templatesRemoved.Count; i++)
+        {
+            this.availableDynamicTemplateIndices.Add(this.dynamicTemplates.IndexOf(templatesRemoved[i]));
+        }
         this.levelManager.Restart();
     }
 
