@@ -186,15 +186,19 @@ private void Clear()
         this.statManagerBehaviour.Reset();
     }
 
-    public void CycleTemplate(LevelTemplate levelTemplate)
+    public List<LevelTemplate> CycleTemplate(LevelTemplate levelTemplate)
     // remove the 3rd template and add the given one
     {
+        List<LevelTemplate> templatesRemoved = new List<LevelTemplate>();
         this.levelTemplates.Add(levelTemplate);
         while (this.levelTemplates.Count > this.numBaseTemplates + this.numStackedTemplates)
         {
             // should only happen once, but keep removing leveltemplates from the back of the stacked dynamic templates (i.e. the oldest)
-            this.levelTemplates.Remove(this.levelTemplates[this.numBaseTemplates]);
+            LevelTemplate templateToRemove = this.levelTemplates[this.numBaseTemplates];
+            this.levelTemplates.Remove(templateToRemove);
+            templatesRemoved.Add(templateToRemove);
         }
+        return templatesRemoved;
     }
 
     public void AddTemplate(LevelTemplate levelTemplate)
