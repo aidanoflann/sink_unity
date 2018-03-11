@@ -36,6 +36,7 @@ public class LevelManager : MonoBehaviour {
     private List<GameObject> platformList;
     private List<Platform> platforms;
     private AnimationManager animationManager;
+    public AudioManager audioManager;
     private StatManagerBehaviour statManagerBehaviour;
     public Player player;
 
@@ -259,6 +260,7 @@ private void Clear()
         this.platforms = new List<Platform>();
         this.levelTemplates = new List<LevelTemplate>();
         this.animationManager = new AnimationManager(FindObjectOfType<MovingTextCanvasBehaviour>());
+        this.audioManager = FindObjectOfType<AudioManager>();
         this.statManagerBehaviour = this.statManagerGameObject.GetComponent<StatManagerBehaviour>();
 
         GeneratePlatformRanges();
@@ -354,10 +356,15 @@ private void Clear()
                 levelTemplates[j].UpdatePlayer(player);
             }
 
-            bool playerCollided = player.UpdatePosition(platforms);
-            if (playerCollided)
+            PlayerUpdate playerUpdate = player.UpdatePosition(platforms);
+            if (playerUpdate.hitPlatform)
             {
                 this.ShakeCamera();
+                this.audioManager.Play("LandSound");
+            }
+            if (playerUpdate.jumped)
+            {
+                this.audioManager.Play("JumpSound");
             }
             player.UpdateVisuals();
             if (currentState != state.preStartAnimation)

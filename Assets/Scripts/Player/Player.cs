@@ -3,6 +3,13 @@ using System.Linq;
 using System.Collections.Generic;
 using Assets.Utils;
 
+
+public class PlayerUpdate
+{
+    public bool jumped;
+    public bool hitPlatform;
+}
+
 public class Player : DynamicObject {
 
     public Tail tail;
@@ -71,7 +78,10 @@ public class Player : DynamicObject {
 
 	}
 
-	public bool UpdatePosition(List<Platform> platforms, float jumpSpeedModifier = 1f) {
+	public PlayerUpdate UpdatePosition(List<Platform> platforms, float jumpSpeedModifier = 1f) {
+        // create an update "report" so the level manager can react to events
+        PlayerUpdate playerUpdate = new PlayerUpdate();
+
         // update position in polar coordinates - return True if a collision occurred
         bool collisionOccured = false;
 		float deltaTime = Time.deltaTime;
@@ -80,6 +90,7 @@ public class Player : DynamicObject {
         if (this.needsToJump)
         {
             Jump(jumpSpeedModifier);
+            playerUpdate.jumped = true;
         }
         if (this.needsToDeJump)
         {
@@ -90,7 +101,7 @@ public class Player : DynamicObject {
         if (currentState == state.midair)
         {
             platformIndex = CheckPlatformCollisions(platforms);
-            collisionOccured = (platformIndex != -1);
+            playerUpdate.hitPlatform = (platformIndex != -1);
             applyCollisions(platformIndex, platforms);
         }
         else
@@ -110,7 +121,7 @@ public class Player : DynamicObject {
 			this.r_pos = this.platform.r_pos + this.size * 0.5f + this.platform.r_size * 0.5f;
             this.w_pos = this.platform.w_pos + this.platformPosition * this.platform.w_size;
         }
-        return collisionOccured;
+        return playerUpdate;
     }
 
     public void UpdateVisuals()
