@@ -9,7 +9,6 @@ public class MenuButtons : MonoBehaviour {
 
     void Start()
     {
-        Screen.orientation = ScreenOrientation.LandscapeLeft;
         //howToPlayMenu = GameObject.FindGameObjectWithTag("HowToPlay");
         howToPlayMenu.SetActive(false);
     }
