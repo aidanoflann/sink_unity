@@ -15,6 +15,7 @@ public class Sound
     [Range(0f, 3f)]
     public float pitch;
 
+    [HideInInspector]
     public AudioSource source;
 
     public bool loop;
@@ -22,9 +23,21 @@ public class Sound
 
 public class AudioManager : MonoBehaviour {
 
+    // enforce singleton behaviour
+    public static AudioManager instance;
     public Sound[] sounds;
 
 	void Awake () {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+
         DontDestroyOnLoad(this.gameObject);
 
         for (int i = 0; i < this.sounds.Length; i++)
@@ -38,11 +51,15 @@ public class AudioManager : MonoBehaviour {
         }
 
         this.Play("BaseMusic");
-	}
-	
-	public void Play(string soundName)
+    }
+
+    public void Play(string soundName)
     {
         Sound s = Array.Find<Sound>(this.sounds, sound => sound.name == soundName);
+        if (s == null)
+        {
+            Debug.LogErrorFormat("Could not find sound with name {0}. Skipping...", soundName);
+        }
         s.source.Play();
     }
 }
