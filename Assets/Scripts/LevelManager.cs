@@ -360,6 +360,7 @@ private void Clear()
             if (playerUpdate.hitPlatform)
             {
                 this.ShakeCamera();
+                this.audioManager.Play("LandSound");
             }
             if (playerUpdate.jumped)
             {
