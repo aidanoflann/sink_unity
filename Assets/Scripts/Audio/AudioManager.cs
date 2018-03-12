@@ -53,12 +53,19 @@ public class AudioManager : MonoBehaviour {
         this.Play("BaseMusic");
     }
 
-    public void Play(string soundName)
+    public void Play(string soundName, float? pitchOverride = null)
     {
         Sound s = Array.Find<Sound>(this.sounds, sound => sound.name == soundName);
         if (s == null)
         {
             Debug.LogErrorFormat("Could not find sound with name {0}. Skipping...", soundName);
+        }
+
+        // TODO: find nicer way of overriding pitch for the duration of the sound (this wont work with stacking)
+        s.source.pitch = s.pitch;
+        if (pitchOverride.HasValue)
+        {
+            s.source.pitch = pitchOverride.Value;
         }
         s.source.Play();
     }

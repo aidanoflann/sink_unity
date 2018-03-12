@@ -279,6 +279,15 @@ public class Player : DynamicObject {
         this.r_pos += amountToAdd;
     }
 
+    public Angle GetPlatformWSize()
+    {
+        if (this.platform == null)
+        {
+            return null;
+        }
+        return this.platform.w_size;
+    }
+
     public bool IsOnTopPlatform
     {
         get
