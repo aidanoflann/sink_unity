@@ -36,7 +36,7 @@ public class LevelManager : MonoBehaviour {
     private List<GameObject> platformList;
     private List<Platform> platforms;
     private AnimationManager animationManager;
-    public AudioManager audioManager;
+    private AudioManager audioManager;
     private StatManagerBehaviour statManagerBehaviour;
     public Player player;
 
@@ -260,10 +260,19 @@ private void Clear()
         this.platforms = new List<Platform>();
         this.levelTemplates = new List<LevelTemplate>();
         this.animationManager = new AnimationManager(FindObjectOfType<MovingTextCanvasBehaviour>());
-        this.audioManager = FindObjectOfType<AudioManager>();
         this.statManagerBehaviour = this.statManagerGameObject.GetComponent<StatManagerBehaviour>();
 
         GeneratePlatformRanges();
+    }
+
+    public void Start()
+    {
+        AudioManager[] allAudioManagers = FindObjectsOfType<AudioManager>();
+        if (allAudioManagers.Length != 1)
+        {
+            Debug.LogErrorFormat("LevelManager found more than one AudioManager on startup. Attaching last one in array...");
+        }
+        this.audioManager = allAudioManagers[allAudioManagers.Length - 1];
     }
 
     public void Update()

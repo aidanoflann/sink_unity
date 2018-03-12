@@ -15,7 +15,7 @@ public class Sound
     [Range(0f, 3f)]
     public float pitch;
 
-    [HideInInspector]
+    //[HideInInspector]
     public AudioSource source;
 
     public bool loop;
@@ -34,7 +34,7 @@ public class AudioManager : MonoBehaviour {
         }
         else
         {
-            Destroy(this.gameObject);
+            DestroyImmediate(this.gameObject);
             return;
         }
 
