@@ -50,7 +50,8 @@ public class AudioManager : MonoBehaviour {
             s.source.loop = s.loop;
         }
 
-        this.Play("BaseMusic");
+        // TODO: re-enable when music is gud
+        //this.Play("BaseMusic");
     }
 
     public void Play(string soundName, float? pitchOverride = null)
