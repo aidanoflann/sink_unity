@@ -369,11 +369,11 @@ private void Clear()
             if (playerUpdate.hitPlatform)
             {
                 this.ShakeCamera();
-                this.PlaySoundScaledToPlayerPlatform(600f, "LandSound");
+                this.PlaySoundScaledToGameState(0.08f, "LandSound");
             }
             if (playerUpdate.jumped)
             {
-                this.PlaySoundScaledToPlayerPlatform(300f, "JumpSound");
+                this.PlaySoundScaledToGameState(0.08f, "JumpSound");
             }
             player.UpdateVisuals();
             if (currentState != state.preStartAnimation)
@@ -388,19 +388,11 @@ private void Clear()
         this.statManagerBehaviour.UpdateStatsOnLevelEnd(this.numBaseTemplates, this.levelTemplates, this.numPlatforms);
     }
 
-    private void PlaySoundScaledToPlayerPlatform(float scaleFactor, string soundName)
+    private void PlaySoundScaledToGameState(float scaleFactor, string soundName)
     {
-        Angle playersPlatformWSize = player.GetPlatformWSize();
-        if (playersPlatformWSize != null)
-        {
-            // scale the wsize of the player's platform between 
-            float pitchOverride = 200f / playersPlatformWSize.GetValue();
-            this.audioManager.Play("JumpSound", pitchOverride);
-        }
-        else
-        {
-            this.audioManager.Play("JumpSound");
-        }
+        // scale to player's RPos
+        float pitchOverride = scaleFactor * this.player.RPos;
+        this.audioManager.Play(soundName, pitchOverride);
     }
 
     #endregion
