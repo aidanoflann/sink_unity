@@ -27,16 +27,13 @@ public class GameManager : MonoBehaviour {
 
         // Each dynamic template added will be used as a new level
         this.dynamicTemplates = new List<LevelTemplate>();
-        this.dynamicTemplates.Add(new WaveTemplate()); // ok
         this.dynamicTemplates.Add(new PulseTemplate()); // love it
-        this.dynamicTemplates.Add(new DilateTemplate()); // like it
+        this.dynamicTemplates.Add(new StretchTemplate()); // like it
         this.dynamicTemplates.Add(new TickTemplate()); // like it but bit buggy
-        this.dynamicTemplates.Add(new TockTemplate()); // meh
-        this.dynamicTemplates.Add(new FattenTemplate()); // meh
         this.dynamicTemplates.Add(new ReverseTemplate()); // love it
         this.dynamicTemplates.Add(new StutterTemplate()); // love it
         this.dynamicTemplates.Add(new SnapTemplate()); // love it
-        this.dynamicTemplates.Add(new PinchTemplate()); // meh
+        this.dynamicTemplates.Add(new DropTemplate());  
 
         this.availableDynamicTemplateIndices = new List<int>();
         for (int i = 0; i < this.dynamicTemplates.Count; i++)
@@ -46,8 +43,11 @@ public class GameManager : MonoBehaviour {
 
         // Experimental templates (usually either low quality or very very difficult)
         //this.dynamicTemplates.Add(new BounceTemplate());
-        //this.dynamicTemplates.Add(new TwirlTemplate());
-        //this.dynamicTemplates.Add(new SinkTemplate());
+        //this.dynamicTemplates.Add(new TwirlTemplate()); // fun but super hard
+        //this.dynamicTemplates.Add(new SinkTemplate()); // hard to communicate, solution not that interesting
+        //this.dynamicTemplates.Add(new PinchTemplate()); // no change in gameplay
+        //this.dynamicTemplates.Add(new FattenTemplate()); // meh
+        //this.dynamicTemplates.Add(new WaveTemplate()); // ok
 
         this.levelManager.SetBaseTemplates(baseTemplates);
         this.levelManager.SetNumPlatforms(this.numPlatforms);
@@ -73,7 +73,7 @@ public class GameManager : MonoBehaviour {
             this.NextLevel();
         }
 
-#if CHEATS_ENABLED
+#if UNITY_EDITOR
         // Level skip cheat
         if (Input.GetKeyDown("s"))
         {
@@ -91,13 +91,11 @@ public class GameManager : MonoBehaviour {
             levelManager.ShakeCamera();
         }
 
-    #endif
-    #if EDITOR
         if (Input.GetKeyDown("l"))
         {
             this.Log();
         }
-    #endif
+#endif
 
         deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
     }
@@ -142,7 +140,7 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-#if EDITOR
+#if UNITY_EDITOR
     private void Log()
     {
         Debug.LogError("=== BEGINNING LOG DUMP ===");

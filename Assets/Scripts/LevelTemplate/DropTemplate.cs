@@ -4,18 +4,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-internal class TockTemplate : SquareWaveTemplate
+internal class DropTemplate : SquareWaveTemplate
 {
-    private static float maxRVel = -4f;
-    private static float minRVel = 0f;
+    private static float maxRVel = -32f;
+    private static float minRVel = +4f;
 
-    public TockTemplate()
+    public DropTemplate()
     {
         this.BackgroundColor = new Color(0.8f, 0.8f, 0.2f);
         this.PlatformColor = new Color(0.5f, 0.5f, 0.16f);
         this.CircleColor = new Color(0.9f, 0.9f, 0.3f);
-        this.tickDuration = 0.3f;
-        this.tickPeriod = 1f;
+        this.tickDuration = 0.2f;
+        this.tickPeriod = 1.5f;
     }
 
     public override void SetPlatformParameters(Platform platform, int platformIndex, int numPlatforms)
@@ -41,7 +41,7 @@ internal class TockTemplate : SquareWaveTemplate
     {
         get
         {
-            return "TOCK";
+            return "DROP";
         }
     }
 }
