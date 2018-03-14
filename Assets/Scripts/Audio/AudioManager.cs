@@ -50,7 +50,6 @@ public class AudioManager : MonoBehaviour {
             s.source.loop = s.loop;
         }
 
-        // TODO: re-enable when music is gud
         this.Play("BaseMusic");
     }
 

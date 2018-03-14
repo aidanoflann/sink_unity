@@ -288,6 +288,14 @@ public class Player : DynamicObject {
         return this.platform.w_size;
     }
 
+    public int PlatformIndex
+    {
+        get
+        {
+            return this.platformIndex;
+        }
+    }
+
     public bool IsOnTopPlatform
     {
         get

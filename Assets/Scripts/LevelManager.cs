@@ -391,7 +391,7 @@ private void Clear()
     private void PlaySoundScaledToGameState(float scaleFactor, string soundName)
     {
         // scale to player's RPos
-        float pitchOverride = scaleFactor * this.player.RPos;
+        float pitchOverride = 1f + (1f/12f * this.player.PlatformIndex); // (scaleFactor * 30f) * this.player.PlatformIndex;
         this.audioManager.Play(soundName, pitchOverride);
     }
 
