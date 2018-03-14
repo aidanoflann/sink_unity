@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-internal class DilateTemplate : SinWaveTemplate
+internal class StretchTemplate : SinWaveTemplate
 {
-    public DilateTemplate()
+    public StretchTemplate()
     {
         this.BackgroundColor = new Color(0.2f, 0.9f, 0.7f);
         this.PlatformColor = new Color(0, 0.4f, 0.3f);
@@ -30,7 +30,7 @@ internal class DilateTemplate : SinWaveTemplate
     {
         get
         {
-            return "DILATE";
+            return "STRETCH";
         }
     }
 }
