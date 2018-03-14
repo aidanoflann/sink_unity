@@ -33,7 +33,8 @@ public class GameManager : MonoBehaviour {
         this.dynamicTemplates.Add(new ReverseTemplate()); // love it
         this.dynamicTemplates.Add(new StutterTemplate()); // love it
         this.dynamicTemplates.Add(new SnapTemplate()); // love it
-        this.dynamicTemplates.Add(new DropTemplate());  
+        this.dynamicTemplates.Add(new DropTemplate());
+        this.dynamicTemplates.Add(new TwirlTemplate()); // fun but super hard
 
         this.availableDynamicTemplateIndices = new List<int>();
         for (int i = 0; i < this.dynamicTemplates.Count; i++)
@@ -43,7 +44,6 @@ public class GameManager : MonoBehaviour {
 
         // Experimental templates (usually either low quality or very very difficult)
         //this.dynamicTemplates.Add(new BounceTemplate());
-        //this.dynamicTemplates.Add(new TwirlTemplate()); // fun but super hard
         //this.dynamicTemplates.Add(new SinkTemplate()); // hard to communicate, solution not that interesting
         //this.dynamicTemplates.Add(new PinchTemplate()); // no change in gameplay
         //this.dynamicTemplates.Add(new FattenTemplate()); // meh
