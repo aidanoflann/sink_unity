@@ -12,8 +12,7 @@ internal class SnapTemplate : SquareWaveTemplate
 
     public SnapTemplate()
     {
-        this.tickDuration = 1f;
-        this.tickPeriod = 2f;
+        this.tickDuration = this.tickPeriod * 0.5f;
         this.BackgroundColor = new Color(0.5f, 0.5f, 1f);
         this.PlatformColor = new Color(0.3f, 0.9f, 1f);
         this.CircleColor = new Color(0.5f, 0.5f, 0.9f);

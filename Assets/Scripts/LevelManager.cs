@@ -361,7 +361,11 @@ private void Clear()
             // This needs to happen before the standard UpdatePosition
             for (int j = 0; j < levelTemplates.Count; j++)
             {
-                levelTemplates[j].UpdateTemplate();
+                LevelUpdate levelUpdate = levelTemplates[j].UpdateTemplate();
+                if (levelUpdate.triggerBeatSound)
+                {
+                    this.audioManager.Play("BeatSound");
+                }
                 levelTemplates[j].UpdatePlayer(player);
             }
 

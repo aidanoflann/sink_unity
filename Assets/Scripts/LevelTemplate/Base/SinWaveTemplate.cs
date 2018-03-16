@@ -16,10 +16,11 @@ public class SinWaveTemplate: LevelTemplate
         this.currentAngle = 0.0f;
     }
 
-    public override void UpdateTemplate()
+    public override LevelUpdate UpdateTemplate()
     {
-        base.UpdateTemplate();
+        LevelUpdate levelUpdate = base.UpdateTemplate();
         this.currentAngle = (this.currentAngle + angularSpeed * Time.deltaTime) % Globals.twoPi;
+        return levelUpdate;
     }
 
     protected float NormalizedSinValue

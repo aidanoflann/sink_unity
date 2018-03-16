@@ -15,7 +15,7 @@ internal class DropTemplate : SquareWaveTemplate
         this.PlatformColor = new Color(0.5f, 0.5f, 0.16f);
         this.CircleColor = new Color(0.9f, 0.9f, 0.3f);
         this.tickDuration = 0.2f;
-        this.tickPeriod = 1.5f;
+        //this.tickPeriod = 1.5f;
     }
 
     public override void SetPlatformParameters(Platform platform, int platformIndex, int numPlatforms)

@@ -4,6 +4,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+public class LevelUpdate
+{
+    public LevelUpdate(bool triggerBeatSound)
+    {
+        this.triggerBeatSound = triggerBeatSound;
+    }
+
+    public bool triggerBeatSound = false;
+}
+
 public class LevelTemplate
 {
     public virtual void SetPlatformParameters(Platform platform, int platformIndex, int numPlatforms)
@@ -26,10 +36,10 @@ public class LevelTemplate
     {
     }
 
-    public virtual void UpdateTemplate()
+    public virtual LevelUpdate UpdateTemplate()
     // called every update, for updating params on the template (not specific to player or platforms)
     {
-
+        return new LevelUpdate(false);
     }
 
     public virtual Color PlatformColor
