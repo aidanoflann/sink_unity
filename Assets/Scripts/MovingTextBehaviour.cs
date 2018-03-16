@@ -48,6 +48,11 @@ public class MovingTextBehaviour : MonoBehaviour {
     {
         this.sitStillTime = sitStillTime;
     }
+
+    public void SetInitialPosition()
+    {
+        this.rectTransform.anchoredPosition = new Vector2(1000, 1000);
+    }
 	
 	public void UpdatePosition (float timeDelta) {
         this.timeElapsed += timeDelta;

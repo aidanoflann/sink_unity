@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour {
         // base templates, common to all levels
         this.baseTemplates = new List<LevelTemplate>();
         this.baseTemplates.Add(new RotateTemplate());
+        this.baseTemplates.Add(new StickToPlatformTemplate());
         this.baseTemplates.Add(new FallTemplate());
 
         // Each dynamic template added will be used as a new level
@@ -35,6 +36,7 @@ public class GameManager : MonoBehaviour {
         this.dynamicTemplates.Add(new SnapTemplate()); // love it
         this.dynamicTemplates.Add(new DropTemplate());
         this.dynamicTemplates.Add(new TwirlTemplate()); // fun but super hard
+        this.dynamicTemplates.Add(new SlipTemplate());
 
         // Experimental templates (usually either low quality or very very difficult)
         //this.dynamicTemplates.Add(new BounceTemplate());

@@ -78,13 +78,13 @@ public class Player : DynamicObject {
 
 	}
 
-	public PlayerUpdate UpdatePosition(List<Platform> platforms, float jumpSpeedModifier = 1f) {
+    public PlayerUpdate UpdatePosition(List<Platform> platforms, float jumpSpeedModifier = 1f) {
         // create an update "report" so the level manager can react to events
         PlayerUpdate playerUpdate = new PlayerUpdate();
 
         // update position in polar coordinates - return True if a collision occurred
         bool collisionOccured = false;
-		float deltaTime = Time.deltaTime;
+        float deltaTime = Time.deltaTime;
 
         // inputs
         if (this.needsToJump)
@@ -107,21 +107,33 @@ public class Player : DynamicObject {
         else
         {
             // check that platform hasn't despawned
-            if (this.platform == null)
-            {
-                currentState = state.midair;
-            }
+            this.CheckIfSlippedOffPlatform();
         }
 
         // states
         if (currentState == state.midair) {
-			this.r_vel -= Globals.gravity * deltaTime;
+            this.r_vel -= Globals.gravity * deltaTime;
             this.r_pos += r_vel * deltaTime;
-		} else {
-			this.r_pos = this.platform.r_pos + this.size * 0.5f + this.platform.r_size * 0.5f;
+        }
+        // position in landed state is handled by the respective LevelTemplates.
+        return playerUpdate;
+    }
+
+    public bool MovingClockwise
+    {
+        get
+        {
+            return (this.IsLanded && this.platform.w_vel.GetValue() > 0f);
+        }
+    }
+
+    public void SetPositionToLandedPlatform()
+    {
+        if (this.IsLanded)
+        {
+            this.r_pos = this.platform.r_pos + this.size * 0.5f + this.platform.r_size * 0.5f;
             this.w_pos = this.platform.w_pos + this.platformPosition * this.platform.w_size;
         }
-        return playerUpdate;
     }
 
     public void UpdateVisuals()
@@ -197,6 +209,34 @@ public class Player : DynamicObject {
 		return collisionIndex;
 	}
 
+    public void CheckIfSlippedOffPlatform()
+    {
+        if(!this.IsLanded)
+        {
+            return;
+        }
+
+        if (this.platform == null)
+        {
+            this.currentState = state.midair;
+        }
+        else if (!this.w_pos.IsWithin(this.platform.w_pos, this.platform.w_size))
+        {
+            this.currentState = state.midair;
+            this.platform.ResetColour();
+        }
+    }
+
+    public void SetPlatformPosition(float platformPosition)
+    {
+        this.platformPosition = platformPosition;
+    }
+
+    public float GetPlatformPosition()
+    {
+        return this.platformPosition;
+    }
+
 	private void applyCollisions (int collisionIndex, List<Platform> platforms)
 	{
 		if (collisionIndex != -1) {
@@ -205,7 +245,7 @@ public class Player : DynamicObject {
             {
                 this.r_vel = 0;
                 this.platform = platforms[collisionIndex];
-                this.platformPosition = (this.w_pos - this.platform.w_pos).GetValue()/this.platform.w_size.GetValue();
+                this.SetPlatformPosition((this.w_pos - this.platform.w_pos).GetValue()/this.platform.w_size.GetValue());
                 this.platform.CatchPlayer(this);
 				currentState = state.landed;
 			} else {

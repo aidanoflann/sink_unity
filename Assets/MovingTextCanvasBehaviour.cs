@@ -34,6 +34,7 @@ public class MovingTextCanvasBehaviour : MonoBehaviour {
             {
                 GameObject newMovingText = GameObject.Instantiate(this.movingTextPrefab, this.transform);
                 MovingTextBehaviour movingTextBehaviour = newMovingText.GetComponent<MovingTextBehaviour>();
+                movingTextBehaviour.SetInitialPosition();
 
                 // store references to the gameobject and its behaviour
                 this.movingTextGameObjects.Add(newMovingText);
