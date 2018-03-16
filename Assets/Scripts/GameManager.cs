@@ -28,26 +28,26 @@ public class GameManager : MonoBehaviour {
         // Each dynamic template added will be used as a new level
         this.dynamicTemplates = new List<LevelTemplate>();
         this.dynamicTemplates.Add(new PulseTemplate()); // love it
-        this.dynamicTemplates.Add(new StretchTemplate()); // like it
-        this.dynamicTemplates.Add(new TickTemplate()); // like it but bit buggy
-        this.dynamicTemplates.Add(new ReverseTemplate()); // love it
-        this.dynamicTemplates.Add(new StutterTemplate()); // love it
-        this.dynamicTemplates.Add(new SnapTemplate()); // love it
-        this.dynamicTemplates.Add(new DropTemplate());
-        this.dynamicTemplates.Add(new TwirlTemplate()); // fun but super hard
+        //this.dynamicTemplates.Add(new StretchTemplate()); // like it
+        //this.dynamicTemplates.Add(new TickTemplate()); // like it but bit buggy
+        //this.dynamicTemplates.Add(new ReverseTemplate()); // love it
+        //this.dynamicTemplates.Add(new StutterTemplate()); // love it
+        //this.dynamicTemplates.Add(new SnapTemplate()); // love it
+        //this.dynamicTemplates.Add(new DropTemplate());
+        //this.dynamicTemplates.Add(new TwirlTemplate()); // fun but super hard
+
+        // Experimental templates (usually either low quality or very very difficult)
+        //this.dynamicTemplates.Add(new BounceTemplate());
+        //this.dynamicTemplates.Add(new WaveTemplate()); // ok
+        //this.dynamicTemplates.Add(new SinkTemplate()); // hard to communicate, solution not that interesting
+        //this.dynamicTemplates.Add(new PinchTemplate()); // no change in gameplay
+        //this.dynamicTemplates.Add(new FattenTemplate()); // meh
 
         this.availableDynamicTemplateIndices = new List<int>();
         for (int i = 0; i < this.dynamicTemplates.Count; i++)
         {
             this.availableDynamicTemplateIndices.Add(i);
         }
-
-        // Experimental templates (usually either low quality or very very difficult)
-        //this.dynamicTemplates.Add(new BounceTemplate());
-        //this.dynamicTemplates.Add(new SinkTemplate()); // hard to communicate, solution not that interesting
-        //this.dynamicTemplates.Add(new PinchTemplate()); // no change in gameplay
-        //this.dynamicTemplates.Add(new FattenTemplate()); // meh
-        //this.dynamicTemplates.Add(new WaveTemplate()); // ok
 
         this.levelManager.SetBaseTemplates(baseTemplates);
         this.levelManager.SetNumPlatforms(this.numPlatforms);
