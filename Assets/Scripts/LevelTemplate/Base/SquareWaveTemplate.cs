@@ -29,6 +29,7 @@ public class SquareWaveTemplate: LevelTemplate
         {
             this.isTicking = true;
             levelUpdate.triggerBeatSound = true;
+            levelUpdate.soundToPlay = "SquareBeat";
         }
         // if the platform is ticking but the time no longer falls within the tick duration, stop ticking
         if (this.timeSinceLastTick > tickDuration && this.isTicking)

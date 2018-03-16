@@ -6,12 +6,14 @@ using System.Text;
 
 public class LevelUpdate
 {
-    public LevelUpdate(bool triggerBeatSound)
+    public LevelUpdate(bool triggerBeatSound, string soundToPlay)
     {
         this.triggerBeatSound = triggerBeatSound;
+        this.soundToPlay = soundToPlay;
     }
 
     public bool triggerBeatSound = false;
+    public string soundToPlay = "";
 }
 
 public class LevelTemplate
@@ -39,7 +41,7 @@ public class LevelTemplate
     public virtual LevelUpdate UpdateTemplate()
     // called every update, for updating params on the template (not specific to player or platforms)
     {
-        return new LevelUpdate(false);
+        return new LevelUpdate(false, "");
     }
 
     public virtual Color PlatformColor

@@ -6,6 +6,7 @@ using System.Text;
 
 public class SinWaveTemplate: LevelTemplate
 {
+    protected float wavePeriod = 0.5f;
     protected float angularSpeed;
     protected float amplitude;
     public float currentAngle = 0f;
@@ -19,7 +20,13 @@ public class SinWaveTemplate: LevelTemplate
     public override LevelUpdate UpdateTemplate()
     {
         LevelUpdate levelUpdate = base.UpdateTemplate();
-        this.currentAngle = (this.currentAngle + angularSpeed * Time.deltaTime) % Globals.twoPi;
+        float newAngle = (this.currentAngle + Time.deltaTime / this.wavePeriod) % Globals.twoPi;
+        if (newAngle % Mathf.PI * 0.25 < this.currentAngle % Mathf.PI * 0.25)
+        {
+            levelUpdate.triggerBeatSound = true;
+            levelUpdate.soundToPlay = "SineBeat";
+        }
+        this.currentAngle = newAngle;
         return levelUpdate;
     }
 

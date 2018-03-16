@@ -364,7 +364,7 @@ private void Clear()
                 LevelUpdate levelUpdate = levelTemplates[j].UpdateTemplate();
                 if (levelUpdate.triggerBeatSound)
                 {
-                    this.audioManager.Play("BeatSound");
+                    this.audioManager.Play(levelUpdate.soundToPlay);
                 }
                 levelTemplates[j].UpdatePlayer(player);
             }
