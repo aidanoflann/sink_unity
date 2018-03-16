@@ -6,7 +6,7 @@ using System.Text;
 
 public class SinWaveTemplate: LevelTemplate
 {
-    protected float wavePeriod = 0.5f;
+    protected float wavePeriod = 0.25f;
     protected float angularSpeed;
     protected float amplitude;
     public float currentAngle = 0f;

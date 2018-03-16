@@ -13,7 +13,6 @@ internal class PulseTemplate : SinWaveTemplate
         this.BackgroundColor = new Color(1, 0.77f, 0.7f);
         this.PlatformColor = new Color(0.9f, 0.1f, 0.1f);
         this.CircleColor = new Color(1f, 0.7f, 0.6f);
-        this.angularSpeed = 6f;
         this.amplitude = 8f;
     }
 
