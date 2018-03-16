@@ -78,13 +78,13 @@ public class Player : DynamicObject {
 
 	}
 
-	public PlayerUpdate UpdatePosition(List<Platform> platforms, float jumpSpeedModifier = 1f) {
+    public PlayerUpdate UpdatePosition(List<Platform> platforms, float jumpSpeedModifier = 1f) {
         // create an update "report" so the level manager can react to events
         PlayerUpdate playerUpdate = new PlayerUpdate();
 
         // update position in polar coordinates - return True if a collision occurred
         bool collisionOccured = false;
-		float deltaTime = Time.deltaTime;
+        float deltaTime = Time.deltaTime;
 
         // inputs
         if (this.needsToJump)
@@ -115,13 +115,20 @@ public class Player : DynamicObject {
 
         // states
         if (currentState == state.midair) {
-			this.r_vel -= Globals.gravity * deltaTime;
+            this.r_vel -= Globals.gravity * deltaTime;
             this.r_pos += r_vel * deltaTime;
-		} else {
-			this.r_pos = this.platform.r_pos + this.size * 0.5f + this.platform.r_size * 0.5f;
+        }
+        // position in landed state is handled by the respective LevelTemplates.
+        return playerUpdate;
+    }
+
+    public void SetPostToLandedPlatform()
+    {
+        if (this.IsLanded)
+        {
+            this.r_pos = this.platform.r_pos + this.size * 0.5f + this.platform.r_size * 0.5f;
             this.w_pos = this.platform.w_pos + this.platformPosition * this.platform.w_size;
         }
-        return playerUpdate;
     }
 
     public void UpdateVisuals()
