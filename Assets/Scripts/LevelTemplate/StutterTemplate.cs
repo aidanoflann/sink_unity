@@ -8,7 +8,7 @@ internal class StutterTemplate : SquareWaveTemplate
 {
     private float timeSinceLastTick;
     private static float upRVel = +40f;
-    private static float downRVel = -5f;
+    private static float downRVel = -4f;
 
     public StutterTemplate()
     {
@@ -16,7 +16,6 @@ internal class StutterTemplate : SquareWaveTemplate
         this.PlatformColor = new Color(0.2f, 0.1f, 0.16f);
         this.CircleColor = new Color(0.4f, 0.2f, 0.3f);
         this.tickDuration = 0.1f;
-        //this.tickPeriod = 1f;
     }
 
     public override void SetPlatformParameters(Platform platform, int platformIndex, int numPlatforms)
