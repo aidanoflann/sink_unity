@@ -6,16 +6,15 @@ using System.Text;
 
 internal class DropTemplate : SquareWaveTemplate
 {
-    private static float maxRVel = -32f;
+    private static float maxRVel = -28f;
     private static float minRVel = +4f;
 
     public DropTemplate()
     {
-        this.BackgroundColor = new Color(0.8f, 0.8f, 0.2f);
-        this.PlatformColor = new Color(0.5f, 0.5f, 0.16f);
-        this.CircleColor = new Color(0.9f, 0.9f, 0.3f);
+        this.BackgroundColor = new Color(0.15f, 0.09f, 0.02f);
+        this.PlatformColor = new Color(0.35f, 0.29f, 0.22f);
+        this.CircleColor = new Color(0.17f, 0.11f, 0.05f);
         this.tickDuration = 0.2f;
-        //this.tickPeriod = 1.5f;
     }
 
     public override void SetPlatformParameters(Platform platform, int platformIndex, int numPlatforms)
