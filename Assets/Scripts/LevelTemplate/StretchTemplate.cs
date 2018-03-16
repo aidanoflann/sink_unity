@@ -11,8 +11,7 @@ internal class StretchTemplate : SinWaveTemplate
         this.BackgroundColor = new Color(0.2f, 0.9f, 0.7f);
         this.PlatformColor = new Color(0, 0.4f, 0.3f);
         this.CircleColor = new Color(0.1f, 8f, 0.6f);
-        this.angularSpeed = 3.0f;
-        this.amplitude = 1f;
+        this.amplitude = 5f;
     }
 
     public override void SetPlatformParameters(Platform platform, int platformIndex, int numPlatforms)

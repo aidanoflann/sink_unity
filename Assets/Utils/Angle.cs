@@ -28,9 +28,13 @@ namespace Assets.Utils
             return this.value;
         }
 
-        public void MultiplyValue(float multiplier)
+        public void MultiplyValue(float multiplier, float?max = null)
         {
             this.value *= multiplier;
+            if(max.HasValue && max.Value < this.value)
+            {
+                this.value = max.Value;
+            }
         }
 
         public bool IsWithin(Angle center, Angle size)

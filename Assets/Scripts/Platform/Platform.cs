@@ -21,9 +21,9 @@ public class Platform : AnnulusShapedObject {
         GameObject toInstantiate = platformTrailPrefab;
         GameObject instance = Instantiate(toInstantiate) as GameObject;
         // grab the behaviour
-        this.platformTrail = instance.GetComponent<PlatformTrail>();
-        this.platformTrail.SetColour(new Color(this.currentColour.r, this.currentColour.g, this.currentColour.b, 0.3f));
-        this.platformTrail.SetPlatform(this.annulusPoints);
+        //this.platformTrail = instance.GetComponent<PlatformTrail>();
+        //this.platformTrail.SetColour(new Color(this.currentColour.r, this.currentColour.g, this.currentColour.b, 0.3f));
+        //this.platformTrail.SetPlatform(this.annulusPoints);
         // set self as parent transform
         instance.transform.SetParent(this.transform);
     }
@@ -32,7 +32,7 @@ public class Platform : AnnulusShapedObject {
         // update annulus based on new points
         this.CalculateAnnulusPoints();
         this.updateMesh(this.annulusPoints);
-        this.platformTrail.UpdateTrail(this.annulusPoints);
+        //this.platformTrail.UpdateTrail(this.annulusPoints);
     }
 
     public void CatchPlayer(Player player)
