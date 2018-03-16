@@ -9,6 +9,6 @@ public class StickToPlatformTemplate : LevelTemplate
     public override void UpdatePlayer(Player player)
     {
         base.UpdatePlayer(player);
-        player.SetPostToLandedPlatform();
+        player.SetPositionToLandedPlatform();
     }
 }

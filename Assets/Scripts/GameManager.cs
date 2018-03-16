@@ -29,12 +29,12 @@ public class GameManager : MonoBehaviour {
         // Each dynamic template added will be used as a new level
         this.dynamicTemplates = new List<LevelTemplate>();
         this.dynamicTemplates.Add(new PulseTemplate()); // love it
-        this.dynamicTemplates.Add(new StretchTemplate()); // like it
-        this.dynamicTemplates.Add(new TickTemplate()); // like it but bit buggy
-        this.dynamicTemplates.Add(new ReverseTemplate()); // love it
-        this.dynamicTemplates.Add(new StutterTemplate()); // love it
-        this.dynamicTemplates.Add(new SnapTemplate()); // love it
-        this.dynamicTemplates.Add(new DropTemplate());
+        //this.dynamicTemplates.Add(new StretchTemplate()); // like it
+        //this.dynamicTemplates.Add(new TickTemplate()); // like it but bit buggy
+        //this.dynamicTemplates.Add(new ReverseTemplate()); // love it
+        //this.dynamicTemplates.Add(new StutterTemplate()); // love it
+        //this.dynamicTemplates.Add(new SnapTemplate()); // love it
+        //this.dynamicTemplates.Add(new DropTemplate());
         this.dynamicTemplates.Add(new TwirlTemplate()); // fun but super hard
         this.dynamicTemplates.Add(new SlipTemplate());
 

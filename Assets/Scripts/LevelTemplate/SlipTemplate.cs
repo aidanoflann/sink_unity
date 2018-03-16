@@ -19,7 +19,16 @@ internal class SlipTemplate : LevelTemplate
     public override void UpdatePlayer(Player player)
     {
         base.UpdatePlayer(player);
-        player.SetPostToLandedPlatform();
+        float offset = 0.1f * Time.deltaTime;
+        if (player.MovingClockwise)
+        {
+            offset *= -1f;
+        }
+
+        if (player.IsLanded)
+        {
+            player.SetPlatformPosition(player.GetPlatformPosition() + offset);
+        }
     }
 
     public override string Word

@@ -107,10 +107,7 @@ public class Player : DynamicObject {
         else
         {
             // check that platform hasn't despawned
-            if (this.platform == null)
-            {
-                currentState = state.midair;
-            }
+            this.CheckIfSlippedOffPlatform();
         }
 
         // states
@@ -122,7 +119,15 @@ public class Player : DynamicObject {
         return playerUpdate;
     }
 
-    public void SetPostToLandedPlatform()
+    public bool MovingClockwise
+    {
+        get
+        {
+            return (this.IsLanded && this.platform.w_vel.GetValue() > 0f);
+        }
+    }
+
+    public void SetPositionToLandedPlatform()
     {
         if (this.IsLanded)
         {
@@ -204,6 +209,34 @@ public class Player : DynamicObject {
 		return collisionIndex;
 	}
 
+    public void CheckIfSlippedOffPlatform()
+    {
+        if(!this.IsLanded)
+        {
+            return;
+        }
+
+        if (this.platform == null)
+        {
+            this.currentState = state.midair;
+        }
+        else if (!this.w_pos.IsWithin(this.platform.w_pos, this.platform.w_size))
+        {
+            this.currentState = state.midair;
+            this.platform.ResetColour();
+        }
+    }
+
+    public void SetPlatformPosition(float platformPosition)
+    {
+        this.platformPosition = platformPosition;
+    }
+
+    public float GetPlatformPosition()
+    {
+        return this.platformPosition;
+    }
+
 	private void applyCollisions (int collisionIndex, List<Platform> platforms)
 	{
 		if (collisionIndex != -1) {
@@ -212,7 +245,7 @@ public class Player : DynamicObject {
             {
                 this.r_vel = 0;
                 this.platform = platforms[collisionIndex];
-                this.platformPosition = (this.w_pos - this.platform.w_pos).GetValue()/this.platform.w_size.GetValue();
+                this.SetPlatformPosition((this.w_pos - this.platform.w_pos).GetValue()/this.platform.w_size.GetValue());
                 this.platform.CatchPlayer(this);
 				currentState = state.landed;
 			} else {
