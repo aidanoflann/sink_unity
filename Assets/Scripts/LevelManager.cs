@@ -49,6 +49,7 @@ public class LevelManager : MonoBehaviour {
     private float[] wSizeRange;
 
     private float platformRSpeedMultiplier;
+    private float? platformRSpeedOverride = null;
 
     private state prepausedState;
     private int numPlatforms;
@@ -286,11 +287,11 @@ private void Clear()
         // restart game if player has died
         if (player.RPos <= 0 && currentState != state.ending)
         {
-            currentState = state.ending;
+            this.currentState = state.ending;
             this.UpdateStats();
-            platformRSpeedMultiplier = 24f;
-            cameraBehaviour.EndGame();
-            player.Hide();
+            this.platformRSpeedOverride = -24f;
+            this.cameraBehaviour.EndGame();
+            this.player.Hide();
         }
 
         // restart game if in completing state and player gets over a certain height
@@ -325,6 +326,7 @@ private void Clear()
                 for( int j = 0; j < levelTemplates.Count; j++)
                 {
                     levelTemplates[j].UpdatePlatformPosition(i, this.platforms, platformRSpeedMultiplier);
+                    levelTemplates[j].OverridePlatformParams(i, this.platforms, this.platformRSpeedOverride);
                 }
 
                 if (platform.r_pos <= 0)

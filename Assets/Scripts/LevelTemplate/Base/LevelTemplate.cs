@@ -28,6 +28,14 @@ public class LevelTemplate
     {
     }
 
+    public void OverridePlatformParams(int platformIndex, List<Platform> allPlatforms, float? rSpeedOverride)
+    {
+        if (rSpeedOverride.HasValue)
+        {
+            allPlatforms[platformIndex].r_vel = rSpeedOverride.Value;
+        }
+    }
+
     public virtual void Reload()
     // reset any variables that are stored on the class instance
     {
