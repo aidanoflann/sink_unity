@@ -261,7 +261,13 @@ private void Clear()
         this.platforms = new List<Platform>();
         this.levelTemplates = new List<LevelTemplate>();
         this.animationManager = new AnimationManager(FindObjectOfType<MovingTextCanvasBehaviour>());
-        this.statManagerBehaviour = this.statManagerGameObject.GetComponent<StatManagerBehaviour>();
+
+        StatManagerBehaviour[] allStatManagers = FindObjectsOfType<StatManagerBehaviour>();
+        if (allStatManagers.Length != 1)
+        {
+            Debug.LogErrorFormat("LevelManager found more than one StatManager on startup. Attaching last one in array...");
+        }
+        this.statManagerBehaviour = allStatManagers[allStatManagers.Length - 1];
 
         GeneratePlatformRanges();
     }

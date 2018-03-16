@@ -9,6 +9,9 @@ public class StatManagerBehaviour : MonoBehaviour {
 
     private float startTime;
 
+    // enforce singleton behaviour
+    public static StatManagerBehaviour instance;
+
     private class LevelStats
     {
         private float levelDuration; // seconds
@@ -36,6 +39,16 @@ public class StatManagerBehaviour : MonoBehaviour {
     }
 
 	void Awake () {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            DestroyImmediate(this.gameObject);
+            return;
+        }
+
         statManager = gameObject;
         DontDestroyOnLoad(statManager);
 	}
