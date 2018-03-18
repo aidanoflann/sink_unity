@@ -10,7 +10,8 @@ public class DynamicObject : MonoBehaviour {
     private int pointCount;
     private Vector3[] vertices;
     private Triangulator triangulator;
-    
+    private bool _isVisible = true;
+
     protected Color oldColour;
     protected Color currentColour;
 
@@ -31,6 +32,26 @@ public class DynamicObject : MonoBehaviour {
     public void ResetColour()
     {
         this.currentColour = this.oldColour;
+    }
+
+    public bool IsVisible
+    {
+        get
+        {
+            return this._isVisible;
+        }
+    }
+
+    public void SetInvisible()
+    {
+        this._isVisible = false;
+        this.currentColour.a = 0.05f;
+    }
+
+    public void SetVisible()
+    {
+        this._isVisible = true;
+        this.currentColour.a = 1f;
     }
 
     protected void createMesh(Vector2[] points, Material material)
