@@ -13,7 +13,7 @@ public class DynamicObject : MonoBehaviour {
     private bool _isVisible = true;
 
     protected Color oldColour;
-    protected Color currentColour;
+    protected Color currentColour = Color.black;
 
     public Color CurrentColour
     {
@@ -25,13 +25,20 @@ public class DynamicObject : MonoBehaviour {
     
     public void SetColour(Color colour)
     {
-        this.oldColour = this.currentColour;
-        this.currentColour = colour;
+        // don't want to copy the alpha channel
+        this.oldColour.r = this.currentColour.r;
+        this.oldColour.g = this.currentColour.g;
+        this.oldColour.b = this.currentColour.b;
+        this.currentColour.r = colour.r;
+        this.currentColour.g = colour.g;
+        this.currentColour.b = colour.b;
     }
 
     public void ResetColour()
     {
-        this.currentColour = this.oldColour;
+        this.currentColour.r = this.oldColour.r;
+        this.currentColour.g = this.oldColour.g;
+        this.currentColour.b = this.oldColour.b;
     }
 
     public bool IsVisible
