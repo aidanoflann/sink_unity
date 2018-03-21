@@ -34,7 +34,6 @@ public class AnnulusShapedObject : DynamicObject {
 	{
 		Vector2[] points = new Vector2 [numPoints * 2];
         for (int x = 0; x < numPoints; x++) {
-            //TODO: disappearing issue starts exactly when w_pos gets > w_size
             Angle d_w = ((this.w_size) * ((float)x / (float)numPoints) - this.w_size * 0.5f + this.w_pos);
 
             // outer circle
@@ -58,7 +57,15 @@ public class AnnulusShapedObject : DynamicObject {
         // so num_points = num_vectors - 2
         int numPoints = points.Length;
         int numberOfTriangles = numPoints - 2;
-        int[] triangles = new int[numberOfTriangles * 3];
+        int[] triangles;
+        if (this.w_size.GetValue() >= 360f)
+        {
+            triangles = new int[numberOfTriangles * 3 + 6];
+        }
+        else
+        {
+            triangles = new int[numberOfTriangles * 3];
+        }
         // draw two triangles (one square) per iteration
         for (int i = 0; i < numberOfTriangles / 2; i++)
         {
@@ -68,6 +75,19 @@ public class AnnulusShapedObject : DynamicObject {
             triangles[i * 6 + 3] = i;
             triangles[i * 6 + 4] = numPoints - i - 2;
             triangles[i * 6 + 5] = i + 1;
+        }
+
+        // TODO: add special case (?) for when this.w_size.GetValue() > 360f
+        if(this.w_size.GetValue() >= 360f)
+        {
+            // if the circle is full, add two final triangles bridging the gap
+            int triangleLength = triangles.Length;
+            triangles[triangleLength - 6] = numPoints / 2 - 1;
+            triangles[triangleLength - 5] = numPoints / 2;
+            triangles[triangleLength - 4] = numPoints - 1;
+            triangles[triangleLength - 3] = numPoints / 2 - 1;
+            triangles[triangleLength - 2] = numPoints - 1;
+            triangles[triangleLength - 1] = 0;
         }
         return triangles;
     }
