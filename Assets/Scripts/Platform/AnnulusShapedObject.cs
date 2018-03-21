@@ -77,7 +77,6 @@ public class AnnulusShapedObject : DynamicObject {
             triangles[i * 6 + 5] = i + 1;
         }
 
-        // TODO: add special case (?) for when this.w_size.GetValue() > 360f
         if(this.w_size.GetValue() >= 360f)
         {
             // if the circle is full, add two final triangles bridging the gap
