@@ -19,49 +19,51 @@ public class BackgroundCircleFactory : MonoBehaviour {
     {
         if (this._copies.Count == 0)
         {
-            for (int i = 0; i < _numCopies; i++)
-            {
-                this.GenerateRandomCircle(colour);
-            }
+            this.GenerateRandomCircles(colour);
         }
         else
         {
-            for(int i = 0; i < this._copies.Count; i++)
-            {
-                this.SetPositionAndColour(this._copies[i], colour);
-            }
+            this.SetPositionsAndColours(colour);
         }
     }
 
-    private void GenerateRandomCircle(Color colour)
+    private void GenerateRandomCircles(Color colour)
     {
-        // generate a copy
-        GameObject copy = GameObject.Instantiate(this.originalCircle);
+        for (int i = 0; i < _numCopies; i++)
+        {
+            // generate a copy
+            GameObject copy = GameObject.Instantiate(this.originalCircle);
 
-        this.SetPositionAndColour(copy, colour);
-        
-        // cache it
-        this._copies.Add(copy);
-        copy.transform.SetParent(this.backgroundCircleHolder);
+            // cache it
+            this._copies.Add(copy);
+            copy.transform.SetParent(this.backgroundCircleHolder);
+        }
+        this.SetPositionsAndColours(colour);
     }
 
-    private void SetPositionAndColour(GameObject copy, Color colour)
+    private void SetPositionsAndColours(Color colour)
     {
         // move it to a random location
-        Vector3 randomPosition = new Vector3(Random.value * 200 - 100, Random.value * 200 - 100, 1);
-        copy.transform.position = randomPosition;
+        // TODO: do more, smaller circles near the center, then larger and larger further away (to a much larger distance)
 
-        // give it a random size
-        float randomScalar = (Random.value * 3) + 1;
-        Vector3 randomScale = new Vector3(randomScalar, randomScalar, 0);
-        copy.transform.localScale = randomScale;
+        for (int i = 0; i < this._copies.Count; i++)
+        {
+            GameObject copy = this._copies[i];
+            Vector3 randomPosition = new Vector3(Random.value * 200 - 100, Random.value * 200 - 100, 1);
+            copy.transform.position = randomPosition;
 
-        // TODO: randomise its size
+            // give it a random size
+            float randomScalar = (Random.value * 3) + 1;
+            Vector3 randomScale = new Vector3(randomScalar, randomScalar, 0);
+            copy.transform.localScale = randomScale;
 
-        // make it visible and set its colour
-        SpriteRenderer copyRenderer = copy.GetComponent<SpriteRenderer>();
-        copyRenderer.enabled = true;
-        copyRenderer.color = colour;
+
+            // make it visible and set its colour
+            SpriteRenderer copyRenderer = copy.GetComponent<SpriteRenderer>();
+            copyRenderer.enabled = true;
+            copyRenderer.color = colour;
+        }
+        // TODO: start from r = 0 and extend out to r = 1000 in increasingly large stepsZ
     }
 
 }
