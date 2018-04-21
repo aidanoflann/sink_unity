@@ -45,16 +45,21 @@ public class BackgroundCircleFactory : MonoBehaviour {
     {
         // move it to a random location
         // TODO: do more, smaller circles near the center, then larger and larger further away (to a much larger distance)
-
+        // TODO: start from r = 0 and extend out to r = 1000 in increasingly large steps
         for (int i = 0; i < this._copies.Count; i++)
         {
+            // generated a weighted radius value
+            float posRadius = Mathf.Pow((float)i, 1.1f) + Random.Range(-1f, 1f);
+            float posAngle = Random.Range(0f, 359f);
+            // determine the size from the position
+            float sizeRadius = posRadius * 0.05f;
+
             GameObject copy = this._copies[i];
-            Vector3 randomPosition = new Vector3(Random.value * 200 - 100, Random.value * 200 - 100, 1);
+            Vector3 randomPosition = new Vector3(posRadius * Mathf.Cos(posAngle), posRadius * Mathf.Sin(posAngle));
             copy.transform.position = randomPosition;
 
             // give it a random size
-            float randomScalar = (Random.value * 3) + 1;
-            Vector3 randomScale = new Vector3(randomScalar, randomScalar, 0);
+            Vector3 randomScale = new Vector3(sizeRadius, sizeRadius, 0);
             copy.transform.localScale = randomScale;
 
 
@@ -63,7 +68,6 @@ public class BackgroundCircleFactory : MonoBehaviour {
             copyRenderer.enabled = true;
             copyRenderer.color = colour;
         }
-        // TODO: start from r = 0 and extend out to r = 1000 in increasingly large stepsZ
     }
 
 }
