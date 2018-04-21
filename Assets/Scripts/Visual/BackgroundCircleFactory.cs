@@ -19,55 +19,49 @@ public class BackgroundCircleFactory : MonoBehaviour {
     {
         if (this._copies.Count == 0)
         {
-            this.GenerateRandomCircles(colour);
+            for (int i = 0; i < _numCopies; i++)
+            {
+                this.GenerateRandomCircle(colour);
+            }
         }
         else
         {
-            this.SetPositionsAndColours(colour);
+            for(int i = 0; i < this._copies.Count; i++)
+            {
+                this.SetPositionAndColour(this._copies[i], colour);
+            }
         }
     }
 
-    private void GenerateRandomCircles(Color colour)
+    private void GenerateRandomCircle(Color colour)
     {
-        for (int i = 0; i < _numCopies; i++)
-        {
-            // generate a copy
-            GameObject copy = GameObject.Instantiate(this.originalCircle);
+        // generate a copy
+        GameObject copy = GameObject.Instantiate(this.originalCircle);
 
-            // cache it
-            this._copies.Add(copy);
-            copy.transform.SetParent(this.backgroundCircleHolder);
-        }
-        this.SetPositionsAndColours(colour);
+        this.SetPositionAndColour(copy, colour);
+        
+        // cache it
+        this._copies.Add(copy);
+        copy.transform.SetParent(this.backgroundCircleHolder);
     }
 
-    private void SetPositionsAndColours(Color colour)
+    private void SetPositionAndColour(GameObject copy, Color colour)
     {
         // move it to a random location
-        // TODO: do more, smaller circles near the center, then larger and larger further away (to a much larger distance)
-        // TODO: start from r = 0 and extend out to r = 1000 in increasingly large steps
-        for (int i = 0; i < this._copies.Count; i++)
-        {
-            // generated a weighted radius value
-            float posRadius = Mathf.Pow((float)i, 1.1f) + Random.Range(-1f, 1f);
-            float posAngle = Random.Range(0f, 359f);
-            // determine the size from the position
-            float sizeRadius = posRadius * 0.1f;
+        Vector3 randomPosition = new Vector3(Random.value * 200 - 100, Random.value * 200 - 100, 1);
+        copy.transform.position = randomPosition;
 
-            GameObject copy = this._copies[i];
-            Vector3 randomPosition = new Vector3(posRadius * Mathf.Cos(posAngle), posRadius * Mathf.Sin(posAngle));
-            copy.transform.position = randomPosition;
+        // give it a random size
+        float randomScalar = (Random.value * 3) + 1;
+        Vector3 randomScale = new Vector3(randomScalar, randomScalar, 0);
+        copy.transform.localScale = randomScale;
 
-            // give it a random size
-            Vector3 randomScale = new Vector3(sizeRadius, sizeRadius, 0);
-            copy.transform.localScale = randomScale;
+        // TODO: randomise its size
 
-
-            // make it visible and set its colour
-            SpriteRenderer copyRenderer = copy.GetComponent<SpriteRenderer>();
-            copyRenderer.enabled = true;
-            copyRenderer.color = colour;
-        }
+        // make it visible and set its colour
+        SpriteRenderer copyRenderer = copy.GetComponent<SpriteRenderer>();
+        copyRenderer.enabled = true;
+        copyRenderer.color = colour;
     }
 
 }
