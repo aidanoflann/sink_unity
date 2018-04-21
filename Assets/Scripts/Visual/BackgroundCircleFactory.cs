@@ -52,7 +52,7 @@ public class BackgroundCircleFactory : MonoBehaviour {
             float posRadius = Mathf.Pow((float)i, 1.1f) + Random.Range(-1f, 1f);
             float posAngle = Random.Range(0f, 359f);
             // determine the size from the position
-            float sizeRadius = posRadius * 0.05f;
+            float sizeRadius = posRadius * 0.1f;
 
             GameObject copy = this._copies[i];
             Vector3 randomPosition = new Vector3(posRadius * Mathf.Cos(posAngle), posRadius * Mathf.Sin(posAngle));
