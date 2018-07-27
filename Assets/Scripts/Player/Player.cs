@@ -157,12 +157,22 @@ public class Player : DynamicObject {
             this.meshRenderer.enabled = true;
         }
         this.currentState = state.midair;
-        this.trailRenderer.Clear();
+
     }
 
     public void ResetTail()
     {
-        this.trailRenderer.Clear();
+        // rotate all of the trails points by 180 degrees. (BIT OF A HACK)
+        int numPoints = this.trailRenderer.positionCount;
+        Vector3[] positions = new Vector3[numPoints];
+        this.trailRenderer.GetPositions(positions);
+        for(int i = 0; i < numPoints -1; i ++)
+        {
+            positions[i].x = -positions[i].x;
+            positions[i].y = -positions[i].y;
+        }
+
+        this.trailRenderer.SetPositions(positions);
     }
 
     public void Hide()
