@@ -144,13 +144,7 @@ private void Clear()
 
         currentState = state.preStartAnimation;
 
-        player.Reset();
-        if (playerWPos != null)
-        {
-            player.SetWPos(playerWPos.GetValue());
-        }
-        player.UpdateVisuals();
-        player.ResetTail();
+        player.Reset(playerWPos);
 
         SpawnPlatforms (this.numPlatforms, player.WPos);
 

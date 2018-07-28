@@ -40,6 +40,7 @@ public class Player : DynamicObject {
     private float platformPosition;
     private float startingRPos;
     private TrailRenderer trailRenderer;
+    private Vector3[] trailRendererSnapshot;
 
     void Awake() {
 		//static attributes
@@ -147,8 +148,9 @@ public class Player : DynamicObject {
         this.w_pos.SetValue(wPos);
     }
 
-    public void Reset()
+    public void Reset(Angle playerWPos = null)
     {
+        // set new rpos
         this.r_pos = startingRPos;
         this.r_vel = 0;
         this.abovePlatform = null;
@@ -158,21 +160,30 @@ public class Player : DynamicObject {
         }
         this.currentState = state.midair;
 
+        // set new WPos, if given.
+        if (playerWPos != null)
+        {
+            this.SetWPos(playerWPos.GetValue());
+        }
+        this.UpdateVisuals();
+
+        this.trailRenderer.Clear();
+        this.trailRenderer.AddPosition(new Vector3(transform.position.x * 1.05f, transform.position.y * 1.05f));
     }
 
-    public void ResetTail()
+    // TODO: delete
+    private void SnapShotTrail()
     {
         // rotate all of the trails points by 180 degrees. (BIT OF A HACK)
         int numPoints = this.trailRenderer.positionCount;
         Vector3[] positions = new Vector3[numPoints];
+        this.trailRendererSnapshot = new Vector3[numPoints];
         this.trailRenderer.GetPositions(positions);
         for(int i = 0; i < numPoints -1; i ++)
         {
-            positions[i].x = -positions[i].x;
-            positions[i].y = -positions[i].y;
+            this.trailRendererSnapshot[i].x = -positions[i].x;
+            this.trailRendererSnapshot[i].y = -positions[i].y;
         }
-
-        this.trailRenderer.SetPositions(positions);
     }
 
     public void Hide()
