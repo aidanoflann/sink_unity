@@ -167,6 +167,7 @@ public class Player : DynamicObject {
         }
         this.UpdateVisuals();
 
+        // clear the trailrenderer and set its single point to just behind the player
         this.trailRenderer.Clear();
         this.trailRenderer.AddPosition(new Vector3(transform.position.x * 1.05f, transform.position.y * 1.05f));
     }
