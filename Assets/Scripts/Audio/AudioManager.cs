@@ -27,6 +27,10 @@ public class AudioManager : SingletonBehaviour
 
 	new void Awake () {
         base.Awake();
+        if (this.gameObject == null)
+        {
+            return;
+        }
 
         for (int i = 0; i < this.sounds.Length; i++)
         {

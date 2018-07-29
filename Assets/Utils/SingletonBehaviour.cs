@@ -20,13 +20,17 @@ namespace Assets.Utils
             return allFoundSingletonBehaviours[allFoundSingletonBehaviours.Length - 1];
         }
 
+        // TODO: THIS DOESN'T SEEM TO ACTUALLY WORK, NEW SINGLETONBEHAVIOURS STILL GET CREATED. NEEDS INVESTIGATION
         public void Awake()
         {
+            Debug.LogFormat("Trying to Awake {0} object. There are currently {1} distinct singletons registered.", this.GetType(), singletonRegistry.Count);
+
             // if this newly instantiating singleton is already in the registry, destroy its gameobject and early out
             foreach(SingletonBehaviour singletonBehaviour in singletonRegistry)
             {
                 if(singletonBehaviour.GetType() == this.GetType())
                 {
+                    Debug.LogFormat("There is already a {0} object in the registry. Deleting gameobject.", this.GetType());
                     DestroyImmediate(this.gameObject);
                     return;
                 }
