@@ -9,6 +9,14 @@ namespace Assets.Scripts
         System.Random random;
         int seed;
 
+        public int Seed
+        {
+            get
+            {
+                return this.seed;
+            }
+        }
+
         public new void Awake()
         {
             base.Awake();
