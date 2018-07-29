@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using Assets.Utils;
-
+using Assets.Scripts;
 
 public class PlayerUpdate
 {
@@ -41,20 +41,19 @@ public class Player : DynamicObject {
     private float startingRPos;
     private TrailRenderer trailRenderer;
     private Vector3[] trailRendererSnapshot;
+    private RandomNumberManager randomNumberManager;
+    private float[] wPosRange = Enumerable.Range(0, 359).Select(i => (float)i).ToArray();
 
     void Awake() {
-		//static attributes
-		this.size = 1f;
+        this.randomNumberManager = SingletonBehaviour.GetSingletonBehaviour<RandomNumberManager>();
 
-        //dynamic attributes
-        float[] wPosRange = Enumerable.Range(0, 359).Select(i => (float)i).ToArray();
-        this.w_pos = new Angle(wPosRange[Random.Range(0, wPosRange.Length - 1)]);
-
+        //static attributes
+        this.size = 1f;
         this.startingRPos = 400f;
-        this.r_pos = this.startingRPos;
-        this.r_vel = 0f;
 
-        this.currentState = state.midair;
+        // rpos and wpos are set in Reset (which is called the first "Set" as well)
+        this.r_vel = 0f;
+        
         this.currentColour = new Color(0.1f, 0.2f, 0.9f);
 
         this.trailRenderer = GetComponent<TrailRenderer>();
@@ -116,6 +115,7 @@ public class Player : DynamicObject {
             this.r_vel -= Globals.gravity * deltaTime;
             this.r_pos += r_vel * deltaTime;
         }
+
         // position in landed state is handled by the respective LevelTemplates.
         return playerUpdate;
     }
@@ -152,6 +152,7 @@ public class Player : DynamicObject {
     {
         // set new rpos
         this.r_pos = startingRPos;
+        this.w_pos = new Angle(this.wPosRange[this.randomNumberManager.Range(0, this.wPosRange.Length - 1)]);
         this.r_vel = 0;
         this.abovePlatform = null;
         if (this.meshRenderer != null)

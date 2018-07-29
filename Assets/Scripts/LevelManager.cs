@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Utils;
+using Assets.Scripts;
 
 public class LevelManager : MonoBehaviour {
 
@@ -38,6 +39,7 @@ public class LevelManager : MonoBehaviour {
     private AnimationManager animationManager;
     private AudioManager audioManager;
     private StatManagerBehaviour statManagerBehaviour;
+    private RandomNumberManager randomNumberManager;
     public Player player;
 
 	// this is used to child all of the gameObjects for better control/organisation in the inspector.
@@ -87,8 +89,8 @@ public class LevelManager : MonoBehaviour {
 
             // TODO: Find a way to get these into an init function - doing so as normal changes the values of the prefab, not the instance
             // TODO: Seems to be that public attributes are assumed to be accessible in-editor only - use properties where required.
-            platform.w_vel = new Angle(wVelRange[Random.Range(0, wVelRange.Length - 1)]);
-            platform.w_size = new Angle(wSizeRange[Random.Range(0, wSizeRange.Length - 1)]);
+            platform.w_vel = new Angle(wVelRange[this.randomNumberManager.Range(0, wVelRange.Length - 1)]);
+            platform.w_size = new Angle(wSizeRange[this.randomNumberManager.Range(0, wSizeRange.Length - 1)]);
             if (clockwise)
 				platform.w_vel *= 1f;
 			else
@@ -257,7 +259,8 @@ private void Clear()
         this.levelTemplates = new List<LevelTemplate>();
         this.animationManager = new AnimationManager(FindObjectOfType<MovingTextCanvasBehaviour>());
 
-        this.statManagerBehaviour = StatManagerBehaviour.GetSingletonBehaviour<StatManagerBehaviour>();
+        this.randomNumberManager = SingletonBehaviour.GetSingletonBehaviour<RandomNumberManager>();
+        this.statManagerBehaviour = SingletonBehaviour.GetSingletonBehaviour<StatManagerBehaviour>();
         GeneratePlatformRanges();
     }
 

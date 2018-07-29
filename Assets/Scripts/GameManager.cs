@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using Assets.Scripts;
+using Assets.Utils;
 
 public class GameManager : MonoBehaviour {
 
@@ -11,6 +13,7 @@ public class GameManager : MonoBehaviour {
     private List<LevelTemplate> baseTemplates;
     private List<LevelTemplate> dynamicTemplates;
     private List<int> availableDynamicTemplateIndices;
+    private RandomNumberManager randomNumberManager;
 
     public int numPlatforms = 5;
     public bool showFPS;
@@ -19,6 +22,7 @@ public class GameManager : MonoBehaviour {
     {
         cameraBehaviour = mainCamera.GetComponent<CameraBehaviour>();
         levelManager = GetComponent<LevelManager> ();
+        this.randomNumberManager = SingletonBehaviour.GetSingletonBehaviour<RandomNumberManager>();
 
         // base templates, common to all levels
         this.baseTemplates = new List<LevelTemplate>();
@@ -26,6 +30,16 @@ public class GameManager : MonoBehaviour {
         this.baseTemplates.Add(new StickToPlatformTemplate());
         this.baseTemplates.Add(new FallTemplate());
 
+        this.SetDynamicTemplates();
+
+        this.levelManager.SetBaseTemplates(baseTemplates);
+        this.levelManager.SetNumPlatforms(this.numPlatforms);
+        this.levelManager.SetCameraBehaviour(cameraBehaviour);
+        this.levelManager.SetupScene();
+	}
+
+    private void SetDynamicTemplates()
+    {
         // Each dynamic template added will be used as a new level
         this.dynamicTemplates = new List<LevelTemplate>();
         this.dynamicTemplates.Add(new PulseTemplate()); // love it
@@ -51,12 +65,7 @@ public class GameManager : MonoBehaviour {
         {
             this.availableDynamicTemplateIndices.Add(i);
         }
-
-        this.levelManager.SetBaseTemplates(baseTemplates);
-        this.levelManager.SetNumPlatforms(this.numPlatforms);
-        this.levelManager.SetCameraBehaviour(cameraBehaviour);
-        this.levelManager.SetupScene();
-	}
+    }
 
     float deltaTime = 0.0f;
 
@@ -105,8 +114,7 @@ public class GameManager : MonoBehaviour {
 
     void NextLevel()
     {
-
-        int indexToAdd = this.availableDynamicTemplateIndices[Random.Range(0, this.availableDynamicTemplateIndices.Count)];
+        int indexToAdd = this.availableDynamicTemplateIndices[this.randomNumberManager.Range(0, this.availableDynamicTemplateIndices.Count)];
         this.availableDynamicTemplateIndices.Remove(indexToAdd);
         LevelTemplate templateToAdd = this.dynamicTemplates[indexToAdd];
         List<LevelTemplate> templatesRemoved = this.levelManager.CycleTemplate(templateToAdd);
@@ -119,8 +127,11 @@ public class GameManager : MonoBehaviour {
 
     void RestartGame()
     {
+        // must do this before restarting the level in order to reuse the same sequence of random commands.
+        this.randomNumberManager.Reset();
         this.levelManager.SetBaseTemplates(this.baseTemplates);
         this.levelManager.Restart();
+        this.SetDynamicTemplates();
     }
 
     // quick FPS script shamelessly copied from http://wiki.unity3d.com/index.php?title=FramesPerSecond
