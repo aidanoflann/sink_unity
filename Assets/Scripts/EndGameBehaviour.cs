@@ -29,7 +29,13 @@ public class EndGameBehaviour : MonoBehaviour {
 
     public void StartLevel()
     {
-        this.randomNumberManager.Reset(false); // TODO: set to true (and add new option for false)
+        this.randomNumberManager.Reset(true);
+        SceneManager.LoadScene("MainLevel");
+    }
+
+    public void StartLevelSameSeed()
+    {
+        this.randomNumberManager.Reset(false);
         SceneManager.LoadScene("MainLevel");
     }
 
