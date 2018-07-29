@@ -1,7 +1,7 @@
 ﻿using UnityEngine.Audio;
 using System;
 using UnityEngine;
-
+using Assets.Utils;
 
 [System.Serializable]
 public class Sound
@@ -21,24 +21,12 @@ public class Sound
     public bool loop;
 }
 
-public class AudioManager : MonoBehaviour {
-
-    // enforce singleton behaviour
-    public static AudioManager instance;
+public class AudioManager : SingletonBehaviour
+{
     public Sound[] sounds;
 
 	void Awake () {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            DestroyImmediate(this.gameObject);
-            return;
-        }
-
-        DontDestroyOnLoad(this.gameObject);
+        base.Awake();
 
         for (int i = 0; i < this.sounds.Length; i++)
         {

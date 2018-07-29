@@ -263,12 +263,7 @@ private void Clear()
 
     public void Start()
     {
-        AudioManager[] allAudioManagers = FindObjectsOfType<AudioManager>();
-        if (allAudioManagers.Length != 1)
-        {
-            Debug.LogErrorFormat("LevelManager found more than one AudioManager on startup. Attaching last one in array...");
-        }
-        this.audioManager = allAudioManagers[allAudioManagers.Length - 1];
+        this.audioManager = SingletonBehaviour.GetSingletonBehaviour<AudioManager>();
     }
 
     public void Update()

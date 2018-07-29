@@ -11,7 +11,6 @@ public class GameManager : MonoBehaviour {
     private List<LevelTemplate> baseTemplates;
     private List<LevelTemplate> dynamicTemplates;
     private List<int> availableDynamicTemplateIndices;
-    private System.Random randomNumberGenerator = new System.Random();
 
     public int numPlatforms = 5;
     public bool showFPS;
