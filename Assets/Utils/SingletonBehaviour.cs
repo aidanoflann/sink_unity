@@ -7,6 +7,7 @@ namespace Assets.Utils
     public class SingletonBehaviour: MonoBehaviour
     {
         // enforce singleton behaviour
+        private static List<SingletonBehaviour> singletonRegistry = new List<SingletonBehaviour>();
         private SingletonBehaviour instance;
 
         public static T GetSingletonBehaviour<T>() where T:MonoBehaviour
@@ -21,15 +22,18 @@ namespace Assets.Utils
 
         public void Awake()
         {
-            if (instance == null)
+            // if this newly instantiating singleton is already in the registry, destroy its gameobject and early out
+            foreach(SingletonBehaviour singletonBehaviour in singletonRegistry)
             {
-                instance = this;
+                if(singletonBehaviour.GetType() == this.GetType())
+                {
+                    DestroyImmediate(this.gameObject);
+                    return;
+                }
             }
-            else
-            {
-                DestroyImmediate(this.gameObject);
-                return;
-            }
+
+            // if we're here, it means the singleton is not in the registry. Add it, and make sure we never destroy the gameobject
+            singletonRegistry.Add(this);
             DontDestroyOnLoad(gameObject);
         }
     }

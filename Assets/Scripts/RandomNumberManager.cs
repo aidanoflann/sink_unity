@@ -20,8 +20,7 @@ namespace Assets.Scripts
         public new void Awake()
         {
             base.Awake();
-            this.seed = 42;
-            this.Reset();
+            this.Reset(true);
         }
 
         public int Range(int lowerBound, int upperBound)
@@ -29,8 +28,18 @@ namespace Assets.Scripts
             return this.random.Next(lowerBound, upperBound);
         }
 
-        public void Reset()
+        private void SetNewSeed()
         {
+            // random int: https://stackoverflow.com/questions/1785744/how-do-i-seed-a-random-class-to-avoid-getting-duplicate-random-values
+            this.seed = Guid.NewGuid().GetHashCode();
+        }
+
+        public void Reset(bool newSeed = false)
+        {
+            if (newSeed)
+            {
+                this.SetNewSeed();
+            }
             this.random = new System.Random(this.seed);
         }
     }
