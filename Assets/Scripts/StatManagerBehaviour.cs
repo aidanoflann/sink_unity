@@ -1,16 +1,14 @@
-﻿using System.Collections;
+﻿using Assets.Utils;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StatManagerBehaviour : MonoBehaviour {
+public class StatManagerBehaviour : SingletonBehaviour {
 
     private GameObject statManager;
     private List<LevelStats> allLevelStats = new List<LevelStats>();
 
     private float startTime;
-
-    // enforce singleton behaviour
-    public static StatManagerBehaviour instance;
 
     private class LevelStats
     {
@@ -37,21 +35,6 @@ public class StatManagerBehaviour : MonoBehaviour {
                 this.levelDuration, this.numPlatforms, this.numDynamicTemplates);
         }
     }
-
-	void Awake () {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            DestroyImmediate(this.gameObject);
-            return;
-        }
-
-        statManager = gameObject;
-        DontDestroyOnLoad(statManager);
-	}
 	
     public void SetStartTime()
     {

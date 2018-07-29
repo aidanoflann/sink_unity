@@ -70,8 +70,8 @@ public class LevelManager : MonoBehaviour {
 
     private void GeneratePlatformRanges()
     {
-        wVelRange = Enumerable.Range(6, 12).Select(i => (float)i * 10f).ToArray();
-        wSizeRange = Enumerable.Range(3, 30).Select(i => (float)i*10f).ToArray();
+        this.wVelRange = Enumerable.Range(6, 12).Select(i => (float)i * 10f).ToArray();
+        this.wSizeRange = Enumerable.Range(3, 30).Select(i => (float)i*10f).ToArray();
     }
 
 	private void SpawnPlatforms(int numPlatforms, Angle playerPosition)
@@ -250,19 +250,14 @@ private void Clear()
 
     public void Awake()
     {
+
         this.levelHolder = new GameObject("Level").transform;
         this.platformList = new List<GameObject>();
         this.platforms = new List<Platform>();
         this.levelTemplates = new List<LevelTemplate>();
         this.animationManager = new AnimationManager(FindObjectOfType<MovingTextCanvasBehaviour>());
 
-        StatManagerBehaviour[] allStatManagers = FindObjectsOfType<StatManagerBehaviour>();
-        if (allStatManagers.Length != 1)
-        {
-            Debug.LogErrorFormat("LevelManager found more than one StatManager on startup. Attaching last one in array...");
-        }
-        this.statManagerBehaviour = allStatManagers[allStatManagers.Length - 1];
-
+        this.statManagerBehaviour = StatManagerBehaviour.GetSingletonBehaviour<StatManagerBehaviour>();
         GeneratePlatformRanges();
     }
 
