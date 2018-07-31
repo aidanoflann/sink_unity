@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
-    class RandomNumberManager: SingletonBehaviour
+    public class RandomNumberManager: SingletonBehaviour
     {
         System.Random random;
         int seed;
@@ -15,6 +15,11 @@ namespace Assets.Scripts
             {
                 return this.seed;
             }
+        }
+
+        public void SetSeed(int seedInt)
+        {
+            this.seed = seedInt;
         }
 
         public new void Awake()
@@ -31,7 +36,7 @@ namespace Assets.Scripts
         private void SetNewSeed()
         {
             // random int: https://stackoverflow.com/questions/1785744/how-do-i-seed-a-random-class-to-avoid-getting-duplicate-random-values
-            this.seed = Guid.NewGuid().GetHashCode();
+            this.seed = Math.Abs(Guid.NewGuid().GetHashCode()) / 1000000;
         }
 
         public void Reset(bool newSeed = false)
