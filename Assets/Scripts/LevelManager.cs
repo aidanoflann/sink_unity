@@ -238,12 +238,14 @@ private void Clear()
     {
         if (currentState != state.paused)
         {
-            prepausedState = currentState;
-            currentState = state.paused;
+            this.prepausedState = this.currentState;
+            this.currentState = state.paused;
+            this.player.Pause();
         }
         else
         {
-            currentState = prepausedState;
+            this.currentState = this.prepausedState;
+            this.player.UnPause();
         }
     }
     #endregion

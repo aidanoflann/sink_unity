@@ -13,6 +13,7 @@ public class PlayerUpdate
 public class Player : DynamicObject {
 
     public Tail tail;
+    public ParticleSystem particleSystem;
 
 	private float size;
 	private float r_pos;
@@ -40,7 +41,8 @@ public class Player : DynamicObject {
     private float platformPosition;
     private float startingRPos;
     private TrailRenderer trailRenderer;
-    private Vector3[] trailRendererSnapshot;
+    private float oldTrailRendererTime;
+    private float timePaused;
     private RandomNumberManager randomNumberManager;
     private float[] wPosRange = Enumerable.Range(0, 359).Select(i => (float)i).ToArray();
 
@@ -57,6 +59,7 @@ public class Player : DynamicObject {
         this.currentColour = new Color(0.1f, 0.2f, 0.9f);
 
         this.trailRenderer = GetComponent<TrailRenderer>();
+        this.oldTrailRendererTime = this.trailRenderer.time;
 	}
 
 	void Start() {
@@ -140,7 +143,6 @@ public class Player : DynamicObject {
     public void UpdateVisuals()
     {
         this.UpdateTransform(this.r_pos, this.w_pos);
-        //this.tail.UpdateTail();
     }
 
     public void SetWPos(float wPos)
@@ -173,19 +175,24 @@ public class Player : DynamicObject {
         this.trailRenderer.AddPosition(new Vector3(transform.position.x * 1.05f, transform.position.y * 1.05f));
     }
 
-    // TODO: delete
-    private void SnapShotTrail()
+    private Vector3[] snapshotTrailPositions;
+    public void Pause()
     {
-        // rotate all of the trails points by 180 degrees. (BIT OF A HACK)
-        int numPoints = this.trailRenderer.positionCount;
-        Vector3[] positions = new Vector3[numPoints];
-        this.trailRendererSnapshot = new Vector3[numPoints];
-        this.trailRenderer.GetPositions(positions);
-        for(int i = 0; i < numPoints -1; i ++)
-        {
-            this.trailRendererSnapshot[i].x = -positions[i].x;
-            this.trailRendererSnapshot[i].y = -positions[i].y;
-        }
+        this.particleSystem.Pause();
+        //this.snapshotTrailPositions = new Vector3[this.trailRenderer.positionCount];
+        //this.trailRenderer.time = 100000000;
+        //this.trailRenderer.GetPositions(snapshotTrailPositions);
+        //Debug.LogFormat("First trail position on pause: {0}", this.snapshotTrailPositions[0].x);
+    }
+
+    public void UnPause()
+    {
+        this.particleSystem.Play();
+        //Debug.LogFormat("First trail position on unpause: {0}", this.snapshotTrailPositions[0].x);
+        //this.timePaused = 0;
+        //this.trailRenderer.time = this.oldTrailRendererTime;
+        //this.trailRenderer.Clear();
+        //this.trailRenderer.AddPositions(this.snapshotTrailPositions);
     }
 
     public void Hide()

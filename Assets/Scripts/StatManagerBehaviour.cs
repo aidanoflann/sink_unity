@@ -46,7 +46,6 @@ public class StatManagerBehaviour : SingletonBehaviour {
         float levelDuration = Time.time - this.startTime;
         int numDynamicTemplates = levelTemplates.Count - numBaseTemplates;
         this.allLevelStats.Add(new LevelStats(levelDuration, numPlatforms, numDynamicTemplates));
-        this.Log();
     }
 
     public int GetTotalScore()
