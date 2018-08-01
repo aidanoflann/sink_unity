@@ -92,7 +92,7 @@ public class CameraBehaviour : MonoBehaviour {
             }
             else
             {
-                float targetDistance = 1 * this.cameraObject.orthographicSize;
+                float targetDistance = 0.5f * this.cameraObject.orthographicSize;
 
                 this.currentShakeTarget.x = this.cameraObject.transform.position.x + Random.Range(- targetDistance, targetDistance);
                 this.currentShakeTarget.y = this.cameraObject.transform.position.y + Random.Range(- targetDistance, targetDistance);
