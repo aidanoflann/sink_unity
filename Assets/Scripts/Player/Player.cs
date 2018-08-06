@@ -13,6 +13,7 @@ public class PlayerUpdate
 public class Player : DynamicObject {
     
     public ParticleSystem particleSystem;
+    public ParticleSystem jumpAnimationParticleSystem;
 
 	private float size;
 	private float r_pos;
@@ -74,6 +75,8 @@ public class Player : DynamicObject {
 
 		createMesh (points, Resources.Load<Material>("PlayerMaterial"));
 
+        this.jumpAnimationParticleSystem.Pause();
+
 	}
 
     public PlayerUpdate UpdatePosition(List<Platform> platforms, float jumpSpeedModifier = 1f) {
@@ -112,6 +115,12 @@ public class Player : DynamicObject {
         if (currentState == state.midair) {
             this.r_vel -= Globals.gravity * deltaTime;
             this.r_pos += r_vel * deltaTime;
+        }
+
+        // particle effects
+        if (this.IsOnTopPlatform && this.jumpAnimationParticleSystem.isPaused)
+        {
+            this.jumpAnimationParticleSystem.Play();
         }
 
         // position in landed state is handled by the respective LevelTemplates.
@@ -163,9 +172,7 @@ public class Player : DynamicObject {
         {
             this.SetWPos(playerWPos.GetValue());
         }
-        this.particleSystem.Pause();
         this.UpdateVisuals();
-        this.particleSystem.Play();
     }
 
     private bool isPaused = false;
@@ -297,6 +304,12 @@ public class Player : DynamicObject {
             this.r_pos += 0.5f;
             this.r_vel = 17 * jumpSpeedModifier + this.platform.r_vel;
             this.platform.ReleasePlayer();
+
+            if(this.jumpAnimationParticleSystem.isPlaying)
+            {
+                this.jumpAnimationParticleSystem.Clear();
+                this.jumpAnimationParticleSystem.Pause();
+            }
         }
     }
 
