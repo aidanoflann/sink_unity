@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using Assets.Scripts;
 using Assets.Utils;
+using Assets.Scripts.Menus;
 
 public class GameManager : MonoBehaviour {
 
     public Camera mainCamera;
+    public Canvas pauseMenu;
+    public PauseMenuBehaviour pauseMenuBehaviour;
 
     private LevelManager levelManager;
     private CameraBehaviour cameraBehaviour;
@@ -23,6 +26,7 @@ public class GameManager : MonoBehaviour {
         cameraBehaviour = mainCamera.GetComponent<CameraBehaviour>();
         levelManager = GetComponent<LevelManager> ();
         this.randomNumberManager = SingletonBehaviour.GetSingletonBehaviour<RandomNumberManager>();
+        this.pauseMenu.enabled = false;
 
         // base templates, common to all levels
         this.baseTemplates = new List<LevelTemplate>();
@@ -75,14 +79,15 @@ public class GameManager : MonoBehaviour {
         {
             SceneManager.LoadScene("EndGame");
         }
-        if (Input.GetKeyDown("r") ||
-            ((Input.GetKeyDown("space") || Input.GetMouseButtonDown(0)) && levelManager.currentState == LevelManager.state.ending))
-        {
-            this.RestartGame();
-        }
         else if (levelManager.currentState == LevelManager.state.nextLevel)
         {
             this.NextLevel();
+        }
+
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            //player-facing pause (bring up window, etc)
+            this.PauseGame();
         }
 
 #if UNITY_EDITOR
@@ -94,7 +99,13 @@ public class GameManager : MonoBehaviour {
 
         if (Input.GetKeyDown("x"))
         {
+            // debug pause
             levelManager.Pause();
+        }
+
+        if (Input.GetKeyDown("r"))
+        {
+            this.RestartGame();
         }
 
         if (Input.GetKeyDown("q"))
@@ -123,6 +134,24 @@ public class GameManager : MonoBehaviour {
             this.availableDynamicTemplateIndices.Add(this.dynamicTemplates.IndexOf(templatesRemoved[i]));
         }
         this.levelManager.Restart();
+    }
+
+    private bool isPaused = false;
+    void PauseGame()
+    {
+        if (this.isPaused)
+        {
+            this.levelManager.Pause();
+            this.pauseMenu.enabled = false;
+            this.isPaused = false;
+        }
+        else
+        {
+            this.levelManager.Pause();
+            this.pauseMenuBehaviour.UpdateData();
+            this.pauseMenu.enabled = true;
+            this.isPaused = true;
+        }
     }
 
     void RestartGame()
