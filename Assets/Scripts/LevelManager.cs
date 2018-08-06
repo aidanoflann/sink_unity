@@ -240,12 +240,10 @@ private void Clear()
         {
             this.prepausedState = this.currentState;
             this.currentState = state.paused;
-            this.player.Pause();
         }
         else
         {
             this.currentState = this.prepausedState;
-            this.player.UnPause();
         }
     }
     #endregion
@@ -276,8 +274,10 @@ private void Clear()
         // if paused, don't do anything
         if (currentState == state.paused)
         {
+            this.player.Pause();
             return;
         }
+        this.player.UnPause();
 
         // restart game if player has died
         if (player.RPos <= 0 && currentState != state.ending)

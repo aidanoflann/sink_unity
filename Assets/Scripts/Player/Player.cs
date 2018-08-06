@@ -11,8 +11,7 @@ public class PlayerUpdate
 }
 
 public class Player : DynamicObject {
-
-    public Tail tail;
+    
     public ParticleSystem particleSystem;
 
 	private float size;
@@ -40,7 +39,6 @@ public class Player : DynamicObject {
     private Platform platform;
     private float platformPosition;
     private float startingRPos;
-    private TrailRenderer trailRenderer;
     private float oldTrailRendererTime;
     private float timePaused;
     private RandomNumberManager randomNumberManager;
@@ -57,9 +55,6 @@ public class Player : DynamicObject {
         this.r_vel = 0f;
         
         this.currentColour = new Color(0.1f, 0.2f, 0.9f);
-
-        this.trailRenderer = GetComponent<TrailRenderer>();
-        this.oldTrailRendererTime = this.trailRenderer.time;
 	}
 
 	void Start() {
@@ -168,31 +163,28 @@ public class Player : DynamicObject {
         {
             this.SetWPos(playerWPos.GetValue());
         }
+        this.particleSystem.Pause();
         this.UpdateVisuals();
-
-        // clear the trailrenderer and set its single point to just behind the player
-        this.trailRenderer.Clear();
-        this.trailRenderer.AddPosition(new Vector3(transform.position.x * 1.05f, transform.position.y * 1.05f));
+        this.particleSystem.Play();
     }
 
-    private Vector3[] snapshotTrailPositions;
+    private bool isPaused = false;
     public void Pause()
     {
-        this.particleSystem.Pause();
-        //this.snapshotTrailPositions = new Vector3[this.trailRenderer.positionCount];
-        //this.trailRenderer.time = 100000000;
-        //this.trailRenderer.GetPositions(snapshotTrailPositions);
-        //Debug.LogFormat("First trail position on pause: {0}", this.snapshotTrailPositions[0].x);
+        if(!this.isPaused)
+        {
+            this.particleSystem.Pause();
+            this.isPaused = true;
+        }
     }
 
     public void UnPause()
     {
-        this.particleSystem.Play();
-        //Debug.LogFormat("First trail position on unpause: {0}", this.snapshotTrailPositions[0].x);
-        //this.timePaused = 0;
-        //this.trailRenderer.time = this.oldTrailRendererTime;
-        //this.trailRenderer.Clear();
-        //this.trailRenderer.AddPositions(this.snapshotTrailPositions);
+        if (this.isPaused)
+        {
+            this.particleSystem.Play();
+            this.isPaused = false;
+        }
     }
 
     public void Hide()
