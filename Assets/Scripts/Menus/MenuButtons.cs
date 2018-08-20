@@ -8,11 +8,16 @@ public class MenuButtons : MonoBehaviour {
     public GameObject optionsMenu;
     public Canvas startMenu;
     public AudioManager audioManager;
+
+    public GameObject SeedGameObject;
+
     public Text audioText;
     public Text shakeText;
+    public Text seedText;
 
-    private ToggleableButton audioButton;
-    private ToggleableButton shakeButton;
+    private ToggleableButton audioButton; // if on, sound is enabled
+    private ToggleableButton shakeButton; // if on, screenshake is enabled
+    private ToggleableButton seedButton; // if on, seed option is visible
 
     void Start()
     {
@@ -21,6 +26,9 @@ public class MenuButtons : MonoBehaviour {
         optionsMenu.SetActive(false);
         this.audioButton = new ToggleableButton("SOUND: ON", "SOUND: OFF", "SoundEnabled", this.audioText);
         this.shakeButton = new ToggleableButton("SHAKE: ON", "SHAKE: OFF", "ShakeEnabled", this.shakeText);
+        this.seedButton = new ToggleableButton("SEED: ON", "SEED: OFF", "SeedEnabled", this.seedText);
+
+        this.SeedGameObject.SetActive(PlayerPrefs.GetInt("SeedEnabled") == 1);
     }
 
     public void HowToPlayButtonPress()
@@ -65,6 +73,12 @@ public class MenuButtons : MonoBehaviour {
     public void ToggleShake()
     {
         this.shakeButton.Toggle();
+    }
+
+    public void ToggleSeed()
+    {
+        this.seedButton.Toggle();
+        this.SeedGameObject.SetActive(PlayerPrefs.GetInt("SeedEnabled") == 1);
     }
 }
 
