@@ -8,12 +8,22 @@ public class MenuButtons : MonoBehaviour {
     public GameObject optionsMenu;
     public Canvas startMenu;
     public AudioManager audioManager;
+    public Text audioText;
 
     void Start()
     {
         //howToPlayMenu = GameObject.FindGameObjectWithTag("HowToPlay");
         howToPlayMenu.SetActive(false);
         optionsMenu.SetActive(false);
+
+        if (this.audioManager.SoundEnabled)
+        {
+            this.audioText.text = "SOUND: ON";
+        }
+        else
+        {
+            this.audioText.text = "SOUND: OFF";
+        }
     }
 
     public void HowToPlayButtonPress()
@@ -50,13 +60,17 @@ public class MenuButtons : MonoBehaviour {
         Application.Quit();
     }
 
-    public void EnableSound()
+    public void ToggleSound()
     {
-        this.audioManager.soundEnabled = true;
-    }
-    
-    public void DisableSound()
-    {
-        this.audioManager.soundEnabled = false;
+        if(this.audioManager.SoundEnabled)
+        {
+            this.audioText.text = "SOUND: OFF";
+            PlayerPrefs.SetInt("SoundEnabled", 0);
+        }
+        else
+        {
+            this.audioText.text = "SOUND: ON";
+            PlayerPrefs.SetInt("SoundEnabled", 1);
+        }
     }
 }

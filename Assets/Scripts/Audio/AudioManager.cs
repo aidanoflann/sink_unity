@@ -24,7 +24,15 @@ public class Sound
 public class AudioManager : SingletonBehaviour
 {
     public Sound[] sounds;
-    public bool soundEnabled = true;
+
+
+    public bool SoundEnabled
+    {
+        get
+        {
+            return PlayerPrefs.GetInt("SoundEnabled") == 1;
+        }
+    }
 
 
 	new void Awake () {
@@ -49,7 +57,7 @@ public class AudioManager : SingletonBehaviour
 
     public void Play(string soundName, float? pitchOverride = null)
     {
-        if(!this.soundEnabled)
+        if(!this.SoundEnabled)
         {
             return;
         }
