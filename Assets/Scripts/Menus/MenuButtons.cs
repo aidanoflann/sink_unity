@@ -9,8 +9,10 @@ public class MenuButtons : MonoBehaviour {
     public Canvas startMenu;
     public AudioManager audioManager;
     public Text audioText;
+    public Text shakeText;
 
     private ToggleableButton audioButton;
+    private ToggleableButton shakeButton;
 
     void Start()
     {
@@ -18,6 +20,7 @@ public class MenuButtons : MonoBehaviour {
         howToPlayMenu.SetActive(false);
         optionsMenu.SetActive(false);
         this.audioButton = new ToggleableButton("SOUND: ON", "SOUND: OFF", "SoundEnabled", this.audioText);
+        this.shakeButton = new ToggleableButton("SHAKE: ON", "SHAKE: OFF", "ShakeEnabled", this.shakeText);
     }
 
     public void HowToPlayButtonPress()
@@ -57,6 +60,11 @@ public class MenuButtons : MonoBehaviour {
     public void ToggleSound()
     {
         this.audioButton.Toggle();
+    }
+
+    public void ToggleShake()
+    {
+        this.shakeButton.Toggle();
     }
 }
 

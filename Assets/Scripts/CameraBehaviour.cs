@@ -35,7 +35,10 @@ public class CameraBehaviour : MonoBehaviour {
     private void Update()
     {
         // shake screen if needed
-        this.Shake();
+        if (PlayerPrefs.GetInt("ShakeEnabled") == 1)
+        {
+            this.Shake();
+        }
     }
 
     public void FollowPlayer (bool dynamicZoom = true, float? panSpeedOverride = null)
