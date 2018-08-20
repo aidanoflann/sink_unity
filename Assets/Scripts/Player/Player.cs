@@ -88,7 +88,7 @@ public class Player : DynamicObject {
         float deltaTime = Time.deltaTime;
 
         // inputs
-        if (this.needsToJump)
+        if (this.needsToJump && this.IsLanded)
         {
             Jump(jumpSpeedModifier);
             playerUpdate.jumped = true;
