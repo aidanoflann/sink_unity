@@ -8,6 +8,8 @@ public class SquareWaveTemplate: LevelTemplate
 {
     private float timeSinceLastTick;
     private bool isTicking;
+    private bool tickedThisUpdate;
+    private bool untickedThisUpdate;
     protected float tickDuration; // time during which the tick is actually happening
     protected float tickPeriod = 1.5f; // how often the tick occurs
 
@@ -19,8 +21,34 @@ public class SquareWaveTemplate: LevelTemplate
         }
     }
 
+    protected bool TickedThisUpdate
+    {
+        get
+        {
+            return this.tickedThisUpdate;
+        }
+    }
+
+    protected bool UntickedThisUpdate
+    {
+        get
+        {
+            return this.untickedThisUpdate;
+        }
+    }
+
     public override LevelUpdate UpdateTemplate()
     {
+        // these bools should only ever be true for one frame.
+        if (this.tickedThisUpdate)
+        {
+            this.tickedThisUpdate = false;
+        }
+        if (this.untickedThisUpdate)
+        {
+            this.untickedThisUpdate = false;
+        }
+
         LevelUpdate levelUpdate = base.UpdateTemplate();
         // modulo the time since last tick by the total period
         this.timeSinceLastTick = (this.timeSinceLastTick + Time.deltaTime) % tickPeriod;
@@ -28,6 +56,7 @@ public class SquareWaveTemplate: LevelTemplate
         if (this.timeSinceLastTick < tickDuration && !this.isTicking)
         {
             this.isTicking = true;
+            this.tickedThisUpdate = true;
             levelUpdate.triggerBeatSound = true;
             levelUpdate.soundToPlay = "SquareBeat";
         }
@@ -35,6 +64,7 @@ public class SquareWaveTemplate: LevelTemplate
         if (this.timeSinceLastTick > tickDuration && this.isTicking)
         {
             this.isTicking = false;
+            this.untickedThisUpdate = true;
         }
         return levelUpdate;
     }

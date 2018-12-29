@@ -13,11 +13,10 @@ public class FallTemplate: LevelTemplate
         this.CircleColor = new Color(0.93f, 0.93f, 0.93f);
     }
 
-
     public override void UpdatePlatformPosition(int platformIndex, List<Platform> allPlatforms, float rSpeedMultiplier)
     {
         Platform platform = allPlatforms[platformIndex];
-        platform.r_pos = platform.r_pos + platform.r_vel * rSpeedMultiplier * Time.deltaTime;
+        platform.r_pos += + platform.r_vel * rSpeedMultiplier * Time.deltaTime;
     }
 
     public override void Reload()

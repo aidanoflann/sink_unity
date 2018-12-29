@@ -6,8 +6,8 @@ using System.Text;
 
 internal class DropTemplate : SquareWaveTemplate
 {
-    private static float maxRVel = -28f;
-    private static float minRVel = +4f;
+    private static float rVelDelta = -32f;
+    private static float bonusRVel = 4.7f; // This is added at the start to account for the drop.
 
     public DropTemplate()
     {
@@ -19,20 +19,20 @@ internal class DropTemplate : SquareWaveTemplate
 
     public override void SetPlatformParameters(Platform platform, int platformIndex, int numPlatforms)
     {
-        platform.r_vel = minRVel;
+        platform.r_vel += bonusRVel;
     }
 
     public override void UpdatePlatformPosition(int platformIndex, List<Platform> allPlatforms, float rSpeedMultiplier)
     {
         Platform platform = allPlatforms[platformIndex];
 
-        if (this.IsTicking)
+        if (this.TickedThisUpdate)
         {
-            platform.r_vel = maxRVel;
+            platform.r_vel += rVelDelta;
         }
-        else
+        if (this.UntickedThisUpdate)
         {
-            platform.r_vel = minRVel;
+            platform.r_vel -= rVelDelta;
         }
     }
 

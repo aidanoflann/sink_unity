@@ -25,6 +25,8 @@ public class LevelTemplate
 
     public virtual void UpdatePlatformPosition(int platformIndex, List<Platform> allPlatforms, float rSpeedMultiplier)
     // called every update, primarily for adjusting platform motion for the level mechanic
+    // IMPORTANT: Best practice is for this function to ADD TO parameters only. DO NOT set them.
+    // Reason: any number of UpdatePlatformPositions can be called per frame, and their effects need to be additive.
     {
     }
 

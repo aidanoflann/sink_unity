@@ -27,6 +27,7 @@ internal class ReverseTemplate : SquareWaveTemplate
 
     public override void UpdatePlatformPosition(int platformIndex, List<Platform> allPlatforms, float rSpeedMultiplier)
     {
+        // TODO: update to use this.TickedThisUpdate
         Platform platform = allPlatforms[platformIndex];
         if (this.IsTicking && !this.ticked)
         {    
