@@ -20,8 +20,9 @@ namespace Assets.Utils
                     return singletonBehaviour as T;
                 }
             }
+            #if VERBOSE
             Debug.LogFormat("Cannot find object of type {0} in the singleton registry. Checking for new unregistered instances.", typeof(T).ToString());
-
+            #endif
             // Bit messy, but this may be needed if two objects awake in an unspecified order, and one requires a reference to the other.
             // The expectation is that the instance found by the following block will later be added to the registry.
             T[] allFoundSingletonBehaviours = FindObjectsOfType<T>();
@@ -35,14 +36,18 @@ namespace Assets.Utils
         // TODO: THIS DOESN'T SEEM TO ACTUALLY WORK, NEW SINGLETONBEHAVIOURS STILL GET CREATED. NEEDS INVESTIGATION
         public void Awake()
         {
+#if VERBOSE
             Debug.LogFormat("Trying to Awake {0} object. There are currently {1} distinct singletons registered.", this.GetType(), singletonRegistry.Count);
+#endif
 
             // if this newly instantiating singleton is already in the registry, destroy its gameobject and early out
             foreach(SingletonBehaviour singletonBehaviour in singletonRegistry)
             {
                 if(singletonBehaviour.GetType() == this.GetType())
                 {
+#if VERBOSE
                     Debug.LogFormat("There is already a {0} object in the registry. Deleting gameobject.", this.GetType());
+#endif
                     DestroyImmediate(this.gameObject);
                     return;
                 }
