@@ -56,6 +56,7 @@ public class GameManager : MonoBehaviour {
         this.dynamicTemplates.Add(new TwirlTemplate()); // fun but super hard
         this.dynamicTemplates.Add(new SlipTemplate());
         this.dynamicTemplates.Add(new VanishTemplate());
+        this.dynamicTemplates.Add(new ConfuseTemplate()); // motion sickness?
 
         // Experimental templates (usually either low quality or very very difficult)
         //this.dynamicTemplates.Add(new BounceTemplate());

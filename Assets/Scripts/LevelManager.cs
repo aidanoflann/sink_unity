@@ -364,6 +364,7 @@ private void Clear()
                     this.audioManager.Play(levelUpdate.soundToPlay);
                 }
                 levelTemplates[j].UpdatePlayer(player);
+                levelTemplates[j].UpdateCameraParams(this.cameraBehaviour);
             }
 
             PlayerUpdate playerUpdate = player.UpdatePosition(platforms);
