@@ -69,13 +69,13 @@ public class MovingTextCanvasBehaviour : MonoBehaviour {
         }
     }
 
-    public void AnimateToPoint(Vector3 point)
+    public void AnimateToPoint(Vector3 point, Vector3 fromPoint)
     // Set up animation params (and start animation) towards given game-space point
     {
         for(int i = 0; i < this.movingTextBehaviours.Count; i++)
         {
             // TODO: randomise start point? currently just comes from the blackhole.
-            movingTextBehaviours[i].SetStartAndEndPoints(new Vector3(1000, 1000, -1), point);
+            movingTextBehaviours[i].SetStartAndEndPoints(fromPoint, point);
             movingTextBehaviours[i].SetWarmUpTime((float)i);
             movingTextBehaviours[i].SetSitStillTime((float)(i + 1f));
         }

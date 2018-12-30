@@ -57,8 +57,8 @@ public class AnimationManager {
         if (!this.animationStarted)
         {
             this.cameraBehaviour.SnapToPlayer();
-            this.movingTextCanvasBehaviour.AnimateToPoint(new Vector3(0, 200, -1));
-            this.movingScoreTextCanvasBehaviour.AnimateToPoint(new Vector3(0, -200, -1));
+            this.movingTextCanvasBehaviour.AnimateToPoint(new Vector3(0, 200, -1), new Vector3(1000, 1000, -1));
+            this.movingScoreTextCanvasBehaviour.AnimateToPoint(new Vector3(0, -200, -1), new Vector3(-1000, -1000, -1));
             this.animationStarted = true;
         }
         else
