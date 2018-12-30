@@ -6,16 +6,24 @@ using Assets.Utils;
 public class AnimationManager {
 
     private MovingTextCanvasBehaviour movingTextCanvasBehaviour;
+    private MovingTextCanvasBehaviour movingScoreTextCanvasBehaviour;
     private Player player;
     private CameraBehaviour cameraBehaviour;
+    private StatManagerBehaviour statManagerBehaviour;
 
     private bool animationStarted = false;
     private float timeSinceAnimationStart = 0;
     private float timeToSpendAnimating = 3; // seconds
 
-    public AnimationManager(MovingTextCanvasBehaviour mtcb)
+    public AnimationManager(
+        MovingTextCanvasBehaviour movingTextCanvasBehaviour,
+        MovingTextCanvasBehaviour movingScoreTextCanvasBehaviour,
+        StatManagerBehaviour statManagerBehaviour
+        )
     {
-        this.movingTextCanvasBehaviour = mtcb;
+        this.movingTextCanvasBehaviour = movingTextCanvasBehaviour;
+        this.movingScoreTextCanvasBehaviour = movingScoreTextCanvasBehaviour;
+        this.statManagerBehaviour = statManagerBehaviour;
     }
 
     public void SetCameraBehaviour(CameraBehaviour cameraBehaviour)
@@ -32,11 +40,13 @@ public class AnimationManager {
     public void SetWords(string words)
     {
         this.movingTextCanvasBehaviour.SetText(words);
+        this.movingScoreTextCanvasBehaviour.SetText(string.Format("SCORE:{0}", this.statManagerBehaviour.GetTotalScore()));
     }
 
     public void SetTextColour(Color colour)
     {
         this.movingTextCanvasBehaviour.SetTextColor(colour);
+        this.movingScoreTextCanvasBehaviour.SetTextColor(colour);
     }
 
     // This function is responsible for all behaviour from the level load to the initial fall of the player onto the level.
@@ -48,6 +58,7 @@ public class AnimationManager {
         {
             this.cameraBehaviour.SnapToPlayer();
             this.movingTextCanvasBehaviour.AnimateToPoint(new Vector3(0, 200, -1));
+            this.movingScoreTextCanvasBehaviour.AnimateToPoint(new Vector3(0, -200, -1));
             this.animationStarted = true;
         }
         else

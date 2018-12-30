@@ -42,6 +42,9 @@ public class LevelManager : MonoBehaviour {
     private RandomNumberManager randomNumberManager;
     public Player player;
 
+    public MovingTextCanvasBehaviour movingTextCanvasBehaviour;
+    public MovingTextCanvasBehaviour movingScoreTextCanvasBehaviour;
+
 	// this is used to child all of the gameObjects for better control/organisation in the inspector.
 	private Transform levelHolder;
 
@@ -257,7 +260,10 @@ private void Clear()
         this.platformList = new List<GameObject>();
         this.platforms = new List<Platform>();
         this.levelTemplates = new List<LevelTemplate>();
-        this.animationManager = new AnimationManager(FindObjectOfType<MovingTextCanvasBehaviour>());
+        this.animationManager = new AnimationManager(
+            this.movingTextCanvasBehaviour,
+            this.movingScoreTextCanvasBehaviour,
+            this.statManagerGameObject.GetComponent<StatManagerBehaviour>());
 
         this.randomNumberManager = SingletonBehaviour.GetSingletonBehaviour<RandomNumberManager>();
         this.statManagerBehaviour = SingletonBehaviour.GetSingletonBehaviour<StatManagerBehaviour>();
