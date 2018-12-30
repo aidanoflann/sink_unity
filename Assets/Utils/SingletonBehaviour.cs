@@ -11,7 +11,19 @@ namespace Assets.Utils
         private SingletonBehaviour instance;
 
         public static T GetSingletonBehaviour<T>() where T:MonoBehaviour
+        // Fetch the requested SingletonBehaviour from the registry
         {
+            foreach(SingletonBehaviour singletonBehaviour in singletonRegistry)
+            {
+                if(singletonBehaviour.GetType() == typeof(T))
+                {
+                    return singletonBehaviour as T;
+                }
+            }
+            Debug.LogFormat("Cannot find object of type {0} in the singleton registry. Checking for new unregistered instances.", typeof(T).ToString());
+
+            // Bit messy, but this may be needed if two objects awake in an unspecified order, and one requires a reference to the other.
+            // The expectation is that the instance found by the following block will later be added to the registry.
             T[] allFoundSingletonBehaviours = FindObjectsOfType<T>();
             if (allFoundSingletonBehaviours.Length != 1)
             {
