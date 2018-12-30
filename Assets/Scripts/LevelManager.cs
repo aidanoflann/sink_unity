@@ -11,7 +11,6 @@ public class LevelManager : MonoBehaviour {
     // prepare the player and platform prefabs
     public GameObject playerPrefab;
 	public GameObject platformPrefab;
-    public GameObject statManagerGameObject;
     public BackgroundCircleFactory backgroundCircleFactory;
     public int numStackedTemplates;
 
@@ -260,13 +259,15 @@ private void Clear()
         this.platformList = new List<GameObject>();
         this.platforms = new List<Platform>();
         this.levelTemplates = new List<LevelTemplate>();
-        this.animationManager = new AnimationManager(
-            this.movingTextCanvasBehaviour,
-            this.movingScoreTextCanvasBehaviour,
-            this.statManagerGameObject.GetComponent<StatManagerBehaviour>());
 
         this.randomNumberManager = SingletonBehaviour.GetSingletonBehaviour<RandomNumberManager>();
         this.statManagerBehaviour = SingletonBehaviour.GetSingletonBehaviour<StatManagerBehaviour>();
+
+        this.animationManager = new AnimationManager(
+            this.movingTextCanvasBehaviour,
+            this.movingScoreTextCanvasBehaviour,
+            this.statManagerBehaviour);
+
         GeneratePlatformRanges();
     }
 
