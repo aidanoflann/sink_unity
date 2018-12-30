@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour {
 
     void Awake ()
     {
+        // Set the target rate to 60 fps
+        Application.targetFrameRate = 60;
         cameraBehaviour = mainCamera.GetComponent<CameraBehaviour>();
         levelManager = GetComponent<LevelManager> ();
         this.randomNumberManager = SingletonBehaviour.GetSingletonBehaviour<RandomNumberManager>();
